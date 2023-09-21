@@ -6,11 +6,11 @@
     "developer": "ナビル",
     "moduleID": "20020901",
     "moduleImage": "https://i.postimg.cc/MK0y10tY/asura-logo.png",
-    "moduleVersion": 1.03,
+    "moduleVersion": 1.04,
     "moduleLenguage": "ENG",
-    "changelog":"Fix search?",
+    "changelog":"Update domain",
     "moduleType": "Image",
-    "baseURL": "https://asura.nacm.xyz/",
+    "baseURL": "https://asuracomics.com/",
     "moduleDeveloperSite": "https://github.com/OffsetParts/bilnaa.github.io/",
     "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/bilnaa.github.io/main/Asura/asura.json",
     "preferedServer": "",
@@ -42,7 +42,7 @@
   "mainPage": [
     {
       "request": {
-        "url": "https://asura.nacm.xyz/",
+        "url": "https://asuracomics.com/",
         "method": "get",
         "headers": [
           {
@@ -155,7 +155,7 @@
   "search": [
     {
       "request": {
-        "url": "https://asura.nacm.xyz/page/<page>/?s=<searched>",
+        "url": "https://asuracomics.com/page/<page>/?s=<searched>",
         "method": "get",
         "headers": [
           {
