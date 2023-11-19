@@ -11,8 +11,8 @@
     "changelog":"Added Update date",
     "moduleType": "Image",
     "baseURL": "https://asuratoon.com/",
-    "moduleDeveloperSite": "https://github.com/OffsetParts/bilnaa.github.io/",
-    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/bilnaa.github.io/main/Asura/asura.json",
+    "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
+    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json",
     "preferedServer": "",
     "preferedDownloadServer": "",
     "blackListed": [
