@@ -44,7 +44,7 @@ var parsedJson = JSON.parse(savedData.innerHTML);
 var emptyKeyValue = [new KeyValue('', '')];
 
 var output = [];
-var images = document.querySelectorAll('p > img');
+var images = document.querySelectorAll('img.ts-main-image');
 for (var x = 1; x < (images.length - 1); x++) {
 	var img = images[x].src;
 	console.log(img);
