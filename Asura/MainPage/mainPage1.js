@@ -1,3 +1,4 @@
+// Style: MainPage
 const DefaultLayouts = {
 	ultraWideFull: 'ultraWideFull',
 	ultraWide: 'ultraWide',
@@ -43,6 +44,7 @@ const DefaultLayouts = {
 	longTripletsFullDoubleConstant: 'longTripletsFullDoubleConstant',
 	none: ''
 };
+
 const CellDesings = {
 	Special1: 'Special1',
 	Special2: 'Special2',
@@ -69,16 +71,19 @@ const CellDesings = {
 	wide10: 'wide10',
 	wide11: 'wide11'
 };
+
 const Paging = {
 	leading: 'leading',
 	centered: 'centered',
 	none: ''
 };
+
 const Orientation = {
 	horizontal: 'horizontal',
 	vertical: 'vertical'
 };
 
+// Functions
 function MainPage(request, extra, javascriptConfig, output) {
 	this.request = request;
 	this.extra = extra;
@@ -129,39 +134,6 @@ function Section(sectionName, separator) {
 	this.separator = separator;
 }
 
-function Layout(insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight,
-	heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing) {
-	this.insets = insets;
-	this.visibleCellsWidthS = visibleCellsWidthS;
-	this.visibleCellsWidthM = visibleCellsWidthM;
-	this.visibleCellsWidthL = visibleCellsWidthL;
-	this.visibleCellsHeight = visibleCellsHeight;
-	this.heightForVisibleCells = heightForVisibleCells;
-	this.cellSize = cellSize;
-	this.ratio = ratio;
-	this.constant = constant;
-	this.horizontalSpacing = horizontalSpacing;
-	this.verticalSpacing = verticalSpacing;
-}
-
-function Insets(top, bottom, left, right) {
-	this.top = top;
-	this.bottom = bottom;
-	this.left = left;
-	this.right = right;
-}
-
-function Size(width, height) {
-	this.width = width;
-	this.height = height;
-}
-
-function Ratio(inRelation, number1, number2) {
-	this.inRelation = inRelation;
-	this.number1 = number1;
-	this.number2 = number2;
-}
-
 function Data(image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView) {
 	this.image = image;
 	this.title = title;
@@ -175,66 +147,64 @@ function Data(image, title, description, field1, field2, field3, field4, isChapt
 	this.openInWebView = openInWebView;
 }
 
-function quickData(link, image, title, field1) {
-	return new Data(image, title, 'unknown', field1, 'unknown', 'unknown', 'unknown', false, link);
-}
-
+//Init
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
-let output = [];
+
 var emptyKeyValue = [new KeyValue('', '')];
-let newRequest = new ModuleRequest(parsedJson.request.url, 'get', emptyKeyValue, null);
-var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true'), new KeyValue('name',
-	'example')])];
+var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
 let emptyExtra = new Extra(commands, emptyKeyValue);
 
+let newRequest = new ModuleRequest(parsedJson.request.url, 'get', emptyKeyValue, null);
 
-let pop = [];
-popchap = document.querySelectorAll('.hothome div.bs');
-for (list of popchap) {
-	let title = list.querySelector('.tt').textContent;
-	var link = list.querySelector('a').href;
-	link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src;
-	image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var ep = list.querySelector('.epxs').textContent;
-	pop.push(new Data(image, title, '', '', '', '', '', false, link));
+// Great of All Time
+let GOATs = [];
+goats = document.querySelectorAll('.serieslist.pop.wpop.wpop-alltime li');
+for (list of goats) {
+	let title = list.querySelector('h2').textContent.replace(' ', '');
+	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+	var image = list.querySelector('img').src.replace('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+	var ep = '';
+	try {
+		ep = list.querySelector('div.leftseries > span').textContent;
+	} catch {}
+	var rating = 'Rating: ' + list.querySelector('.numscore').textContent.replaceAll('\n', '').replaceAll(' ', '');
+	GOATs.push(new Data(image, title, ep, '', rating, '', '', false, link));
 }
-let lastchap = [];
-lastchapchap = document.querySelectorAll('div.uta');
-for (list of lastchapchap) {
+
+// Popular
+let Popular = [];
+pops = document.querySelectorAll('.hothome div.bs');
+for (list of pops) {
+	let title = list.querySelector('.tt').textContent;
+	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+	var ep = list.querySelector('.epxs').textContent;
+	Popular.push(new Data(image, title, '', '', '', '', '', false, link));
+}
+
+// Latest Chapters
+let Latests = [];
+LatestChapters = document.querySelectorAll('div.uta');
+for (list of LatestChapters) {
 	let title = list.querySelector('h4').textContent;
-	var link = list.querySelector('a').href;
-	link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src;
-	image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	var ep = '';
     var udate = '';
 	try {
 		ep = list.querySelector('ul li a').textContent;
         udate = list.querySelector('ul li span').textContent;
 	} catch {}
-	lastchap.push(new Data(image, title, ep, udate, '', '', '', false, link));
-}
-let bestmanhwa = [];
-bestmanhwa1 = document.querySelectorAll('.serieslist.pop.wpop.wpop-alltime li');
-for (list of bestmanhwa1) {
-	let title = list.querySelector('h2').textContent.replace(' ', '');
-	var link = list.querySelector('a').href;
-	link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src.replace()
-	image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var ep = '';
-	try {
-		ep = list.querySelector('div.leftseries > span').textContent;
-	} catch {}
-	var rating = 'Rating: ' + list.querySelector('.numscore').textContent.replaceAll('\n', '').replaceAll(' ', '');
-	bestmanhwa.push(new Data(image, title, ep, '', rating, '', '', false, link));
+	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
 }
 
-output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('', false), null, bestmanhwa));
-output.push(new Output(CellDesings.Special1, Orientation.horizontal, DefaultLayouts.triplets, Paging.leading, new Section('Popular Today', true), null, pop));
-output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, lastchap));
+let output = [];
+output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('GOATs', false), null, GOATs));
+output.push(new Output(CellDesings.Special2, Orientation.horizontal, DefaultLayouts.triplets, Paging.leading, new Section('Popular Today', true), null, Popular));
+output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
+
+console.log('Output submitted');
 
 let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
