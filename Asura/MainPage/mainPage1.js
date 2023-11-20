@@ -210,7 +210,7 @@ for (list of LatestChapters) {
     console.log('Latests: ' + title);
 }
 
-output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('GOATs', false), null, GOATs));
+output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('', false), null, GOATs));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.tripletsFull, Paging.leading, new Section('Popular Today', true), null, Popular));
 output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 

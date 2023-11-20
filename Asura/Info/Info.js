@@ -52,48 +52,34 @@ function Output(image, title, link, description, genres, field1, field2, field3,
     this.chapters = chapters;
 }
 
-function getStuff(array, match) {
-    for (var x = 0; x < array.length; x++) {
-        let data = array[x].innerText;
-        if (data.includes(match)) {
-            return data.replace(match, '').trim();
-        }
-    }
-}
 
-function getHtmlStuff(array, match) {
-    for (var x = 0; x < array.length; x++) {
-        let data = array[x].innerText;
-        if (data.includes(match)) {
-            return array[x];
-        }
-    }
-}
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
-var episodes = [];
-var type = document.querySelector('div.tsinfo > div:nth-child(2) a').textContent;
+
+var genres = []; genres = Array.from(document.querySelectorAll('.wd-full a')).map(g => g.textContent);
 var status = document.querySelector('div.tsinfo > div:nth-child(1) i').textContent;
-var genres = [];
-genres = Array.from(document.querySelectorAll('.wd-full a')).map(g => g.textContent);
-var desc;
+var type = document.querySelector('div.tsinfo > div:nth-child(2) a').textContent;
+
+var Synopsis;
 try {
-  desc = document.querySelector('[itemprop=\"depion\"]').textContent.replaceAll('\n','').trim();
-} catch{}
+    Synopsis = document.querySelector('[itemprop=\"depion\"]').textContent.replaceAll('\\n','').trim();
+} catch{
+
+}
+
 var title = document.querySelector('.entry-title').textContent.trim();
-var image = document.querySelector('.thumb img').src;
-image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+var image = document.querySelector('.thumb img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 var chapters = document.querySelector('.clstyle').querySelectorAll('li');
+
+var episodes = [];
 for (var i = chapters.length - 1; i >= 0; i--) {
     var element = chapters[i];
     var fixedLink = element.querySelector('a').href;
-    let chapter = new Chapter('Chapter ' + (chapters.length - i), new ModuleRequest(fixedLink, 'get',
-        emptyKeyValue, null), false);
+    let chapter = new Chapter('Chapter ' + (chapters.length - i), new ModuleRequest(fixedLink, 'get', emptyKeyValue, null), false);
     episodes.push(chapter);
 }
-let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('',
-    emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title,
-    parsedJson.request, desc, genres, status, type, '', 'Chapters : ' + episodes.length, episodes));
+
+let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, Synopsis, genres, status, type, '', 'Chapters : ' + episodes.length, episodes));
 var finalJson = JSON.stringify(infoPageObject);
 savedData.innerHTML = finalJson;
