@@ -148,6 +148,7 @@ function Data(image, title, description, field1, field2, field3, field4, isChapt
 }
 
 //Init
+let output = [];
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 
@@ -157,30 +158,39 @@ let emptyExtra = new Extra(commands, emptyKeyValue);
 
 let newRequest = new ModuleRequest(parsedJson.request.url, 'get', emptyKeyValue, null);
 
+//Debug
+console.log('newRequest: ' + newRequest);
+
+//Do stuff
+let request = new ModuleRequest(newRequest.url, newRequest.method, newRequest.headers, emptyExtra);
+
+
 // Great of All Time
 let GOATs = [];
 goats = document.querySelectorAll('.serieslist.pop.wpop.wpop-alltime li');
 for (list of goats) {
 	let title = list.querySelector('h2').textContent.replace(' ', '');
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src.replace('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	var ep = '';
 	try {
 		ep = list.querySelector('div.leftseries > span').textContent;
 	} catch {}
-	var rating = 'Rating: ' + list.querySelector('.numscore').textContent.replaceAll('\n', '').replaceAll(' ', '');
+	var rating = 'Rating: ' + list.querySelector('.numscore').textContent.replaceAll('\\n', '').replaceAll(' ', '');
 	GOATs.push(new Data(image, title, ep, '', rating, '', '', false, link));
+    console.log('GOATs: ' + title);
 }
 
 // Popular
 let Popular = [];
 pops = document.querySelectorAll('.hothome div.bs');
 for (list of pops) {
-	let title = list.querySelector('.tt').textContent;
+	let title = list.querySelector('.tt').textContent.replaceAll('\\n', '');
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	var ep = list.querySelector('.epxs').textContent;
 	Popular.push(new Data(image, title, '', '', '', '', '', false, link));
+    console.log('Popular: ' + title);
 }
 
 // Latest Chapters
@@ -197,15 +207,15 @@ for (list of LatestChapters) {
         udate = list.querySelector('ul li span').textContent;
 	} catch {}
 	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
+    console.log('Latests: ' + title);
 }
 
-let output = [];
 output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('GOATs', false), null, GOATs));
-output.push(new Output(CellDesings.Special2, Orientation.horizontal, DefaultLayouts.triplets, Paging.leading, new Section('Popular Today', true), null, Popular));
-output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.tripletsFull, Paging.leading, new Section('Popular Today', true), null, Popular));
+output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
 console.log('Output submitted');
 
-let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
+let MainPageObject = new MainPage(new ModuleRequest('https://asuratoon.com', 'get', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;
