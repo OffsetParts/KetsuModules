@@ -83,6 +83,45 @@ const Orientation = {
 	vertical: 'vertical'
 };
 
+function Layout ( insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing ) {
+	this.insets = insets;
+	this.visibleCellsWidthS = visibleCellsWidthS;
+	this.visibleCellsWidthM = visibleCellsWidthM;
+	this.visibleCellsWidthL = visibleCellsWidthL;
+	this.visibleCellsHeight = visibleCellsHeight;
+	this.heightForVisibleCells = heightForVisibleCells;
+	this.cellSize = cellSize;
+	this.ratio = ratio;
+	this.constant = constant;
+	this.horizontalSpacing = horizontalSpacing;
+	this.verticalSpacing = verticalSpacing;
+}
+
+function Insets ( top, bottom, left, right ) {
+	this.top = top;
+	this.bottom = bottom;
+	this.left = left;
+	this.right = right;
+}
+
+function Size ( width, height ) {
+	this.width = width;
+	this.height = height;
+}
+
+function Ratio ( inRelation, number1, number2 ) {
+	this.inRelation = inRelation;
+	this.number1 = number1;
+	this.number2 = number2;
+}
+
+let Carousel = new Layout(new Insets(5, 5, 0, 0), 1, 2, 3, 135, 145, new Insets(200, 0, 0, 150), new Ratio(RatioRelation.width, 118, 45), new Size(354, 145), 2, 2);
+
+const RatioRelation = {
+width: 'width',
+height: 'height'
+}
+
 // Functions
 function MainPage(request, extra, javascriptConfig, output) {
 	this.request = request;
@@ -119,16 +158,6 @@ function KeyValue(key, value) {
 	this.value = value;
 }
 
-function Output(cellDesing, orientation, defaultLayout, paging, section, layout, data) {
-	this.cellDesing = cellDesing;
-	this.orientation = orientation;
-	this.defaultLayout = defaultLayout;
-	this.paging = paging;
-	this.section = section;
-	this.layout = layout;
-	this.data = data;
-}
-
 function Section(sectionName, separator) {
 	this.sectionName = sectionName;
 	this.separator = separator;
@@ -147,6 +176,16 @@ function Data(image, title, description, field1, field2, field3, field4, isChapt
 	this.openInWebView = openInWebView;
 }
 
+function Output(cellDesing, orientation, defaultLayout, paging, section, layout, data) {
+	this.cellDesing = cellDesing;
+	this.orientation = orientation;
+	this.defaultLayout = defaultLayout;
+	this.paging = paging;
+	this.section = section;
+	this.layout = layout;
+	this.data = data;
+}
+
 //Init
 let output = [];
 var savedData = document.getElementById('ketsu-final-data');
@@ -156,66 +195,53 @@ var emptyKeyValue = [new KeyValue('', '')];
 var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
 let emptyExtra = new Extra(commands, emptyKeyValue);
 
-let newRequest = new ModuleRequest(parsedJson.request.url, 'get', emptyKeyValue, null);
+function grabTitle(link) {
+	var siteData = new ModuleRequest(link, 'get', emptyKeyValue); console.log(siteData);
+	var title = siteData.querySelector('h1').textContent;
+	return title;
+}
 
-//Debug
-console.log('newRequest: ' + newRequest);
-
-//Do stuff
-let request = new ModuleRequest(newRequest.url, newRequest.method, newRequest.headers, emptyExtra);
-
-
-// Great of All Time
+// Greatests of All Time
 let GOATs = [];
-goats = document.querySelectorAll('.serieslist.pop.wpop.wpop-alltime li');
+goats = document.querySelectorAll('div .carousel-cell');
 for (list of goats) {
-	let title = list.querySelector('h2').textContent.replace(' ', '');
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var ep = '';
-	try {
-		ep = list.querySelector('div.leftseries > span').textContent;
-	} catch {}
-	var rating = 'Rating: ' + list.querySelector('.numscore').textContent.replaceAll('\\n', '').replaceAll(' ', '');
-	GOATs.push(new Data(image, title, ep, '', rating, '', '', false, link));
-    console.log('GOATs: ' + title);
+	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
+	// var title = grabTitle(link); console.log(title);
+	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
+	GOATs.push(new Data(image, '', '', '', '', '', '', false, link));
+    //console.log('GOATs: ' + link);
 }
 
 // Popular
 let Popular = [];
-pops = document.querySelectorAll('.hothome div.bs');
+pops = document.querySelectorAll('.grid li.col-span-1');
 for (list of pops) {
-	let title = list.querySelector('.tt').textContent.replaceAll('\\n', '');
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var ep = list.querySelector('.epxs').textContent;
+	let title = list.querySelectorAll('a')[1].textContent.replaceAll('\\n', '');
+	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
+	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
 	Popular.push(new Data(image, title, '', '', '', '', '', false, link));
-    console.log('Popular: ' + title);
 }
 
 // Latest Chapters
 let Latests = [];
-LatestChapters = document.querySelectorAll('div.uta');
+LatestChapters = document.querySelectorAll('div .relative.flex.space-x-2');
 for (list of LatestChapters) {
-	let title = list.querySelector('h4').textContent;
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var ep = '';
-    var udate = '';
-	try {
-		ep = list.querySelector('ul li a').textContent;
-        udate = list.querySelector('ul li span').textContent;
-	} catch {}
+	let title = list.querySelector('div .flex-1 a').text;
+	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
+	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
+	
+	var proxy = list.querySelector('div .flex.mt-2 a').outerText.split('\\n');
+	var ep = proxy[0];
+    var udate = proxy[1];
 	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
-    console.log('Latests: ' + title);
 }
 
-output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('', false), null, GOATs));
+output.push(new Output(CellDesings.normal2, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('GOATs', false), Carousel, GOATs));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.tripletsFull, Paging.leading, new Section('Popular Today', true), null, Popular));
 output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
 console.log('Output submitted');
 
-let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
+let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;
