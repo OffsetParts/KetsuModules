@@ -26,7 +26,6 @@ You will find tutorials made by the creator in English [here](https://ketsu.app/
 You can find the ipa file here [Ketsu](https://ketsu.app).
 
 # Can I make a module ? 
-If you atleast sometime experienced with JavaScript you can easily make one too. The creator has made a website and templates that allow you to learn the logic and framework of Ketsu.
-This repo is not just for me but the community so if you want to get into JS you can contribute them here.
-If you have a github account make a pull request with the name and type (Image, Video or text) of the modules you've made.
-And if you ever need help you can hit up me or other module makers in the [Ketsu discord](https://discord.gg/CP3Q6XBv9F) by just mentioning me @scrumptious_ or others.
+Even if your only a little seasoned with JavaScript you can easily make one too. The creator has resources and templates that allow you to learn the logic and framework of Ketsu.
+This repo is not just for me but the community so if you want to get into module making you can contribute them here or on your own and if you have a github account make a push request with your module and I'll glady accept them.
+And if you ever need help you can hit up me or other module makers in the [Ketsu discord](https://discord.gg/CP3Q6XBv9F).
