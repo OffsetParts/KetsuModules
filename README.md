@@ -3,12 +3,12 @@ This was forked from a community-based modules (https://github.com/Bilnaa/Ketsu-
 So I've taken some time to update some modules I personal use for everyone to enjoy.
 
 
-| Modules                        | Direct<br>Install                              | Added      | Updated     |
+<!-- | Modules                        | Direct<br>Install                              | Added      | Updated     |
 |--------------------------------|:----------------------------------------------:|:----------:|:-----------:|
 | Asurascans                     | [KETSU][asura-ketsu]<br>[ZETSU][asura-zetsu] | 2022.11.21 | 2022.10.221 |
 
 [asura-ketsu]: ketsuapp:///?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json
-[asura-zetsu]: zetsuapp:///?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json
+[asura-zetsu]: zetsuapp:///?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json -->
 
 # Creator
 Orion is the creator of Katsu/Ketsu modular viewers that work through custom modules to read/watch media.

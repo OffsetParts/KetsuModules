@@ -1,5 +1,5 @@
 var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/main/allmodules.json');
+xhr.open('GET', 'https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/docs/allmodules.json');
 xhr.onload = function () {
     var content = xhr.responseText;
     var parsedJson = JSON.parse(content);

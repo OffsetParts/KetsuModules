@@ -10,8 +10,8 @@
     "moduleLenguage": "ENG",
     "moduleType": "Video",
     "baseURL": "https://hdtoday.cc/",
-    "moduleDeveloperSite": "https://bilnaa.github.io/main",
-    "UpdateSite": "https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/main/hdtoday.json",
+    "moduleDeveloperSite": "github.com/OffsetParts/KetsuModules/",
+    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/docs/hdtoday.json",
     "preferedServer": "STREAMLARE",
     "preferedDownloadServer": "MZZCLOUD",
     "blackListed": [
