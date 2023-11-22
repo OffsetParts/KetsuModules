@@ -7,7 +7,7 @@ So I've taken some time to update some modules I personal use for everyone to en
 |--------------------------------|:----------------------------------------------:|:----------:|:-----------:|
 | Asurascans                     | [KETSU][asura-ketsu]<br>[ZETSU][asura-zetsu] | 2022.11.21 | 2022.10.221 |
 
-[asura-ketsu]: ketsuapp:///?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json
+[asura-ketsu]: ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json
 [asura-zetsu]: zetsuapp:///?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json -->
 
 # Creator
