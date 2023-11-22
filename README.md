@@ -1,13 +1,11 @@
 # Origin
-This was forked from a community-based modules (https://github.com/Bilnaa/Ketsu-Modules) but sadly those makers no longer update their modules as they slowly become outdated.
+This was forked from a community-based modules (https://github.com/Bilnaa/Ketsu-Modules) but sadly they've been archived as their modules slowly become outdated.
 So I've taken some time to update some modules I personal use for everyone to enjoy.
 
-1. Modules
 
-	| Custom Modules                         | Direct<br>Install      | Added      | Updated     |
-	|----------------------------------------|:----------------------:|:----------:|:-----------:|
-	| GitHub code colors                     | [KETSU][asura-ketsu]<br>[ZETSU][asura-zetsu] | 2022.11.21 | 2022.10.221 |
-
+| Modules                        | Direct<br>Install                              | Added      | Updated     |
+|--------------------------------|:----------------------------------------------:|:----------:|:-----------:|
+| Asurascans                     | [KETSU][asura-ketsu]<br>[ZETSU][asura-zetsu] | 2022.11.21 | 2022.10.221 |
 
 [asura-ketsu]: ketsuapp:///?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json
 [asura-zetsu]: zetsuapp:///?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json
