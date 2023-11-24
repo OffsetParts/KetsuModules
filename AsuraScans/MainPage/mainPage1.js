@@ -157,46 +157,46 @@ var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 
 let emptyExtra = new Extra(commands, emptyKeyValue);
 
 
-// Great of All Time
+// Greatests of All Time
 let GOATs = [];
 goats = document.querySelectorAll('.wpop-alltime li');
 for (list of goats) {
-	let title = list.querySelector('h2').outerText;
+	let title = list.querySelector('h2').textContent; console.log(title);
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	var genres = '';
 	try {
-		genres = list.querySelector('div.leftseries > span').outerText;
+		genres = list.querySelector('div.leftseries > span').textContent;
 	} catch {}
-	var rating = 'Rating: ' + list.querySelector('.numscore').outerText;
+	var rating = ('Rating : ' + document.querySelector('.numscore').textContent.replaceAll('\\n', '')).trim();
 	GOATs.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
 
 let Monthly = [];
 months = document.querySelectorAll('.wpop-monthly li');
 for (list of months) {
-	let title = list.querySelector('h2').outerText;
+	let title = list.querySelector('h2').textContent;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	var genres = '';
 	try {
-		genres = list.querySelector('div.leftseries > span').outerText;
+		genres = list.querySelector('div.leftseries > span').textContent;
 	} catch {}
-	var rating = 'Rating: ' + list.querySelector('.numscore').outerText;
+	var rating = ('Rating : ' + document.querySelector('.numscore').textContent.replaceAll('\\n', '')).trim();
 	Monthly.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
 
 let Weekly = [];
 weeks = document.querySelectorAll('.wpop-weekly li');
 for (list of weeks) {
-	let title = list.querySelector('h2').outerText;
+	let title = list.querySelector('h2').textContent;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	var genres = '';
 	try {
-		genres = list.querySelector('div.leftseries > span').outerText;
+		genres = list.querySelector('div.leftseries > span').textContent;
 	} catch {}
-	var rating = 'Rating: ' + list.querySelector('.numscore').outerText;
+	var rating = ('Rating : ' + document.querySelector('.numscore').textContent.replaceAll('\\n', '')).trim();
 	Weekly.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
 
@@ -204,7 +204,7 @@ for (list of weeks) {
 let Popular = [];
 pops = document.querySelectorAll('.hothome div.bs');
 for (list of pops) {
-	let title = list.querySelector('.tt').outerText;
+	let title = list.querySelector('.tt').textContent.replaceAll('\\n', '').trim();
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	// var ep = list.querySelector('.epxs').outerText;
@@ -215,14 +215,14 @@ for (list of pops) {
 let Latests = [];
 LatestChapters = document.querySelectorAll('div.uta');
 for (list of LatestChapters) {
-	let title = list.querySelector('h4').outerText;
+	let title = list.querySelector('h4').textContent; 
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	var ep = '';
     var udate = '';
 	try {
-		ep = list.querySelector('ul li a').outerText;
-        udate = list.querySelector('ul li span').outerText;
+		ep = list.querySelector('ul li a').textContent;
+        udate = list.querySelector('ul li span').textContent;
 	} catch {}
 	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
 }

@@ -208,7 +208,7 @@ for(var x = 0; x < lastAdded.length; x++) {
     var image = last.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
     let title = last.querySelector('.bsx a').title;
     var link = last.querySelector('.bsx a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-    var status = last.querySelector('.status i').innerText;
+    var status = last.querySelector('.status i').textContent;
     let data = new Data(image, title, status, '', '', '', '', false, link);
     lastAddedArray.push(data);
 }

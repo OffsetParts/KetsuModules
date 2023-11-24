@@ -217,9 +217,9 @@ for (list of goats) {
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
 
-	var title = list.querySelector('.tt').outerText;
-	var rating = list.querySelector('.numscore').outerText;
-	var status = list.querySelector('.status').outerText;
+	var title = list.querySelector('.tt').textContent.replaceAll('\\n','').replaceAll('\\t', '');
+	var rating = list.querySelector('.numscore').textContent;
+	var status = list.querySelector('.status').textContent.replaceAll('\\n','').replaceAll('\\t', '').trim();
 
 
 	GOATs.push(new Data(image, '', '', title, status, '', '', false, link));
@@ -229,7 +229,7 @@ for (list of goats) {
 let Popular = [];
 pops = document.querySelectorAll('.pop-list-desktop')[0].querySelectorAll('div.bs');
 for (list of pops) {
-	let title = list.querySelector('.tt') != null ? list.querySelector('.tt').outerText : '';
+	let title = list.querySelector('.tt') != null ? list.querySelector('.tt').textContent.replaceAll('\\n','').replaceAll('\\t', '') : '';
 	var link = list.querySelector('a') != null ? list.querySelector('a').href : ''; link = new ModuleRequest(link, 'get', emptyKeyValue);
 	var image = list.querySelector('img') != null ? list.querySelector('img').src : ''; image = new ModuleRequest(image, 'get', emptyKeyValue);
 
@@ -239,7 +239,7 @@ for (list of pops) {
 let StaffPick = [];
 staffs = document.querySelectorAll('.pop-list-desktop')[1].querySelectorAll('div.bs');
 for (list of staffs) {
-	let title = list.querySelector('.tt') != null ? list.querySelector('.tt').outerText : '';
+	let title = list.querySelector('.tt') != null ? list.querySelector('.tt').textContent.replaceAll('\\n','').replaceAll('\\t', '') : '';
 	var link = list.querySelector('a') != null ? list.querySelector('a').href : ''; link = new ModuleRequest(link, 'get', emptyKeyValue);
 	var image = list.querySelector('img') != null ? list.querySelector('img').src : ''; image = new ModuleRequest(image, 'get', emptyKeyValue);
 
@@ -250,12 +250,12 @@ for (list of staffs) {
 let Latests = [];
 LatestChapters = document.querySelectorAll('.latest-updates div.bs');
 for (list of LatestChapters) {
-	let title = list.querySelector('.tt').outerText;
+	let title = list.querySelector('.tt').textContent.replaceAll('\\n','').replaceAll('\\t', '');
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
 	
-	var ep = list.querySelector('.epxs').outerText;
-    var udate = list.querySelector('.epxdate').outerText;
+	var ep = list.querySelector('.epxs').textContent.replaceAll('\\n','').replaceAll('\\t', '');
+    var udate = list.querySelector('.epxdate').textContent.replaceAll('\\n','').replaceAll('\\t', '');
 	Latests.push(new Data(image, title, ep, '', '', '', '', false, link));
 }
 

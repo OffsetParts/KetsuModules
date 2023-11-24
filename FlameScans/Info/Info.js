@@ -52,29 +52,25 @@ function Output(image, title, link, description, genres, field1, field2, field3,
     this.chapters = chapters;
 }
 
-var baseUrl = '';
-if (window.location) {
-    baseUrl = window.location.hostname + window.location.pathname
-}
-
-
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
 
-var rating =  'Rating: ' + document.querySelector('.numscore').innerText; 
-var status = document.querySelector('.status').innerText;
-var type = document.querySelector('.tsinfo .imptdt i').innerText;
-
-var Summary;
+var Synopsis;
 try {
-    Synopsis = document.querySelector('.entry-content-single').innerText;
+    Synopsis = document.querySelector('.entry-content-single').textContent.replaceAll('\\n','').replaceAll('\\t', '').trim();
 } catch {
     Synopsis = '';
 }
 
-var title = document.querySelector('.entry-title').innerText.replaceAll('\\n\\n','\\n').replaceAll('(adsbygoogle = window.adsbygoogle || []).push({})', '').trim();
-var genres = []; genres = Array.from(document.querySelectorAll('.mgen a')).map(g => g.innerText);
+var title = document.querySelector('.entry-title').textContent;
+var genres = []; genres = Array.from(document.querySelectorAll('.mgen a')).map(g => g.textContent);
+
+var rating =  ('Rating : ' + document.querySelector('.numscore').textContent.replaceAll('\\n', '')).trim(); 
+var status = document.querySelector('.status').textContent.replaceAll('\\n', '').trim();
+var type = document.querySelector('.tsinfo .imptdt i').textContent;
+
+
 var image = document.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 var chapters = document.querySelectorAll('.eplister ul li');
 
@@ -91,6 +87,6 @@ if (chapters.length > 0) {
     }
 }
 
-let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, Synopsis, genres, rating, status, type, 'Chapters : ' + chapters.length, episodes));
+let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, Synopsis, genres, rating, status, '', 'Chapters : ' + chapters.length, episodes));
 var finalJson = JSON.stringify(infoPageObject);
 savedData.innerHTML = finalJson;

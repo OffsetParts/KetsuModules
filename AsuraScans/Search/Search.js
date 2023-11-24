@@ -200,18 +200,16 @@ var parsedJson = JSON.parse(savedData.innerHTML);
 let output = [];
 let emptyKeyValue = [new KeyValue('','')];
 
-var lastAdded = document.querySelector('.listupd').querySelectorAll('.bs');
+var lastAdded = document.querySelectorAll('.listupd .bs');
 let lastAddedArray = [];
 
 for(var x = 0; x < lastAdded.length; x++) {
-    var last = lastAdded[x];
-    var image = last.querySelector('img').src;
-    image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+    var last  = lastAdded[x];
     let title = last.querySelector('.bsx a').title;
-    var link = last.querySelector('.bsx a').href;
-    link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-    var lastchap = 'Last chapter : ' + last.querySelector('.adds .epxs').textContent.replaceAll('\\n','');
-    let data = new Data(image, title, lastchap, 'Manhwa', '', '', '', false, link);
+    var link  = last.querySelector('.bsx a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+    var image = last.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+    var rchap = 'Last chapter : ' + last.querySelector('.adds .epxs').textContent.replaceAll('\\n','');
+    let data = new Data(image, title, rchap, 'Manhwa', '', '', '', false, link);
     lastAddedArray.push(data);
 }
 
