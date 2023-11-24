@@ -156,63 +156,82 @@ var emptyKeyValue = [new KeyValue('', '')];
 var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
 let emptyExtra = new Extra(commands, emptyKeyValue);
 
-let newRequest = new ModuleRequest(parsedJson.request.url, 'get', emptyKeyValue, null);
-
-//Debug
-console.log('newRequest: ' + newRequest);
-
-//Do stuff
-let request = new ModuleRequest(newRequest.url, newRequest.method, newRequest.headers, emptyExtra);
-
 
 // Great of All Time
 let GOATs = [];
-goats = document.querySelectorAll('.serieslist.pop.wpop.wpop-alltime li');
+goats = document.querySelectorAll('.wpop-alltime li');
 for (list of goats) {
-	let title = list.querySelector('h2').textContent.replace(' ', '');
+	let title = list.querySelector('h2').outerText;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var ep = '';
+	var genres = '';
 	try {
-		ep = list.querySelector('div.leftseries > span').textContent;
+		genres = list.querySelector('div.leftseries > span').outerText;
 	} catch {}
-	var rating = 'Rating: ' + list.querySelector('.numscore').textContent.replaceAll('\\n', '').replaceAll(' ', '');
-	GOATs.push(new Data(image, title, ep, '', rating, '', '', false, link));
-    console.log('GOATs: ' + title);
+	var rating = 'Rating: ' + list.querySelector('.numscore').outerText;
+	GOATs.push(new Data(image, title, genres, '', rating, '', '', false, link));
+}
+
+let Monthly = [];
+months = document.querySelectorAll('.wpop-monthly li');
+for (list of months) {
+	let title = list.querySelector('h2').outerText;
+	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+	var genres = '';
+	try {
+		genres = list.querySelector('div.leftseries > span').outerText;
+	} catch {}
+	var rating = 'Rating: ' + list.querySelector('.numscore').outerText;
+	Monthly.push(new Data(image, title, genres, '', rating, '', '', false, link));
+}
+
+let Weekly = [];
+weeks = document.querySelectorAll('.wpop-weekly li');
+for (list of weeks) {
+	let title = list.querySelector('h2').outerText;
+	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+	var genres = '';
+	try {
+		genres = list.querySelector('div.leftseries > span').outerText;
+	} catch {}
+	var rating = 'Rating: ' + list.querySelector('.numscore').outerText;
+	Weekly.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
 
 // Popular
 let Popular = [];
 pops = document.querySelectorAll('.hothome div.bs');
 for (list of pops) {
-	let title = list.querySelector('.tt').textContent.replaceAll('\\n', '');
+	let title = list.querySelector('.tt').outerText;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var ep = list.querySelector('.epxs').textContent;
+	// var ep = list.querySelector('.epxs').outerText;
 	Popular.push(new Data(image, title, '', '', '', '', '', false, link));
-    console.log('Popular: ' + title);
 }
 
 // Latest Chapters
 let Latests = [];
 LatestChapters = document.querySelectorAll('div.uta');
 for (list of LatestChapters) {
-	let title = list.querySelector('h4').textContent;
+	let title = list.querySelector('h4').outerText;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	var ep = '';
     var udate = '';
 	try {
-		ep = list.querySelector('ul li a').textContent;
-        udate = list.querySelector('ul li span').textContent;
+		ep = list.querySelector('ul li a').outerText;
+        udate = list.querySelector('ul li span').outerText;
 	} catch {}
 	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
-    console.log('Latests: ' + title);
 }
 
-output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('', false), null, GOATs));
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.tripletsFull, Paging.leading, new Section('Popular Today', true), null, Popular));
-output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
+output.push(new Output(CellDesings.wide5, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('GOATs', false), null, GOATs));
+output.push(new Output(CellDesings.wide4, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('Monthly', false), null, Monthly));
+output.push(new Output(CellDesings.wide4, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('Weekly', false), null, Weekly));
+output.push(new Output(CellDesings.Special1, Orientation.horizontal, DefaultLayouts.tripletsFull, Paging.leading, new Section('Popular Today', true), null, Popular));
+output.push(new Output(CellDesings.wide4, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
 console.log('Output submitted');
 

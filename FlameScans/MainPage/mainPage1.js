@@ -1,4 +1,5 @@
 // Style: MainPage
+
 const DefaultLayouts = {
 	ultraWideFull: 'ultraWideFull',
 	ultraWide: 'ultraWide',
@@ -83,6 +84,16 @@ const Orientation = {
 	vertical: 'vertical'
 };
 
+const RatioRelation = {
+	width: 'width',
+	height: 'height'
+};
+
+function Section ( sectionName, separator ) {
+	this.sectionName = sectionName;
+	this.separator = separator;
+}
+
 function Layout ( insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing ) {
 	this.insets = insets;
 	this.visibleCellsWidthS = visibleCellsWidthS;
@@ -115,34 +126,28 @@ function Ratio ( inRelation, number1, number2 ) {
 	this.number2 = number2;
 }
 
-let Carousel = new Layout(new Insets(5, 5, 0, 0), 1, 2, 3, 135, 145, new Insets(200, 0, 0, 150), new Ratio(RatioRelation.width, 118, 45), new Size(354, 145), 2, 2);
-
-const RatioRelation = {
-width: 'width',
-height: 'height'
-}
-
 // Functions
-function MainPage(request, extra, javascriptConfig, output) {
+
+function MainPage ( request, extra, javascriptConfig, output ) {
 	this.request = request;
 	this.extra = extra;
 	this.javascriptConfig = javascriptConfig;
 	this.output = output;
 }
 
-function ModuleRequest(url, method, headers, httpBody) {
+function ModuleRequest ( url, method, headers, httpBody ) {
 	this.url = url;
 	this.method = method;
 	this.headers = headers;
 	this.httpBody = httpBody;
 }
 
-function Extra(commands, extraInfo) {
+function Extra ( commands, extraInfo ) {
 	this.commands = commands;
 	this.extraInfo = extraInfo;
 }
 
-function Commands(commandName, params) {
+function Commands ( commandName, params ) {
 	this.commandName = commandName;
 	this.params = params;
 }
@@ -153,17 +158,12 @@ function JavascriptConfig(removeJavascript, loadInWebView, javaScript) {
 	this.javaScript = javaScript;
 }
 
-function KeyValue(key, value) {
+function KeyValue ( key, value ) {
 	this.key = key;
 	this.value = value;
 }
 
-function Section(sectionName, separator) {
-	this.sectionName = sectionName;
-	this.separator = separator;
-}
-
-function Data(image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView) {
+function Data ( image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView ) {
 	this.image = image;
 	this.title = title;
 	this.description = description;
@@ -176,7 +176,7 @@ function Data(image, title, description, field1, field2, field3, field4, isChapt
 	this.openInWebView = openInWebView;
 }
 
-function Output(cellDesing, orientation, defaultLayout, paging, section, layout, data) {
+function Output ( cellDesing, orientation, defaultLayout, paging, section, layout, data ) {
 	this.cellDesing = cellDesing;
 	this.orientation = orientation;
 	this.defaultLayout = defaultLayout;
@@ -186,61 +186,83 @@ function Output(cellDesing, orientation, defaultLayout, paging, section, layout,
 	this.data = data;
 }
 
-//Init
+
 let output = [];
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 
-var emptyKeyValue = [new KeyValue('', '')];
 var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
-let emptyExtra = new Extra(commands, emptyKeyValue);
+var emptyKeyValue = [new KeyValue('', '')];
+var emptyExtra = new Extra(commands, emptyKeyValue);
 
-function grabTitle(link) {
-	var siteData = new ModuleRequest(link, 'get', emptyKeyValue); console.log(siteData);
-	var title = siteData.querySelector('h1').textContent;
-	return title;
-}
+// Custom Layouts
+let Carousel = new Layout(
+	new Insets(5, 5, 0, 0), // insets
+	1, // visibleCellsWidthS
+	2, // visibleCellsWidthM
+	3, // visibleCellsWidthL
+	135, // visibleCellsHeight
+	145, // heightForVisibleCells
+	new Insets(200, 0, 0, 150), // cellSize 
+	new Ratio(RatioRelation.width, 118, 45), // ratio 
+	new Size(354, 145), // constant
+	2, // horizontalSpacing
+	2 // verticalSpacing
+);
 
-// Greatests of All Time
+// Top
 let GOATs = [];
-goats = document.querySelectorAll('div .carousel-cell');
+goats = document.querySelector('.swiper-wrapper').querySelectorAll('.swiper-slide');
 for (list of goats) {
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
-	// var title = grabTitle(link); console.log(title);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
-	GOATs.push(new Data(image, '', '', '', '', '', '', false, link));
-    //console.log('GOATs: ' + link);
+
+	var title = list.querySelector('.tt').outerText;
+	var rating = list.querySelector('.numscore').outerText;
+	var status = list.querySelector('.status').outerText;
+
+
+	GOATs.push(new Data(image, '', '', title, status, '', '', false, link));
 }
 
 // Popular
 let Popular = [];
-pops = document.querySelectorAll('.grid li.col-span-1');
+pops = document.querySelectorAll('.pop-list-desktop')[0].querySelectorAll('div.bs');
 for (list of pops) {
-	let title = list.querySelectorAll('a')[1].textContent.replaceAll('\\n', '');
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
-	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
+	let title = list.querySelector('.tt') != null ? list.querySelector('.tt').outerText : '';
+	var link = list.querySelector('a') != null ? list.querySelector('a').href : ''; link = new ModuleRequest(link, 'get', emptyKeyValue);
+	var image = list.querySelector('img') != null ? list.querySelector('img').src : ''; image = new ModuleRequest(image, 'get', emptyKeyValue);
+
 	Popular.push(new Data(image, title, '', '', '', '', '', false, link));
+}
+
+let StaffPick = [];
+staffs = document.querySelectorAll('.pop-list-desktop')[1].querySelectorAll('div.bs');
+for (list of staffs) {
+	let title = list.querySelector('.tt') != null ? list.querySelector('.tt').outerText : '';
+	var link = list.querySelector('a') != null ? list.querySelector('a').href : ''; link = new ModuleRequest(link, 'get', emptyKeyValue);
+	var image = list.querySelector('img') != null ? list.querySelector('img').src : ''; image = new ModuleRequest(image, 'get', emptyKeyValue);
+
+	StaffPick.push(new Data(image, title, '', '', '', '', '', false, link));
 }
 
 // Latest Chapters
 let Latests = [];
-LatestChapters = document.querySelectorAll('div .relative.flex.space-x-2');
+LatestChapters = document.querySelectorAll('.latest-updates div.bs');
 for (list of LatestChapters) {
-	let title = list.querySelector('div .flex-1 a').text;
+	let title = list.querySelector('.tt').outerText;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
 	
-	var proxy = list.querySelector('div .flex.mt-2 a').outerText.split('\\n');
-	var ep = proxy[0];
-    var udate = proxy[1];
+	var ep = list.querySelector('.epxs').outerText;
+    var udate = list.querySelector('.epxdate').outerText;
 	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
 }
 
-output.push(new Output(CellDesings.normal2, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('GOATs', false), Carousel, GOATs));
+output.push(new Output(CellDesings.Special2, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), null, GOATs));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.tripletsFull, Paging.leading, new Section('Popular Today', true), null, Popular));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.tripletsFull, Paging.leading, new Section('Staff Picks', true), null, StaffPick));
 output.push(new Output(CellDesings.wide11, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
-
-console.log('Output submitted');
 
 let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);

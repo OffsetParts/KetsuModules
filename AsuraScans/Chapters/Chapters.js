@@ -1,5 +1,3 @@
-<script type = "text/javascript">
-  
 function Chapters(request, extra, javascriptConfig, output) {
   this.request = request;
   this.extra = extra;
@@ -50,7 +48,7 @@ if (images.length == 0) {
 	images = document.querySelectorAll('p > img');
 }
 
-for (var x = 1; x < (images.length - 1); x++) {
+for (var x = 0; x < images.length; x++) {
 	var img = images[x].src;
 	output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
 }
@@ -60,5 +58,3 @@ var chaptersObject = new Chapters(new ModuleRequest('', '', emptyKeyValue, null)
 var finalJson = JSON.stringify(chaptersObject);
 
 savedData.innerHTML = finalJson;
-
-</script>

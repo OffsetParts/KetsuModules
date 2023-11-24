@@ -234,6 +234,13 @@
         "info": "Lisez gratuitement des mangas webtoons avec le module du site CrunchyScan.",
         "link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/CrunchyScan/moduleTemplate.json",
         "Zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/CrunchyScan/moduleTemplate.json"
+    }, {
+        "name": "FlameScans | ENG",
+        "author": "Scrumptious",
+        "image": "https://i.postimg.cc/WbXtdkbS/icon.png",
+        "info": "Read for free scanlations on FlameScans.",
+        "link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/FlameScans/flames.json",
+        "Zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/FlameScans/flames.json"
     }],
     "text": [{
         "name": "Livre1 | FR",
