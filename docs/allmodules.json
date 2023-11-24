@@ -187,8 +187,8 @@
         "author": "Nabil",
         "image": "https://i.postimg.cc/MK0y10tY/asura-logo.png",
         "info": "Read for free webtoons that are on the website of AsuraScans",
-        "link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json",
-        "Zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Asura/asura.json"
+        "link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/AsuraScans/asura.json",
+        "Zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/AsuraScans/asura.json"
     }, {
         "name": "MangaWeebs | ENG",
         "author": "Nabil",
