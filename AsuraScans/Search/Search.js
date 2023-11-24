@@ -204,15 +204,15 @@ var lastAdded = document.querySelector('.listupd').querySelectorAll('.bs');
 let lastAddedArray = [];
 
 for(var x = 0; x < lastAdded.length; x++) {
-        var last = lastAdded[x];
-        var image = last.querySelector('img').src;
-        image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-        let title = last.querySelector('.bsx a').title;
-        var link = last.querySelector('.bsx a').href;
-        link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-        var lastchap = 'Last chapter : ' + last.querySelector('.adds .epxs').textContent.replaceAll('\\n','');
-        let data = new Data(image, title, lastchap, 'Manhwa', '', '', '', false, link);
-        lastAddedArray.push(data);
+    var last = lastAdded[x];
+    var image = last.querySelector('img').src;
+    image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+    let title = last.querySelector('.bsx a').title;
+    var link = last.querySelector('.bsx a').href;
+    link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+    var lastchap = 'Last chapter : ' + last.querySelector('.adds .epxs').textContent.replaceAll('\\n','');
+    let data = new Data(image, title, lastchap, 'Manhwa', '', '', '', false, link);
+    lastAddedArray.push(data);
 }
 
 var testLayout = new Layout(new Insets(10, 10, 10, 10), 1, 2, 3, 1, 500, new Size(400, 400), new Ratio('width', 4, 11), new Size(0, 0), 10, 10);
