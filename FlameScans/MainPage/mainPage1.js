@@ -256,13 +256,13 @@ for (list of LatestChapters) {
 	
 	var ep = list.querySelector('.epxs').outerText;
     var udate = list.querySelector('.epxdate').outerText;
-	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
+	Latests.push(new Data(image, title, ep, '', '', '', '', false, link));
 }
 
 output.push(new Output(CellDesings.Special3, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), null, GOATs));
 output.push(new Output(CellDesings.wide8, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Staff Picks', true), null, StaffPick));
-output.push(new Output(CellDesings.wide5, Orientation.horizontal, DefaultLayouts.wideStrechedDouble, Paging.leading, new Section('Latest Chapters', true), null, Latests));
+output.push(new Output(CellDesings.wide8, Orientation.horizontal, DefaultLayouts.wideStrechedDouble, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
 let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);

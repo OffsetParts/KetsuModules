@@ -42,7 +42,7 @@ var parsedJson = JSON.parse(savedData.innerHTML);
 var emptyKeyValue = [new KeyValue('', '')];
 
 var output = [];
-var images = document.querySelectorAll('img.aligncenter');
+var images = document.querySelectorAll('.rdminimal img');
 
 if (images.length == 0) {
 	images = document.querySelectorAll('p > img');
