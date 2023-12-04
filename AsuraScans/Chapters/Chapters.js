@@ -42,19 +42,20 @@ var parsedJson = JSON.parse(savedData.innerHTML);
 var emptyKeyValue = [new KeyValue('', '')];
 
 var output = [];
-var images = document.querySelectorAll('img.ts-main-image');
 
-if (images.length == 0) {
-	images = document.querySelectorAll('p > img');
-}
+function getImages() {
+	var images = document.querySelectorAll('img.ts-main-image, img.alignnone');
 
-for (var x = 0; x < images.length; x++) {
-	var img = images[x].src;
-	output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
+	for (var x = 0; x < images.length; x++) {
+		var img = images[x].src;
+		output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
+	}
+
+	return output;
 }
 
 let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
-var chaptersObject = new Chapters(new ModuleRequest('', '', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, false, ''), new Package(output));
-var finalJson = JSON.stringify(chaptersObject);
+var chaptersObject = new Chapters(new ModuleRequest('', '', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, false, ''), new Package(getImages()));
 
+var finalJson = JSON.stringify(chaptersObject);
 savedData.innerHTML = finalJson;
