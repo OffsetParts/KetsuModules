@@ -186,6 +186,12 @@ function Output ( cellDesing, orientation, defaultLayout, paging, section, layou
 	this.data = data;
 }
 
+function cleanText(obj) {
+	obj = obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
+	return obj;
+}
+
+
 
 let output = [];
 var savedData = document.getElementById('ketsu-final-data');
@@ -197,39 +203,40 @@ var emptyExtra = new Extra(commands, emptyKeyValue);
 
 // Custom Layouts
 let Carousel = new Layout(
-	new Insets(5, 5, 0, 0), // insets
+	new Insets(5, 5, 5, 5), // insets
 	1, // visibleCellsWidthS
 	2, // visibleCellsWidthM
 	3, // visibleCellsWidthL
-	135, // visibleCellsHeight
-	145, // heightForVisibleCells
-	new Insets(200, 0, 0, 150), // cellSize 
-	new Ratio(RatioRelation.width, 118, 45), // ratio 
-	new Size(354, 145), // constant
-	2, // horizontalSpacing
-	2 // verticalSpacing
+	1, // visibleCellsHeight
+	500, // heightForVisibleCells
+	new Size(200, 200), // cellSize 
+	new Ratio(RatioRelation.width, 315, 590), // ratio 
+	new Size(0, 0), // constant
+	5, // horizontalSpacing
+	5 // verticalSpacing
 );
 
 // Top
+
 let GOATs = [];
 goats = document.querySelector('.swiper-wrapper').querySelectorAll('.swiper-slide');
 for (list of goats) {
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
-	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
+	var image = list.querySelector('.bigbanner').style.backgroundImage.split('\"')[1]; image = new ModuleRequest(image, 'get', emptyKeyValue);
 
-	var title = list.querySelector('.tt').textContent.replaceAll('\\n','').replaceAll('\\t', '');
+	var title = cleanText(list.querySelector('.tt').textContent);
 	var rating = list.querySelector('.numscore').textContent;
-	var status = list.querySelector('.status').textContent.replaceAll('\\n','').replaceAll('\\t', '').trim();
+	var status = cleanText(list.querySelector('.status').textContent);
 
 
-	GOATs.push(new Data(image, '', '', title, status, '', '', false, link));
+	GOATs.push(new Data( image, title, '', '', '', '', '', false, link ));
 }
 
 // Popular
 let Popular = [];
 pops = document.querySelectorAll('.pop-list-desktop')[0].querySelectorAll('div.bs');
 for (list of pops) {
-	let title = list.querySelector('.tt') != null ? list.querySelector('.tt').textContent.replaceAll('\\n','').replaceAll('\\t', '') : '';
+	let title = list.querySelector('.tt') != null ? cleanText(list.querySelector('.tt').textContent) : '';
 	var link = list.querySelector('a') != null ? list.querySelector('a').href : ''; link = new ModuleRequest(link, 'get', emptyKeyValue);
 	var image = list.querySelector('img') != null ? list.querySelector('img').src : ''; image = new ModuleRequest(image, 'get', emptyKeyValue);
 
@@ -239,7 +246,7 @@ for (list of pops) {
 let StaffPick = [];
 staffs = document.querySelectorAll('.pop-list-desktop')[1].querySelectorAll('div.bs');
 for (list of staffs) {
-	let title = list.querySelector('.tt') != null ? list.querySelector('.tt').textContent.replaceAll('\\n','').replaceAll('\\t', '') : '';
+	let title = list.querySelector('.tt') != null ? cleanText(list.querySelector('.tt').textContent) : '';
 	var link = list.querySelector('a') != null ? list.querySelector('a').href : ''; link = new ModuleRequest(link, 'get', emptyKeyValue);
 	var image = list.querySelector('img') != null ? list.querySelector('img').src : ''; image = new ModuleRequest(image, 'get', emptyKeyValue);
 
@@ -250,17 +257,17 @@ for (list of staffs) {
 let Latests = [];
 LatestChapters = document.querySelectorAll('.latest-updates div.bs');
 for (list of LatestChapters) {
-	let title = list.querySelector('.tt').textContent.replaceAll('\\n','').replaceAll('\\t', '');
+	let title = cleanText(list.querySelector('.tt').textContent);
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue);
 	
-	var ep = list.querySelector('.epxs').textContent.replaceAll('\\n','').replaceAll('\\t', '');
-    var udate = list.querySelector('.epxdate').textContent.replaceAll('\\n','').replaceAll('\\t', '');
+	var ep = cleanText(list.querySelector('.epxs').textContent);
+    var udate = cleanText(list.querySelector('.epxdate').textContent);
 	Latests.push(new Data(image, title, ep, '', '', '', '', false, link));
 }
 
-output.push(new Output(CellDesings.Special3, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), null, GOATs));
-output.push(new Output(CellDesings.wide8, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, GOATs));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Staff Picks', true), null, StaffPick));
 output.push(new Output(CellDesings.wide8, Orientation.horizontal, DefaultLayouts.wideStrechedDouble, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 

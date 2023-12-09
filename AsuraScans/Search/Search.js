@@ -192,12 +192,17 @@ function Data(image,title,description,field1,field2,field3,field4,isChapter,link
     this.openInWebView = openInWebView;
 }
 
+// Functions
+function cleanText(obj) {
+	obj = obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
+	return obj;
+}
 
-var savedData = document.getElementById('ketsu-final-data');
-
-var parsedJson = JSON.parse(savedData.innerHTML); 
 
 let output = [];
+
+var savedData = document.getElementById('ketsu-final-data');
+var parsedJson = JSON.parse(savedData.innerHTML); 
 let emptyKeyValue = [new KeyValue('','')];
 
 var lastAdded = document.querySelectorAll('.listupd .bs');
@@ -208,8 +213,8 @@ for(var x = 0; x < lastAdded.length; x++) {
     let title = last.querySelector('.bsx a').title;
     var link  = last.querySelector('.bsx a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
     var image = last.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-    var rchap = 'Last chapter : ' + last.querySelector('.adds .epxs').textContent.replaceAll('\\n','');
-    let data = new Data(image, title, rchap, 'Manhwa', '', '', '', false, link);
+    var lChap = cleanText('Last chapter : ' + last.querySelector('.adds .epxs').textContent);
+    let data  = new Data(image, title, lChap, 'Manhwa', '', '', '', false, link);
     lastAddedArray.push(data);
 }
 

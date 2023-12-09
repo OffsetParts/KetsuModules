@@ -44,13 +44,12 @@ var emptyKeyValue = [new KeyValue('', '')];
 var output = [];
 
 function getImages() {
-	var images = document.querySelectorAll('img.ts-main-image, img.alignnone');
-
+	var images = document.querySelectorAll('.rdminimal img');
 	for (var x = 0; x < images.length; x++) {
 		var img = images[x].src;
 		output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
 	}
-
+	
 	return output;
 }
 

@@ -192,16 +192,14 @@ function Data(image,title,description,field1,field2,field3,field4,isChapter,link
     this.openInWebView = openInWebView;
 }
 
-
+let output = [];
 var savedData = document.getElementById('ketsu-final-data');
-
 var parsedJson = JSON.parse(savedData.innerHTML); 
 
-let output = [];
 let emptyKeyValue = [new KeyValue('','')];
 
-var lastAdded = document.querySelectorAll('.listupd .bs');
 let lastAddedArray = [];
+var lastAdded = document.querySelectorAll('.listupd .bs');
 
 for(var x = 0; x < lastAdded.length; x++) {
     var last = lastAdded[x];

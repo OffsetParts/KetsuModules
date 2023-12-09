@@ -148,7 +148,6 @@ function Data(image, title, description, field1, field2, field3, field4, isChapt
 }
 
 //Init
-let output = [];
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 
@@ -156,19 +155,28 @@ var emptyKeyValue = [new KeyValue('', '')];
 var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
 let emptyExtra = new Extra(commands, emptyKeyValue);
 
+// Functions
+
+function scaleImg(img) {
+	img = img.replaceAll('130x170', '330x450').replaceAll('200x260', '330x450');
+	return img;
+}
+
+function cleanText(obj) {
+	obj = obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
+	return obj;
+}
 
 // Greatests of All Time
 let GOATs = [];
 goats = document.querySelectorAll('.wpop-alltime li');
 for (list of goats) {
-	let title = list.querySelector('h2').textContent; console.log(title);
+	let title = list.querySelector('h2').textContent;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var genres = '';
-	try {
-		genres = list.querySelector('div.leftseries > span').textContent;
-	} catch {}
-	var rating = ('Rating : ' + document.querySelector('.numscore').textContent.replaceAll('\\n', '')).trim();
+	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+
+	var genres = list.querySelector('div.leftseries > span').textContent;
+	var rating = ('Rating : ' + cleanText(list.querySelector('.numscore').textContent));
 	GOATs.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
 
@@ -177,12 +185,10 @@ months = document.querySelectorAll('.wpop-monthly li');
 for (list of months) {
 	let title = list.querySelector('h2').textContent;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var genres = '';
-	try {
-		genres = list.querySelector('div.leftseries > span').textContent;
-	} catch {}
-	var rating = ('Rating : ' + document.querySelector('.numscore').textContent.replaceAll('\\n', '')).trim();
+	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+
+	var genres = list.querySelector('div.leftseries > span').textContent;
+	var rating = ('Rating : ' + cleanText(list.querySelector('.numscore').textContent));
 	Monthly.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
 
@@ -191,12 +197,10 @@ weeks = document.querySelectorAll('.wpop-weekly li');
 for (list of weeks) {
 	let title = list.querySelector('h2').textContent;
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src.replaceAll('130x170', '330x450'); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var genres = '';
-	try {
-		genres = list.querySelector('div.leftseries > span').textContent;
-	} catch {}
-	var rating = ('Rating : ' + document.querySelector('.numscore').textContent.replaceAll('\\n', '')).trim();
+	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+
+	var genres = list.querySelector('div.leftseries > span').textContent;
+	var rating = ('Rating : ' + cleanText(list.querySelector('.numscore').textContent));
 	Weekly.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
 
@@ -204,7 +208,7 @@ for (list of weeks) {
 let Popular = [];
 pops = document.querySelectorAll('.hothome div.bs');
 for (list of pops) {
-	let title = list.querySelector('.tt').textContent.replaceAll('\\n', '').trim();
+	let title = cleanText(list.querySelector('.tt').textContent);
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 	// var ep = list.querySelector('.epxs').outerText;
@@ -213,25 +217,24 @@ for (list of pops) {
 
 // Latest Chapters
 let Latests = [];
-LatestChapters = document.querySelectorAll('div.uta');
-for (list of LatestChapters) {
+latestChapters = document.querySelectorAll('div.uta');
+for (list of latestChapters) {
 	let title = list.querySelector('h4').textContent; 
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	var ep = '';
-    var udate = '';
-	try {
-		ep = list.querySelector('ul li a').textContent;
-        udate = list.querySelector('ul li span').textContent;
-	} catch {}
+	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+
+	var ep = list.querySelector('ul li a').textContent;
+    var udate = list.querySelector('ul li span').textContent;
+
 	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
 }
 
+let output = [];
 output.push(new Output(CellDesings.wide5, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('GOATs', false), null, GOATs));
-output.push(new Output(CellDesings.wide4, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('Monthly', false), null, Monthly));
-output.push(new Output(CellDesings.wide4, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('Weekly', false), null, Weekly));
-output.push(new Output(CellDesings.Special1, Orientation.horizontal, DefaultLayouts.tripletsFull, Paging.leading, new Section('Popular Today', true), null, Popular));
-output.push(new Output(CellDesings.wide4, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section('Monthly', false), null, Monthly));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, Weekly));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
+output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
 console.log('Output submitted');
 
