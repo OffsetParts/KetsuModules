@@ -1,4 +1,4 @@
-function Chapters(request, extra, javascriptConfig, output) {
+function Episodes(request, extra, javascriptConfig, output) {
     this.request = request;
     this.extra = extra;
     this.javascriptConfig = javascriptConfig;
@@ -44,7 +44,7 @@ function Videos(needsResolver, rawVideo) {
     this.rawVideo = rawVideo;
 }
 
-function NeedsResolver(resolverIdentifier, link) {
+function Resolver(resolverIdentifier, link) {
     this.resolverIdentifier = resolverIdentifier;
     this.link = link;
 }
@@ -62,23 +62,44 @@ function Text(text) {
     this.text = text;
 }
 
-var savedData = document.getElementById('ketsu-final-data');
-var parsedJson = JSON.parse(savedData.innerHTML);
+function parseJsonFromSavedData() {
+    const savedDataElement = document.getElementById('ketsu-final-data');
+    return JSON.parse(savedDataElement.innerHTML);
+}
+
+function isValidBase64String(input) {
+    const validBase64Chars = /^[A-Za-z0-9+/]+={0,2}$/;
+    return validBase64Chars.test(input) && input.length % 4 === 0;
+}
+  
+function decodeBase64(input) {
+    if (!isValidBase64String(input)) {
+        throw new Error('Invalid Base64 input');
+    }
+
+    const paddedInput = input + '='.repeat(4 - (input.length % 4));
+    const decodedData = atob(paddedInput);
+
+    return decodedData;
+}  
+
+var parsedJson = parseJsonFromSavedData();
 
 var output = parsedJson.output.videos;
 
+const extra = new Extra([new Commands('', emptyKeyValue)], extraInfo);
 var emptyKeyValue = [new KeyValue('', '')];
 var referer = [new KeyValue('referer', 'https://9animetv.to/watch/')];
 let newRequest = new ModuleRequest('', '', emptyKeyValue, null);
 let extraInfo = [new KeyValue('current', '1')];
 
 const url = new URL(parsedJson.request.url);
-const params = url.search.substring(1).split('&amp;');
+const params = Object.fromEntries(url.searchParams);
 
-let serv = {};
-for (const extras of parsedJson.extra.extraInfo) {
-    serv[extras.key] = extras.value;
-}
+const serv = parsedJson.extra.extraInfo.reduce((result, item) => {
+    result[item.key] = item.value;
+    return result;
+}, {});
 
 if (url.href.includes('google')) {
     let servers = {};
@@ -95,34 +116,18 @@ if (url.href.includes('google')) {
     newRequest = new ModuleRequest(`https://9animetv.to/ajax/anime/episode?id=${servers['35']}`, 'get', referer, null);
     
 } else {
-    function transform(r) { 
-        const e = r.substr(0, 16); 
-        let t = r.substr(16); 
-        if ((t = t.replace(/[ \\t\\n\\f\\r]/g, '')).length % 4 == 0 && ((t = t.replace(/==?$/, '')).length % 4 == 1 || /[^+/0-9A-Za-z]/.test(t))) 
-            return null; 
-        let n = '', o = 0; 
-        for (let r = 0; r < t.length; r++) { 
-            o <<= 6; 
-            const e = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.indexOf(t[r]); 
-            if (((o |= e < 0 ? void 0 : e), (r + 1) % 4 == 0 && ((n += String.fromCharCode((16711680 & o) >> 16)), (n += String.fromCharCode((65280 & o) >> 8)), (n += String.fromCharCode(255 & o)), (o = remaining = 0)), r == t.length - 1)) 
-            switch (r % 4) { 
-            case 1: (o >>= 4), (n += String.fromCharCode(o)); 
-                break; 
-            case 2: (o >>= 2), (n += String.fromCharCode((65280 & o) >> 8)), (n += String.fromCharCode(255 & o)); } 
-        } 
-        try { 
-            n = decodeURIComponent(n); 
-        } catch (r) {} 
-        var a = [...Array(256).keys()], i = 0; 
-        for (let r = 0; r < 256; r += 1) a[(i = (i + a[r] + e.charCodeAt(r % e.length)) % 256)] = [a[r], (a[r] = a[i])][0]; 
-        for (var d = '', h = (i = index = 0); h < n.length; h += 1) (a[(i = (i + a[(index = (index + h) % 256)]) % 256)] = [a[index], (a[index] = a[i])][0]), (d += String.fromCharCode(n.charCodeAt(h) ^ a[(a[index] + a[i]) % 256])); 
-        return d;
-    }
+    function transform(input) {
+        // Decode the Base64 string
+        const decodedData = decodeBase64(input.replace(/\\s/g, ''));
+
+        // const transformedData = decodedData.toUpperCase(); // Example transformation: convert to uppercase
+      
+        return decodedData;
+      }
 
     const current = parseInt(serv.current);
     const script = document.querySelector('script').innerHTML.replace('/*', '').replace('*/', '');
-    const data = JSON.parse(script);
-    const videoUrl = transform(data.url);
+    const videoUrl = transform(JSON.parse(script).url); console.log(videoUrl);
     let name = 'MP4UPLOAD';
 
     if (current == 1) {
@@ -143,12 +148,12 @@ if (url.href.includes('google')) {
         name = 'VIDSTREAM';
     }
 
-    let resolver = new NeedsResolver(name, new ModuleRequest(videoUrl, 'get', referer, null));
+    let resolver = new Resolver(name, new ModuleRequest(videoUrl, 'get', referer, null));
     output.needsResolver.push(resolver);
     output.rawVideo = null;
 }
 
-const extra = new Extra([new Commands('', emptyKeyValue)], extraInfo);
-var chaptersObject = new Chapters(newRequest, extra, new JavascriptConfig(true, false, ''), new Output(output, null, null));
-var finalJson = JSON.stringify(chaptersObject);
-savedData.innerHTML = finalJson;
+var episodeObject = new Episodes(newRequest, extra, new JavascriptConfig(true, false, ''), new Output(output, null, null));
+var finalJson = JSON.stringify(episodeObject);
+var savedDataElement = document.getElementById('ketsu-final-data');
+savedDataElement.innerHTML = finalJson;

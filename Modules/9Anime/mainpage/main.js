@@ -191,87 +191,63 @@ function Data(image, title, description, field1, field2, field3, field4, isChapt
     this.openInWebView = openInWebView;
 }
 
-function quickData(link, image, title, field1) {
-    return new Data(image, title, 'unknown', field1, 'unknown', 'unknown', 'unknown', false, link);
-}
-
-function shuffle(a) {
-    var j, x, i;
-    for (i = a.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        x = a[i];
-        a[i] = a[j];
-        a[j] = x;
-    }
-    return a;
+function cleanText(obj) {
+	return obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
 }
 
 var savedData = document.getElementById('ketsu-final-data');
-
 var parsedJson = JSON.parse(savedData.innerHTML);
+let emptyKeyValue = [new KeyValue('', '')];
 
 let output = [];
 let featured = [];
 let topAnime = [];
 let recent = [];
 
-let emptyKeyValue = [new KeyValue('', '')];
-
-const slides = document.querySelectorAll('.swiper-wrapper > .swiper-slide.item');
+const slides = document.querySelectorAll('.deslide-wrap .swiper-wrapper > .swiper-slide');
 
 for (const slide of slides) {
-    let image = slide.querySelector('.backdrop').style.backgroundImage;
-    image = image.match(/\"(.+?)\"/)[1];
+    let image = slide.querySelector('.film-poster-img');
     image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 
-    const title = slide.querySelector('.info > h2 > a').textContent;
+    const title = slide.querySelector('.desi-head-title a').textContent;
 
-    let link = slide.querySelector('.info > h2 > a').href;
-    link = new URL(link, parsedJson.request.url).href;
+    let link = slide.querySelector('.desi-buttons a').href; link = new URL( link, parsedJson.request.url ).href;
     link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 
-    const desc = slide.querySelector('.info > p').textContent;
+    // const desc = cleanText(slide.querySelector('.desi-description').textContent);
 
-    const obj = new Data(image, title, 'unknown', title, desc, 'unknown', 'unknown', false, link, false);
+    const obj = new Data(image, title, 'desc', '', '', '', '', false, link, false);
     featured.push(obj);
 }
 
-const tops = document.querySelectorAll('.top > .body > ul[data-name=day] > li');
+const tops = document.querySelectorAll('#top-viewed-day li');
 
 for (const top of tops) {
-    let image = '';
-
-    if (top.className.includes('top1')) {
-        image = top.style.backgroundImage.match(/\"(.+?)\"/)[1];
-        image = image.includes('.jpg-') ? image.split('-w')[0] : image;
-    } else {
-        image = top.querySelector('a > .anime > .thumb > div > img').src;
-    }
+    let image = top.querySelector('img').src;
     image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 
-    let link = top.querySelector('a').href;
-    link = new URL(link, parsedJson.request.url).href;
+    let link = top.querySelector('a').href; link = new URL( link, parsedJson.request.url ).href;
     link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 
-    const title = top.querySelector('a > .anime > .info > .name').textContent;
+    const title = top.querySelector('a').textContent;
 
-    const obj = new Data(image, title, 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', false, link, false);
+    const obj = new Data(image, title, '', '', '', '', '', false, link, false);
     topAnime.push(obj);
 }
 
-const animeList = document.querySelectorAll('.anime-list > li');
+const animeList = document.querySelectorAll('.flw-item');
 
 for (const anime of animeList) {
-    const title = anime.querySelector('.name').textContent;
+    const title = anime.querySelector('h3').textContent;
 
-    let link = anime.querySelector('.name').href;
-    link = new URL(link, parsedJson.request.url).href;
+    let link = anime.querySelector('a').href; link = new URL( link, parsedJson.request.url ).href;
     link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 
-    let image = anime.querySelector('.poster > img').src;
+    let image = anime.querySelector('img').src;
     image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 
-    const obj = new Data(image, title, 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', false, link, false);
+    const obj = new Data(image, title, '', '', '', '', '', false, link, false);
     recent.push(obj);
 }
 
