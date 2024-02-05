@@ -191,8 +191,6 @@ function cleanText(obj) {
 	return obj;
 }
 
-
-
 let output = [];
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);

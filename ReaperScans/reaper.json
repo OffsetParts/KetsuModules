@@ -1,254 +1,344 @@
 {
-  "moduleInfo": {
-    "moduleName": "ReaperScans",
-    "moduleInitials": "RS",
-    "moduleDesc": "Reaperscans Module",
-    "developer": "Scrumptious",
-    "moduleID": "20231121",
-    "moduleImage": "https://fillin.later",
-    "moduleVersion": 0.2,
-    "moduleLenguage": "ENG",
-    "changelog":"- Development",
-    "moduleType": "Image",
-    "baseURL": "https://reaperscans.com",
-    "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
-    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/ReaperScans/reaper.json",
-    "preferedServer": "",
-    "preferedDownloadServer": "",
-    "blackListed": [
-      ""
-    ]
-  },
-  "global": {
-    "variables": [
-      {
-        "key": "",
-        "value": ""
-      }
-    ],
-    "cookies": [
-      {
-        "key": "",
-        "value": ""
-      }
-    ],
-    "headers": [
-      {
-        "key": "",
-        "value": ""
-      }
-    ]
-  },
-  "mainPage": [
-    {
-      "request": {
-        "url": "https://reaperscans.com/",
-        "method": "get",
-        "headers": [
-          {
-            "key": "",
-            "value": ""
-          }
-        ],
-        "httpBody": null
-      },
-      "extra": {
-        "commands": [
-          {
-            "commandName": "",
-            "params": [
-              {
-                "key": "",
-                "value": ""
-              }
-            ]
-          }
-        ],
-        "extraInfo": [
-          {
-            "key": "",
-            "value": ""
-          }
-        ]
-      },
-      "javascriptConfig": {
-        "removeJavascript": true,
-        "loadInWebView": false,
-        "javaScript": "const DefaultLayouts={ultraWideFull:'ultraWideFull',ultraWide:'ultraWide',wideFull:'wideFull',wide:'wide',wideStrechedFull:'wideStrechedFull',wideStrechedFullDouble:'WideStrechedFullDouble',wideStreched:'wideStreched',wideStrechedDouble:'wideStrechedDouble',wideStrechedFullList:'wideStrechedFullList',wideStrechedList:'wideStrechedList',doublets:'doublets',doubletsDouble:'doubletsDouble',doubletsFull:'doubletsFull',doubletsFullDouble:'doubletsFullDouble',doubletsConstant:'doubletsConstant',doubletsDoubleConstant:'doubletsDoubleConstant',doubletsFullConstant:'doubletsFullConstant',doubletsFullDoubleConstant:'doubletsFullDoubleConstant',longDoublets:'longDoublets',longDoubletsDouble:'longDoubletsDouble',longDoubletsFull:'longDoubletsFull',longDoubletsFullDouble:'longDoubletsFullDouble',longDoubletsConstant:'longDoubletsConstant',longDoubletsDoubleConstant:'longDoubletsDoubleConstant',longDoubletsFullConstant:'longDoubletsFullConstant',longDoubletsFullDoubleConstant:'longDoubletsFullDoubleConstant',triplets:'triplets',tripletsDouble:'tripletsDouble',tripletsFull:'tripletsFull',tripletsFullDouble:'tripletsFullDouble',tripletsConstant:'tripletsConstant',tripletsDoubleConstant:'tripletsDoubleConstant',tripletsFullConstant:'tripletsFullConstant',tripletsFullDoubleConstant:'tripletsFullDoubleConstant',longTriplets:'longTriplets',longTripletsDouble:'longTripletsDouble',longTripletsFull:'longTripletsFull',longTripletsFullDouble:'longTripletsFullDouble',longTripletsConstant:'longTripletsConstant',longTripletsDoubleConstant:'longTripletsDoubleConstant',longTripletsFullConstant:'longTripletsFullConstant',longTripletsFullDoubleConstant:'longTripletsFullDoubleConstant',none:''};const CellDesings={Special1:'Special1',Special2:'Special2',Special3:'Special3',CELLHelperText:'CELLHelperText',small1:'small1',small2:'small2',normal1:'normal1',normal2:'normal2',normal3:'normal3',normal4:'normal4',normal5:'normal5',normal6:'normal6',normal7:'normal7',wide1:'wide1',wide2:'wide2',wide3:'wide3',wide4:'wide4',wide5:'wide5',wide6:'wide6',wide7:'wide7',wide8:'wide8',wide9:'wide9',wide10:'wide10',wide11:'wide11'};const Paging={leading:'leading',centered:'centered',none:''};const Orientation={horizontal:'horizontal',vertical:'vertical'};function Layout(insets,visibleCellsWidthS,visibleCellsWidthM,visibleCellsWidthL,visibleCellsHeight,heightForVisibleCells,cellSize,ratio,constant,horizontalSpacing,verticalSpacing){this.insets=insets;this.visibleCellsWidthS=visibleCellsWidthS;this.visibleCellsWidthM=visibleCellsWidthM;this.visibleCellsWidthL=visibleCellsWidthL;this.visibleCellsHeight=visibleCellsHeight;this.heightForVisibleCells=heightForVisibleCells;this.cellSize=cellSize;this.ratio=ratio;this.constant=constant;this.horizontalSpacing=horizontalSpacing;this.verticalSpacing=verticalSpacing}function Insets(top,bottom,left,right){this.top=top;this.bottom=bottom;this.left=left;this.right=right}function Size(width,height){this.width=width;this.height=height}function Ratio(inRelation,number1,number2){this.inRelation=inRelation;this.number1=number1;this.number2=number2}let Carousel=new Layout(new Insets(5,5,0,0),1,2,3,135,145,new Insets(200,0,0,150),new Ratio(RatioRelation.width,118,45),new Size(354,145),2,2);const RatioRelation={width:'width',height:'height'}function MainPage(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Section(sectionName,separator){this.sectionName=sectionName;this.separator=separator}function Data(image,title,description,field1,field2,field3,field4,isChapter,link,openInWebView){this.image=image;this.title=title;this.description=description;this.field1=field1;this.field2=field2;this.field3=field3;this.field4=field4;this.isChapter=isChapter;this.link=link;this.openInWebView=openInWebView}function Output(cellDesing,orientation,defaultLayout,paging,section,layout,data){this.cellDesing=cellDesing;this.orientation=orientation;this.defaultLayout=defaultLayout;this.paging=paging;this.section=section;this.layout=layout;this.data=data}let output=[];var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);var emptyKeyValue=[new KeyValue('','')];var commands=[new Commands('helperFunction',[new KeyValue('isCustomRequest','true')])];let emptyExtra=new Extra(commands,emptyKeyValue);function grabTitle(link){var siteData=new ModuleRequest(link,'get',emptyKeyValue);console.log(siteData);var title=siteData.querySelector('h1').textContent;return title}let GOATs=[];goats=document.querySelectorAll('div .carousel-cell');for(list of goats){var link=list.querySelector('a').href;link=new ModuleRequest(link,'get',emptyKeyValue);var image=list.querySelector('img').src;image=new ModuleRequest(image,'get',emptyKeyValue);GOATs.push(new Data(image,'','','','','','',false,link))}let Popular=[];pops=document.querySelectorAll('.grid li.col-span-1');for(list of pops){let title=list.querySelectorAll('a')[1].textContent.replaceAll('\\n','');var link=list.querySelector('a').href;link=new ModuleRequest(link,'get',emptyKeyValue);var image=list.querySelector('img').src;image=new ModuleRequest(image,'get',emptyKeyValue);Popular.push(new Data(image,title,'','','','','',false,link))}let Latests=[];LatestChapters=document.querySelectorAll('div .relative.flex.space-x-2');for(list of LatestChapters){let title=list.querySelector('div .flex-1 a').text;var link=list.querySelector('a').href;link=new ModuleRequest(link,'get',emptyKeyValue);var image=list.querySelector('img').src;image=new ModuleRequest(image,'get',emptyKeyValue);var proxy=list.querySelector('div .flex.mt-2 a').outerText.split('\\n');var ep=proxy[0];var udate=proxy[1];console.log(ep,udate);Latests.push(new Data(image,title,'','','','','',false,link))}output.push(new Output(CellDesings.ultraWide,Orientation.horizontal,Carousel,Paging.leading,new Section('GOATs',false),null,GOATs));output.push(new Output(CellDesings.normal4,Orientation.horizontal,DefaultLayouts.tripletsFull,Paging.leading,new Section('Popular Today',true),null,Popular));output.push(new Output(CellDesings.wide11,Orientation.horizontal,DefaultLayouts.wideStrechedList,Paging.leading,new Section('Latest Chapters',true),null,Latests));console.log('Output submitted');let MainPageObject=new MainPage(new ModuleRequest('','get',emptyKeyValue),new Extra([new Commands('',emptyKeyValue)],emptyKeyValue),new JavascriptConfig(true,false,''),output);var finalJson=JSON.stringify(MainPageObject);savedData.innerHTML=finalJson;"
-      },
-      "output": [
+    "moduleInfo": {
+      "moduleName": "Reaperscans",
+      "moduleInitials": "RS",
+      "moduleDesc": "Reaperscans Module",
+      "developer": "Scrumptious",
+      "moduleID": "20231124",
+      "moduleImage": "",
+      "moduleVersion": 0.5,
+      "moduleLenguage": "ENG",
+      "changelog":"development",
+      "moduleType": "Image",
+      "baseURL": "https://reaperscans.com",
+      "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
+      "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/ReaperScans/reaper.json",
+      "preferedServer": "",
+      "preferedDownloadServer": "",
+      "blackListed": [
+        ""
+      ]
+    },
+    "global": {
+      "variables": [
         {
-          "cellDesing": "normal1",
-          "orientation": "vertical",
-          "defaultLayout": "wide",
-          "paging": "",
-          "section": {
-            "sectionName": "",
-            "separator": false
-          },
-          "layout": {
-            "insets": {
-              "top": 0,
-              "bottom": 0,
-              "left": 0,
-              "right": 0
-            },
-            "visibleCellsWidthS": 2,
-            "visibleCellsWidthM": 2,
-            "visibleCellsWidthL": 2,
-            "visibleCellsHeight": 2,
-            "heightForVisibleCells": 400,
-            "cellSize": {
-              "width": 300,
-              "height": 300
-            },
-            "ratio": {
-              "inRelation": "width",
-              "number1": 1,
-              "number2": 2
-            },
-            "constant": {
-              "width": 1,
-              "height": 2
-            },
-            "horizontalSpacing": 0,
-            "verticalSpacing": 0
-          },
-          "data": [
-            {
-              "image": {
-                "url": "",
-                "method": "get",
-                "headers": [
-                  {
-                    "key": "",
-                    "value": ""
-                  }
-                ],
-                "httpBody": null
-              },
-              "title": "",
-              "description": "",
-              "field1": "",
-              "field2": "",
-              "field3": "",
-              "field4": "",
-              "openInWebView" : false,
-              "isChapter": false,
-              "link": {
-                "url": "",
-                "method": "",
-                "headers": [
-                  {
-                    "key": "",
-                    "value": ""
-                  }
-                ],
-                "httpBody": null
-              }
-            }
-          ]
+          "key": "",
+          "value": ""
+        }
+      ],
+      "cookies": [
+        {
+          "key": "",
+          "value": ""
+        }
+      ],
+      "headers": [
+        {
+          "key": "",
+          "value": ""
         }
       ]
-    }
-  ],
-  "search": [
-    {
-      "request": {
-        "url": "https://reaperscans.com/comics/<comic>?page=<page>",
-        "method": "get",
-        "headers": [
+    },
+    "mainPage": [
+      {
+        "request": {
+          "url": "https://reaperscans.com/",
+          "method": "get",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "httpBody": null
+        },
+        "extra": {
+          "commands": [
+            {
+              "commandName": "",
+              "params": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            }
+          ],
+          "extraInfo": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ]
+        },
+        "javascriptConfig": {
+          "removeJavascript": true,
+          "loadInWebView": false,
+          "javaScript": "const DefaultLayouts={ultraWideFull:'ultraWideFull',ultraWide:'ultraWide',wideFull:'wideFull',wide:'wide',wideStrechedFull:'wideStrechedFull',wideStrechedFullDouble:'WideStrechedFullDouble',wideStreched:'wideStreched',wideStrechedDouble:'wideStrechedDouble',wideStrechedFullList:'wideStrechedFullList',wideStrechedList:'wideStrechedList',doublets:'doublets',doubletsDouble:'doubletsDouble',doubletsFull:'doubletsFull',doubletsFullDouble:'doubletsFullDouble',doubletsConstant:'doubletsConstant',doubletsDoubleConstant:'doubletsDoubleConstant',doubletsFullConstant:'doubletsFullConstant',doubletsFullDoubleConstant:'doubletsFullDoubleConstant',longDoublets:'longDoublets',longDoubletsDouble:'longDoubletsDouble',longDoubletsFull:'longDoubletsFull',longDoubletsFullDouble:'longDoubletsFullDouble',longDoubletsConstant:'longDoubletsConstant',longDoubletsDoubleConstant:'longDoubletsDoubleConstant',longDoubletsFullConstant:'longDoubletsFullConstant',longDoubletsFullDoubleConstant:'longDoubletsFullDoubleConstant',triplets:'triplets',tripletsDouble:'tripletsDouble',tripletsFull:'tripletsFull',tripletsFullDouble:'tripletsFullDouble',tripletsConstant:'tripletsConstant',tripletsDoubleConstant:'tripletsDoubleConstant',tripletsFullConstant:'tripletsFullConstant',tripletsFullDoubleConstant:'tripletsFullDoubleConstant',longTriplets:'longTriplets',longTripletsDouble:'longTripletsDouble',longTripletsFull:'longTripletsFull',longTripletsFullDouble:'longTripletsFullDouble',longTripletsConstant:'longTripletsConstant',longTripletsDoubleConstant:'longTripletsDoubleConstant',longTripletsFullConstant:'longTripletsFullConstant',longTripletsFullDoubleConstant:'longTripletsFullDoubleConstant',none:''};const CellDesings={Special1:'Special1',Special2:'Special2',Special3:'Special3',CELLHelperText:'CELLHelperText',small1:'small1',small2:'small2',normal1:'normal1',normal2:'normal2',normal3:'normal3',normal4:'normal4',normal5:'normal5',normal6:'normal6',normal7:'normal7',wide1:'wide1',wide2:'wide2',wide3:'wide3',wide4:'wide4',wide5:'wide5',wide6:'wide6',wide7:'wide7',wide8:'wide8',wide9:'wide9',wide10:'wide10',wide11:'wide11'};const Paging={leading:'leading',centered:'centered',none:''};const Orientation={horizontal:'horizontal',vertical:'vertical'};function Layout(insets,visibleCellsWidthS,visibleCellsWidthM,visibleCellsWidthL,visibleCellsHeight,heightForVisibleCells,cellSize,ratio,constant,horizontalSpacing,verticalSpacing){this.insets=insets;this.visibleCellsWidthS=visibleCellsWidthS;this.visibleCellsWidthM=visibleCellsWidthM;this.visibleCellsWidthL=visibleCellsWidthL;this.visibleCellsHeight=visibleCellsHeight;this.heightForVisibleCells=heightForVisibleCells;this.cellSize=cellSize;this.ratio=ratio;this.constant=constant;this.horizontalSpacing=horizontalSpacing;this.verticalSpacing=verticalSpacing}function Insets(top,bottom,left,right){this.top=top;this.bottom=bottom;this.left=left;this.right=right}function Size(width,height){this.width=width;this.height=height}function Ratio(inRelation,number1,number2){this.inRelation=inRelation;this.number1=number1;this.number2=number2}const RatioRelation={width:'width',height:'height'};function MainPage(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Section(sectionName,separator){this.sectionName=sectionName;this.separator=separator}function Data(image,title,description,field1,field2,field3,field4,isChapter,link,openInWebView){this.image=image;this.title=title;this.description=description;this.field1=field1;this.field2=field2;this.field3=field3;this.field4=field4;this.isChapter=isChapter;this.link=link;this.openInWebView=openInWebView}function Output(cellDesing,orientation,defaultLayout,paging,section,layout,data){this.cellDesing=cellDesing;this.orientation=orientation;this.defaultLayout=defaultLayout;this.paging=paging;this.section=section;this.layout=layout;this.data=data}function createData(image,title,description,field1,field2,field3,field4,isChapter,link,openInWebView){return new Data(image,title,description,field1,field2,field3,field4,isChapter,link,openInWebView)}function createModuleRequest(url){return new ModuleRequest(url,'get',emptyKeyValue)}function cleanText(obj){return obj.replaceAll('\\n','').replaceAll('\\t','').trim()}const Carousel=new Layout(new Insets(5,5,5,5),1,2,3,1,500,new Size(200,200),new Ratio(RatioRelation.width,315,590),new Size(0,0),5,5);let output=[];var commands=[new Commands('helperFunction',[new KeyValue('isCustomRequest','true')])];var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);var emptyKeyValue=[new KeyValue('','')];let emptyExtra=new Extra(commands,emptyKeyValue);function finalizeAndDisplayData(mainObject){var finalJson=JSON.stringify(mainObject);savedData.innerHTML=finalJson;console.log('Final JSON submitted:',finalJson)}function continueProcessing(nextURL,delay=0){return new Promise(resolve=>{setTimeout(()=>{var mainPageObject;if(nextURL){mainPageObject=new MainPage(new ModuleRequest(nextURL,'get',emptyKeyValue,null),emptyExtra,new JavascriptConfig(true,false,''),output);console.log('New request submitted for:',nextURL)}else{console.log('No more requests to make.');finalizeAndDisplayData(mainPageObject)}resolve()},delay)})}function scrapeComicsPage(){const latestChapters=document.querySelectorAll('.grid .relative');const Latests=Array.from(latestChapters).map((list)=>{const[title,link,image,proxy]=[cleanText(list.querySelector('.flex-1 a').textContent),createModuleRequest(list.querySelector('a').href),createModuleRequest(list.querySelector('img').src),list.querySelector('div .flex.mt-2 a').outerText];return createData(title,proxy,link,image)});output.push(new Output(CellDesings.wide9,Orientation.horizontal,DefaultLayouts.wideStrechedList,Paging.leading,new Section('Latest Chapters',true),null,Latests))}async function startProcessing(){const headers=document.querySelectorAll('div .carousel-cell');const Banners=Array.from(headers).map((list)=>{const link=createModuleRequest(list.querySelector('a').href);const image=createModuleRequest(list.querySelector('img').src);return createData(image,'','','','','','',false,link)});const pops=document.querySelectorAll('[role=\"list\"] li');const Popular=Array.from(pops).slice(0,3).map((list)=>{const[title,link,image]=[cleanText(list.querySelectorAll('.flex-1 a')[1].textContent),createModuleRequest(list.querySelector('a').href),createModuleRequest(list.querySelector('img').src)];return createData(image,title,'','','','','',false,link)});output.push(new Output(CellDesings.normal4,Orientation.horizontal,DefaultLayouts.none,Paging.leading,new Section('',false),Carousel,Banners));output.push(new Output(CellDesings.normal4,Orientation.horizontal,DefaultLayouts.longTripletsFull,Paging.leading,new Section('Popular Today',true),null,Popular));await continueProcessing('https://reaperscans.com/latest/comics',5000);scrapeComicsPage();await continueProcessing(null)}startProcessing();window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('finished');"
+        },
+        "output": [
           {
-            "key": "",
-            "value": ""
+            "cellDesing": "normal1",
+            "orientation": "vertical",
+            "defaultLayout": "wide",
+            "paging": "",
+            "section": {
+              "sectionName": "",
+              "separator": false
+            },
+            "layout": {
+              "insets": {
+                "top": 0,
+                "bottom": 0,
+                "left": 0,
+                "right": 0
+              },
+              "visibleCellsWidthS": 2,
+              "visibleCellsWidthM": 2,
+              "visibleCellsWidthL": 2,
+              "visibleCellsHeight": 2,
+              "heightForVisibleCells": 400,
+              "cellSize": {
+                "width": 300,
+                "height": 300
+              },
+              "ratio": {
+                "inRelation": "width",
+                "number1": 1,
+                "number2": 2
+              },
+              "constant": {
+                "width": 1,
+                "height": 2
+              },
+              "horizontalSpacing": 0,
+              "verticalSpacing": 0
+            },
+            "data": [
+              {
+                "image": {
+                  "url": "",
+                  "method": "get",
+                  "headers": [
+                    {
+                      "key": "",
+                      "value": ""
+                    }
+                  ],
+                  "httpBody": null
+                },
+                "title": "",
+                "description": "",
+                "field1": "",
+                "field2": "",
+                "field3": "",
+                "field4": "",
+                "openInWebView" : false,
+                "isChapter": false,
+                "link": {
+                  "url": "",
+                  "method": "",
+                  "headers": [
+                    {
+                      "key": "",
+                      "value": ""
+                    }
+                  ],
+                  "httpBody": null
+                }
+              }
+            ]
           }
-        ],
-        "httpBody": null
-      },
-      "separator": "+",
-      "extra": {
-        "commands": [
+        ]
+      }
+    ],
+    "search": [
+      {
+        "request": {
+          "url": "https://reaperscans.com/page/<page>/?s=<searched>",
+          "method": "get",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "httpBody": null
+        },
+        "separator": "+",
+        "extra": {
+          "commands": [
+            {
+              "commandName": "",
+              "params": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            }
+          ],
+          "extraInfo": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ]
+        },
+        "javascriptConfig": {
+          "removeJavascript": true,
+          "loadInWebView": false,
+          "javaScript": "const DefaultLayouts={ultraWideFull:'ultraWideFull',ultraWide:'ultraWide',wideFull:'wideFull',wide:'wide',wideStrechedFull:'wideStrechedFull',wideStrechedFullDouble:'WideStrechedFullDouble',wideStreched:'wideStreched',wideStrechedDouble:'wideStrechedDouble',wideStrechedFullList:'wideStrechedFullList',wideStrechedList:'wideStrechedList',doublets:'doublets',doubletsDouble:'doubletsDouble',doubletsFull:'doubletsFull',doubletsFullDouble:'doubletsFullDouble',doubletsConstant:'doubletsConstant',doubletsDoubleConstant:'doubletsDoubleConstant',doubletsFullConstant:'doubletsFullConstant',doubletsFullDoubleConstant:'doubletsFullDoubleConstant',longDoublets:'longDoublets',longDoubletsDouble:'longDoubletsDouble',longDoubletsFull:'longDoubletsFull',longDoubletsFullDouble:'longDoubletsFullDouble',longDoubletsConstant:'longDoubletsConstant',longDoubletsDoubleConstant:'longDoubletsDoubleConstant',longDoubletsFullConstant:'longDoubletsFullConstant',longDoubletsFullDoubleConstant:'longDoubletsFullDoubleConstant',triplets:'triplets',tripletsDouble:'tripletsDouble',tripletsFull:'tripletsFull',tripletsFullDouble:'tripletsFullDouble',tripletsConstant:'tripletsConstant',tripletsDoubleConstant:'tripletsDoubleConstant',tripletsFullConstant:'tripletsFullConstant',tripletsFullDoubleConstant:'tripletsFullDoubleConstant',longTriplets:'longTriplets',longTripletsDouble:'longTripletsDouble',longTripletsFull:'longTripletsFull',longTripletsFullDouble:'longTripletsFullDouble',longTripletsConstant:'longTripletsConstant',longTripletsDoubleConstant:'longTripletsDoubleConstant',longTripletsFullConstant:'longTripletsFullConstant',longTripletsFullDoubleConstant:'longTripletsFullDoubleConstant',none:''};const CellDesings={Special1:'Special1',Special2:'Special2',Special3:'Special3',CELLHelperText:'CELLHelperText',small1:'small1',small2:'small2',normal1:'normal1',normal2:'normal2',normal3:'normal3',normal4:'normal4',normal5:'normal5',normal6:'normal6',normal7:'normal7',wide1:'wide1',wide2:'wide2',wide3:'wide3',wide4:'wide4',wide5:'wide5',wide6:'wide6',wide7:'wide7',wide8:'wide8',wide9:'wide9',wide10:'wide10',wide11:'wide11'};const Paging={leading:'leading',centered:'centered',none:''};const Orientation={horizontal:'horizontal',vertical:'vertical'};function Search(request,extra,separator,javascriptConfig,output){this.request=request;this.extra=extra;this.separator=separator;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Output(cellDesing,orientation,defaultLayout,paging,section,layout,data){this.cellDesing=cellDesing;this.orientation=orientation;this.defaultLayout=defaultLayout;this.paging=paging;this.section=section;this.layout=layout;this.data=data}function Section(sectionName,separator){this.sectionName=sectionName;this.separator=separator}function Layout(insets,visibleCellsWidthS,visibleCellsWidthM,visibleCellsWidthL,visibleCellsHeight,heightForVisibleCells,cellSize,ratio,constant,horizontalSpacing,verticalSpacing){this.insets=insets;this.visibleCellsWidthS=visibleCellsWidthS;this.visibleCellsWidthM=visibleCellsWidthM;this.visibleCellsWidthL=visibleCellsWidthL;this.visibleCellsHeight=visibleCellsHeight;this.heightForVisibleCells=heightForVisibleCells;this.cellSize=cellSize;this.ratio=ratio;this.constant=constant;this.horizontalSpacing=horizontalSpacing;this.verticalSpacing=verticalSpacing}function Insets(top,bottom,left,right){this.top=top;this.bottom=bottom;this.left=left;this.right=right}function Size(width,height){this.width=width;this.height=height}function Ratio(inRelation,number1,number2){this.inRelation=inRelation;this.number1=number1;this.number2=number2}function Data(image,title,description,field1,field2,field3,field4,isChapter,link,openInWebView){this.image=image;this.title=title;this.description=description;this.field1=field1;this.field2=field2;this.field3=field3;this.field4=field4;this.isChapter=isChapter;this.link=link;this.openInWebView=openInWebView}let output=[];var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);let emptyKeyValue=[new KeyValue('','')];let lastAddedArray=[];var lastAdded=document.querySelectorAll('.listupd .bs');for(var x=0;x<lastAdded.length;x++){var last=lastAdded[x];var image=last.querySelector('img').src;image=new ModuleRequest(image,'get',emptyKeyValue,null);let title=last.querySelector('.bsx a').title;var link=last.querySelector('.bsx a').href;link=new ModuleRequest(link,'get',emptyKeyValue,null);var status=last.querySelector('.status i').textContent;let data=new Data(image,title,status,'','','','',false,link);lastAddedArray.push(data)}var testLayout=new Layout(new Insets(10,10,10,10),1,2,3,1,500,new Size(400,400),new Ratio('width',4,11),new Size(0,0),10,10);output.push(new Output(CellDesings.wide8,Orientation.vertical,DefaultLayouts.none,Paging.none,new Section('',false),testLayout,lastAddedArray));let searchPageObject=new Search(new ModuleRequest('','',emptyKeyValue,null),new Extra([new Commands('',emptyKeyValue)],emptyKeyValue),'',new JavascriptConfig(false,false,''),output);var finalJson=JSON.stringify(searchPageObject);savedData.innerHTML=finalJson;"
+        },
+        "output": [
           {
-            "commandName": "",
-            "params": [
+            "cellDesing": "normal1",
+            "orientation": "vertical",
+            "defaultLayout": "wide",
+            "paging": "",
+            "section": {
+              "sectionName": "",
+              "separator": false
+            },
+            "layout": {
+              "insets": {
+                "top": 0,
+                "bottom": 0,
+                "left": 0,
+                "right": 0
+              },
+              "visibleCellsWidthS": 2,
+              "visibleCellsWidthM": 2,
+              "visibleCellsWidthL": 2,
+              "visibleCellsHeight": 2,
+              "heightForVisibleCells": 400,
+              "cellSize": {
+                "width": 300,
+                "height": 300
+              },
+              "ratio": {
+                "inRelation": "width",
+                "number1": 1,
+                "number2": 2
+              },
+              "constant": {
+                "width": 1,
+                "height": 2
+              },
+              "horizontalSpacing": 0,
+              "verticalSpacing": 0
+            },
+            "data": [
+              {
+                "image": {
+                  "url": "",
+                  "method": "get",
+                  "headers": [
+                    {
+                      "key": "",
+                      "value": ""
+                    }
+                  ],
+                  "httpBody": null
+                },
+                "title": "",
+                "description": "",
+                "field1": "",
+                "field2": "",
+                "field3": "",
+                "field4": "",
+                "openInWebView" : false,
+                "isChapter": false,
+                "link": {
+                  "url": "empty",
+                  "method": "get",
+                  "headers": [
+                    {
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "httpBody": null
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "info": [
+      {
+        "request": {
+          "url": "",
+          "method": "get",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "httpBody": null
+        },
+        "extra": {
+          "commands": [
+            {
+              "commandName": "",
+              "params": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            }
+          ],
+          "extraInfo": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ]
+        },
+        "javascriptConfig": {
+          "removeJavascript": true,
+          "loadInWebView": false,
+          "javaScript": "function Info(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Chapter(chapName,link,openInWebView){this.chapName=chapName;this.link=link;this.openInWebView=openInWebView}function Output(image,title,link,description,genres,field1,field2,field3,field4,chapters){this.image=image;this.link=link;this.title=title;this.description=description;this.genres=genres;this.field1=field1;this.field2=field2;this.field3=field3;this.field4=field4;this.chapters=chapters}function cleanText(obj){return obj.replaceAll('\\n','').replaceAll('\\t','').trim()}let emptyKeyValue=[new KeyValue('','')];var preset={request:new ModuleRequest('','get',emptyKeyValue,null),extra:new Extra([new Commands('',emptyKeyValue)],emptyKeyValue),javascriptConfig:new JavascriptConfig(true,false,''),}var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);var currUrl=parsedJson.request.url;var title=cleanText(document.querySelector('h1').textContent);var image=document.querySelector('.w-full img').src;image=new ModuleRequest(image,'get',emptyKeyValue,null);var Synopsis=cleanText(document.querySelector('.mt-3').textContent);var genres=['N/A','None','Null'];var AgeRating=document.querySelectorAll('dd.text-neutral-200')[2].textContent;var status=document.querySelectorAll('dd.text-neutral-200')[3].textContent;var LastUpdated=document.querySelectorAll('dd.text-neutral-200')[5].textContent;var chapterAmount=document.querySelectorAll('span.font-medium')[3]var episodes=[];var chapters=document.querySelector('ul').querySelectorAll('li');for(index of chapters){var cLink=chapter.querySelector('a').href;let chapter=new Chapter(cleanText(index.querySelector('p').textContent),new ModuleRequest(cLink,'get',emptyKeyValue,null),false);episodes.push(chapter)}let infoPageObject if(chapters.length==32){infoPageObject=new Info(new ModuleRequest(currUrl+`?page=2`,'get',emptyKeyValue,null),preset.extra,preset.javascriptConfig,new Output(image,title,parsedJson.request,Synopsis,genres,AgeRating,status,LastUpdated,'Chapters : '+chapterAmount,episodes))}else{infoPageObject=new Info(preset.request,preset.extra,preset.javascriptConfig,new Output(image,title,parsedJson.request,Synopsis,genres,AgeRating,status,LastUpdated,'Chapters : '+chapterAmount,episodes))}savedData.innerHTML=JSON.stringify(infoPageObject);"
+        },
+        "output": {
+          "image": {
+            "url": "",
+            "method": "get",
+            "headers": [
               {
                 "key": "",
                 "value": ""
               }
-            ]
-          }
-        ],
-        "extraInfo": [
-          {
-            "key": "",
-            "value": ""
-          }
-        ]
-      },
-      "javascriptConfig": {
-        "removeJavascript": true,
-        "loadInWebView": false,
-        "javaScript": "const DefaultLayouts={ultraWideFull:'ultraWideFull',ultraWide:'ultraWide',wideFull:'wideFull',wide:'wide',wideStrechedFull:'wideStrechedFull',wideStrechedFullDouble:'WideStrechedFullDouble',wideStreched:'wideStreched',wideStrechedDouble:'wideStrechedDouble',wideStrechedFullList:'wideStrechedFullList',wideStrechedList:'wideStrechedList',doublets:'doublets',doubletsDouble:'doubletsDouble',doubletsFull:'doubletsFull',doubletsFullDouble:'doubletsFullDouble',doubletsConstant:'doubletsConstant',doubletsDoubleConstant:'doubletsDoubleConstant',doubletsFullConstant:'doubletsFullConstant',doubletsFullDoubleConstant:'doubletsFullDoubleConstant',longDoublets:'longDoublets',longDoubletsDouble:'longDoubletsDouble',longDoubletsFull:'longDoubletsFull',longDoubletsFullDouble:'longDoubletsFullDouble',longDoubletsConstant:'longDoubletsConstant',longDoubletsDoubleConstant:'longDoubletsDoubleConstant',longDoubletsFullConstant:'longDoubletsFullConstant',longDoubletsFullDoubleConstant:'longDoubletsFullDoubleConstant',triplets:'triplets',tripletsDouble:'tripletsDouble',tripletsFull:'tripletsFull',tripletsFullDouble:'tripletsFullDouble',tripletsConstant:'tripletsConstant',tripletsDoubleConstant:'tripletsDoubleConstant',tripletsFullConstant:'tripletsFullConstant',tripletsFullDoubleConstant:'tripletsFullDoubleConstant',longTriplets:'longTriplets',longTripletsDouble:'longTripletsDouble',longTripletsFull:'longTripletsFull',longTripletsFullDouble:'longTripletsFullDouble',longTripletsConstant:'longTripletsConstant',longTripletsDoubleConstant:'longTripletsDoubleConstant',longTripletsFullConstant:'longTripletsFullConstant',longTripletsFullDoubleConstant:'longTripletsFullDoubleConstant',none:''};const CellDesings={Special1:'Special1',Special2:'Special2',Special3:'Special3',CELLHelperText:'CELLHelperText',small1:'small1',small2:'small2',normal1:'normal1',normal2:'normal2',normal3:'normal3',normal4:'normal4',normal5:'normal5',normal6:'normal6',normal7:'normal7',wide1:'wide1',wide2:'wide2',wide3:'wide3',wide4:'wide4',wide5:'wide5',wide6:'wide6',wide7:'wide7',wide8:'wide8',wide9:'wide9',wide10:'wide10',wide11:'wide11'};const Paging={leading:'leading',centered:'centered',none:''};const Orientation={horizontal:'horizontal',vertical:'vertical'};function Search(request,extra,separator,javascriptConfig,output){this.request=request;this.extra=extra;this.separator=separator;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Output(cellDesing,orientation,defaultLayout,paging,section,layout,data){this.cellDesing=cellDesing;this.orientation=orientation;this.defaultLayout=defaultLayout;this.paging=paging;this.section=section;this.layout=layout;this.data=data}function Section(sectionName,separator){this.sectionName=sectionName;this.separator=separator}function Layout(insets,visibleCellsWidthS,visibleCellsWidthM,visibleCellsWidthL,visibleCellsHeight,heightForVisibleCells,cellSize,ratio,constant,horizontalSpacing,verticalSpacing){this.insets=insets;this.visibleCellsWidthS=visibleCellsWidthS;this.visibleCellsWidthM=visibleCellsWidthM;this.visibleCellsWidthL=visibleCellsWidthL;this.visibleCellsHeight=visibleCellsHeight;this.heightForVisibleCells=heightForVisibleCells;this.cellSize=cellSize;this.ratio=ratio;this.constant=constant;this.horizontalSpacing=horizontalSpacing;this.verticalSpacing=verticalSpacing}function Insets(top,bottom,left,right){this.top=top;this.bottom=bottom;this.left=left;this.right=right}function Size(width,height){this.width=width;this.height=height}function Ratio(inRelation,number1,number2){this.inRelation=inRelation;this.number1=number1;this.number2=number2}function Data(image,title,description,field1,field2,field3,field4,isChapter,link,openInWebView){this.image=image;this.title=title;this.description=description;this.field1=field1;this.field2=field2;this.field3=field3;this.field4=field4;this.isChapter=isChapter;this.link=link;this.openInWebView=openInWebView}var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);let output=[];let emptyKeyValue=[new KeyValue('','')];var lastAdded=document.querySelector('.listupd').querySelectorAll('.bs');let lastAddedArray=[];for(var x=0;x<lastAdded.length;x++){var last=lastAdded[x];var image=last.querySelector('img').src;image=new ModuleRequest(image,'get',emptyKeyValue,null);let title=last.querySelector('.bsx a').title;var link=last.querySelector('.bsx a').href;link=new ModuleRequest(link,'get',emptyKeyValue,null);var lastchap='Last chapter : '+last.querySelector('.adds .epxs').textContent.replaceAll('\\n','');let data=new Data(image,title,lastchap,'Manhwa','','','',false,link);lastAddedArray.push(data)}var testLayout=new Layout(new Insets(10,10,10,10),1,2,3,1,500,new Size(400,400),new Ratio('width',4,11),new Size(0,0),10,10);output.push(new Output(CellDesings.wide8,Orientation.vertical,DefaultLayouts.none,Paging.none,new Section('',false),testLayout,lastAddedArray));let searchPageObject=new Search(new ModuleRequest('','',emptyKeyValue,null),new Extra([new Commands('',emptyKeyValue)],emptyKeyValue),'',new JavascriptConfig(false,false,''),output);var finalJson=JSON.stringify(searchPageObject);savedData.innerHTML=finalJson;"
-      },
-      "output": [
-        {
-          "cellDesing": "normal1",
-          "orientation": "vertical",
-          "defaultLayout": "wide",
-          "paging": "",
-          "section": {
-            "sectionName": "",
-            "separator": false
+            ],
+            "httpBody": null
           },
-          "layout": {
-            "insets": {
-              "top": 0,
-              "bottom": 0,
-              "left": 0,
-              "right": 0
-            },
-            "visibleCellsWidthS": 2,
-            "visibleCellsWidthM": 2,
-            "visibleCellsWidthL": 2,
-            "visibleCellsHeight": 2,
-            "heightForVisibleCells": 400,
-            "cellSize": {
-              "width": 300,
-              "height": 300
-            },
-            "ratio": {
-              "inRelation": "width",
-              "number1": 1,
-              "number2": 2
-            },
-            "constant": {
-              "width": 1,
-              "height": 2
-            },
-            "horizontalSpacing": 0,
-            "verticalSpacing": 0
+          "link": {
+            "url": "",
+            "method": "get",
+            "headers": [
+              {
+                "key": "",
+                "value": ""
+              }
+            ],
+            "httpBody": null
           },
-          "data": [
+          "title": "",
+          "description": "",
+          "genres": [
+            ""
+          ],
+          "field1": "",
+          "field2": "",
+          "field3": "",
+          "field4": "",
+          "chapters": [
             {
-              "image": {
-                "url": "",
-                "method": "get",
-                "headers": [
-                  {
-                    "key": "",
-                    "value": ""
-                  }
-                ],
-                "httpBody": null
-              },
-              "title": "",
-              "description": "",
-              "field1": "",
-              "field2": "",
-              "field3": "",
-              "field4": "",
-              "openInWebView" : false,
-              "isChapter": false,
+              "chapName": "",
+              "openInWebView": false,
               "link": {
                 "url": "empty",
                 "method": "get",
@@ -263,48 +353,9 @@
             }
           ]
         }
-      ]
-    }
-  ],
-  "info": [
-    {
-      "request": {
-        "url": "",
-        "method": "get",
-        "headers": [
-          {
-            "key": "",
-            "value": ""
-          }
-        ],
-        "httpBody": null
       },
-      "extra": {
-        "commands": [
-          {
-            "commandName": "",
-            "params": [
-              {
-                "key": "",
-                "value": ""
-              }
-            ]
-          }
-        ],
-        "extraInfo": [
-          {
-            "key": "",
-            "value": ""
-          }
-        ]
-      },
-      "javascriptConfig": {
-        "removeJavascript": true,
-        "loadInWebView": false,
-        "javaScript": "function Info(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Chapter(chapName,link,openInWebView){this.chapName=chapName;this.link=link;this.openInWebView=openInWebView}function Output(image,title,link,description,genres,field1,field2,field3,field4,chapters){this.image=image;this.link=link;this.title=title;this.description=description;this.genres=genres;this.field1=field1;this.field2=field2;this.field3=field3;this.field4=field4;this.chapters=chapters}var baseUrl='';if(window.location){baseUrl=window.location.hostname+window.location.pathname}var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);let emptyKeyValue=[new KeyValue('','')];var AgeRating=document.querySelectorAll('dd.text-neutral-200')[2].textContent;var status=document.querySelector('dd.text-neutral-200')[3].textContent;var LastUpdated=document.querySelector('dd.text-neutral-200')[5].textContent;var Summary;try{Synopsis=document.querySelectorAll('.mt-3').textContent.replaceAll('\\n','').trim()}catch{Synopsis=''}var title=document.querySelector('h1').textContent.trim();var image=document.querySelector('.w-full img').src;image=new ModuleRequest(image,'get',emptyKeyValue,null);var chapters=document.querySelector('ul').querySelectorAll('li');var episodes=[];if(chapters.length>0){for(var x=0;x=32;x++){var element=chapters[i];if(element){var cLink=element.querySelector('a').href;let chapter=new Chapter(element.querySelector('p').outerText,new ModuleRequest(cLink,'get',emptyKeyValue,null),false);console.log(chapter);episodes.push(chapter)}}}let infoPageObject=new Info(new ModuleRequest(baseUrl,'',emptyKeyValue,null),new Extra([new Commands('',emptyKeyValue)],emptyKeyValue),new JavascriptConfig(false,false,''),new Output(image,title,parsedJson.request,Synopsis,AgeRating,status,LastUpdated,'','Chapters : '+document.querySelectorAll('span.font-medium')[3],episodes));var finalJson=JSON.stringify(infoPageObject);savedData.innerHTML=finalJson;"
-      },
-      "output": {
-        "image": {
+      {
+        "request": {
           "url": "",
           "method": "get",
           "headers": [
@@ -315,90 +366,68 @@
           ],
           "httpBody": null
         },
-        "link": {
-          "url": "",
-          "method": "get",
-          "headers": [
+        "extra": {
+          "commands": [
             {
-              "key": "",
-              "value": ""
-            }
-          ],
-          "httpBody": null
-        },
-        "title": "",
-        "description": "",
-        "genres": [
-          ""
-        ],
-        "field1": "",
-        "field2": "",
-        "field3": "",
-        "field4": "",
-        "chapters": [
-          {
-            "chapName": "",
-            "openInWebView": false,
-            "link": {
-              "url": "empty",
-              "method": "get",
-              "headers": [
+              "commandName": "",
+              "params": [
                 {
-                  "key": "key",
-                  "value": "value"
+                  "key": "",
+                  "value": ""
                 }
-              ],
-              "httpBody": null
+              ]
             }
-          }
-        ]
-      }
-    }
-  ],
-  "chapters": [
-    {
-      "request": {
-        "url": "",
-        "method": "get",
-        "headers": [
-          {
-            "key": "key",
-            "value": "value"
-          }
-        ],
-        "httpBody": null
-      },
-      "extra": {
-        "commands": [
-          {
-            "commandName": "",
-            "params": [
+          ],
+          "extraInfo": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ]
+        },
+        "javascriptConfig": {
+          "removeJavascript": true,
+          "loadInWebView": false,
+          "javaScript": "function Info(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Chapter(chapName,link,openInWebView){this.chapName=chapName;this.link=link;this.openInWebView=openInWebView}function Output(image,title,link,description,genres,field1,field2,field3,field4,chapters){this.image=image;this.link=link;this.title=title;this.description=description;this.genres=genres;this.field1=field1;this.field2=field2;this.field3=field3;this.field4=field4;this.chapters=chapters}function cleanText(obj){obj=obj.replaceAll('\\n','').replaceAll('\\t','').trim();return obj}let emptyKeyValue=[new KeyValue('','')];var preset={request:new ModuleRequest('','get',emptyKeyValue,null),extra:new Extra([new Commands('',emptyKeyValue)],emptyKeyValue),javascriptConfig:new JavascriptConfig(true,false,''),}var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);var currUrl=parsedJson.request.url;let params=new URLSearchParams(new URL(parsedJson.request.url).searchParams);let currentPage=parseInt(params.get('page'));console.log(parsedJson.request.url);let nextPage=currentPage+1 var title=cleanText(document.querySelector('h1').textContent);var image=document.querySelector('.w-full img').src;image=new ModuleRequest(image,'get',emptyKeyValue,null);var Synopsis=cleanText(document.querySelector('.mt-3').textContent);var genres=['N/A','None','Null'];var AgeRating=document.querySelectorAll('dd.text-neutral-200')[2].textContent;var status=document.querySelectorAll('dd.text-neutral-200')[3].textContent;var LastUpdated=document.querySelectorAll('dd.text-neutral-200')[5].textContent;var chapterAmount=document.querySelectorAll('span.font-medium')[3]var episodes=parsedJson.output;var chapters=document.querySelector('ul').querySelectorAll('li');for(index of chapters){var cLink=chapter.querySelector('a').href;let chapter=new Chapter(cleanText(index.querySelector('p').textContent),new ModuleRequest(cLink,'get',emptyKeyValue,null),false);episodes.push(chapter)}let infoPageObject if(chapters.length==32){infoPageObject=new Info(new ModuleRequest(currUrl+`?page=${nextPage}`,'get',emptyKeyValue,null),preset.extra,preset.javascriptConfig,new Output(image,title,parsedJson.request,Synopsis,genres,AgeRating,status,LastUpdated,'Chapters : '+chapterAmount,episodes))}else{infoPageObject=new Info(preset.request,preset.extra,preset.javascriptConfig,new Output(image,title,parsedJson.request,Synopsis,genres,AgeRating,status,LastUpdated,'Chapters : '+chapterAmount,episodes))}savedData.innerHTML=JSON.stringify(infoPageObject);"
+        },
+        "output": {
+          "image": {
+            "url": "",
+            "method": "get",
+            "headers": [
               {
                 "key": "",
                 "value": ""
               }
-            ]
-          }
-        ],
-        "extraInfo": [
-          {
-            "key": "",
-            "value": ""
-          }
-        ]
-      },
-      "javascriptConfig": {
-        "removeJavascript": true,
-        "loadInWebView": false,
-        "javaScript": "function Chapters(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Package(images){this.images=images}var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);var emptyKeyValue=[new KeyValue('','')];var output=[];var images=document.querySelectorAll('img.ts-main-image');if(images.length==0){images=document.querySelectorAll('p > img')}for(var x=0;x<images.length;x++){var img=images[x].src;output.push(new ModuleRequest(img,'get',emptyKeyValue,null))}let emptyExtra=new Extra([new Commands('',emptyKeyValue)],emptyKeyValue);var chaptersObject=new Chapters(new ModuleRequest('','',emptyKeyValue,null),emptyExtra,new JavascriptConfig(false,false,''),new Package(output));var finalJson=JSON.stringify(chaptersObject);savedData.innerHTML=finalJson;"
-      },
-      "output": {
-        "videos": {
-          "needsResolver": [
+            ],
+            "httpBody": null
+          },
+          "link": {
+            "url": "",
+            "method": "get",
+            "headers": [
+              {
+                "key": "",
+                "value": ""
+              }
+            ],
+            "httpBody": null
+          },
+          "title": "",
+          "description": "",
+          "genres": [
+            ""
+          ],
+          "field1": "",
+          "field2": "",
+          "field3": "",
+          "field4": "",
+          "chapters": [
             {
-              "resolverIdentifier": "",
+              "chapName": "",
+              "openInWebView": false,
               "link": {
-                "url": "",
+                "url": "empty",
                 "method": "get",
                 "headers": [
                   {
@@ -409,12 +438,159 @@
                 "httpBody": null
               }
             }
-          ],
-          "rawVideo": [
+          ]
+        }
+      }
+    ],
+    "chapters": [
+      {
+        "request": {
+          "url": "",
+          "method": "get",
+          "headers": [
             {
+              "key": "key",
+              "value": "value"
+            }
+          ],
+          "httpBody": null
+        },
+        "extra": {
+          "commands": [
+            {
+              "commandName": "",
+              "params": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            }
+          ],
+          "extraInfo": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ]
+        },
+        "javascriptConfig": {
+          "removeJavascript": true,
+          "loadInWebView": false,
+          "javaScript": "function Chapters(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Package(images){this.images=images}var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);var emptyKeyValue=[new KeyValue('','')];var output=[];function getImages(){var images=document.querySelectorAll('.rdminimal img');for(var x=0;x<images.length;x++){var img=images[x].src;output.push(new ModuleRequest(img,'get',emptyKeyValue,null))}return output}let emptyExtra=new Extra([new Commands('',emptyKeyValue)],emptyKeyValue);var chaptersObject=new Chapters(new ModuleRequest('','',emptyKeyValue,null),emptyExtra,new JavascriptConfig(false,false,''),new Package(getImages()));var finalJson=JSON.stringify(chaptersObject);savedData.innerHTML=finalJson;"
+        },
+        "output": {
+          "videos": {
+            "needsResolver": [
+              {
+                "resolverIdentifier": "",
+                "link": {
+                  "url": "",
+                  "method": "get",
+                  "headers": [
+                    {
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "httpBody": null
+                }
+              }
+            ],
+            "rawVideo": [
+              {
+                "video": [
+                  {
+                    "videoQuality": "",
+                    "videoLink": {
+                      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                      "method": "get",
+                      "headers": [
+                        {
+                          "key": "key",
+                          "value": "value"
+                        }
+                      ],
+                      "httpBody": null
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "images": [
+            {
+              "url": "empty",
+              "method": "get",
+              "headers": [
+                {
+                  "key": "key",
+                  "value": "value"
+                }
+              ],
+              "httpBody": null
+            }
+          ],
+          "text": {
+            "text": ""
+          }
+        }
+      }
+    ],
+    "moduleResolvers": [
+      {
+        "resolverInfo": {
+          "resolverName": "",
+          "nameMatches": [
+            ""
+          ],
+          "developer": "",
+          "moduleID": "",
+          "resolverVersion": 1,
+          "baseURL": ""
+        },
+        "resolver": [
+          {
+            "request": {
+              "url": "",
+              "method": "get",
+              "headers": [
+                {
+                  "key": "key",
+                  "value": "value"
+                }
+              ],
+              "httpBody": null
+            },
+            "extra": {
+              "commands": [
+                {
+                  "commandName": "",
+                  "params": [
+                    {
+                      "key": "",
+                      "value": ""
+                    }
+                  ]
+                }
+              ],
+              "extraInfo": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "javascriptConfig": {
+              "removeJavascript": false,
+              "loadInWebView": false,
+              "javaScript": ""
+            },
+            "output": {
+              "moduleID": "",
               "video": [
                 {
-                  "videoQuality": "",
+                  "videoQuality": "720",
                   "videoLink": {
                     "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     "method": "get",
@@ -429,191 +605,103 @@
                 }
               ]
             }
-          ]
-        },
-        "images": [
-          {
-            "url": "empty",
-            "method": "get",
-            "headers": [
-              {
-                "key": "key",
-                "value": "value"
-              }
-            ],
-            "httpBody": null
           }
-        ],
-        "text": {
-          "text": ""
-        }
+        ]
       }
-    }
-  ],
-  "moduleResolvers": [
-    {
-      "resolverInfo": {
-        "resolverName": "",
-        "nameMatches": [
-          ""
-        ],
-        "developer": "",
-        "moduleID": "",
-        "resolverVersion": 1,
-        "baseURL": ""
-      },
-      "resolver": [
-        {
-          "request": {
-            "url": "",
-            "method": "get",
-            "headers": [
-              {
-                "key": "key",
-                "value": "value"
-              }
-            ],
-            "httpBody": null
-          },
-          "extra": {
-            "commands": [
-              {
-                "commandName": "",
-                "params": [
-                  {
-                    "key": "",
-                    "value": ""
-                  }
-                ]
-              }
-            ],
-            "extraInfo": [
-              {
-                "key": "",
-                "value": ""
-              }
-            ]
-          },
-          "javascriptConfig": {
-            "removeJavascript": false,
-            "loadInWebView": false,
-            "javaScript": ""
-          },
-          "output": {
-            "moduleID": "",
-            "video": [
-              {
-                "videoQuality": "720",
-                "videoLink": {
-                  "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                  "method": "get",
-                  "headers": [
-                    {
-                      "key": "key",
-                      "value": "value"
-                    }
-                  ],
-                  "httpBody": null
+    ],
+    "responseCodeFunctions": [
+      {
+        "code": 0,
+        "msgTitle": "",
+        "msgBody": "",
+        "type": "normal",
+        "functions": [
+          {
+            "request": {
+              "url": "empty",
+              "method": "get",
+              "headers": [
+                {
+                  "key": "key",
+                  "value": "value"
                 }
-              }
-            ]
+              ],
+              "httpBody": null
+            },
+            "extra": {
+              "commands": [
+                {
+                  "commandName": "",
+                  "params": [
+                    {
+                      "key": "",
+                      "value": ""
+                    }
+                  ]
+                }
+              ],
+              "extraInfo": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "javascriptConfig": {
+              "removeJavascript": true,
+              "loadInWebView": false,
+              "javaScript": ""
+            }
           }
-        }
-      ]
-    }
-  ],
-  "responseCodeFunctions": [
-    {
-      "code": 0,
-      "msgTitle": "",
-      "msgBody": "",
-      "type": "normal",
-      "functions": [
-        {
-          "request": {
-            "url": "empty",
-            "method": "get",
-            "headers": [
-              {
-                "key": "key",
-                "value": "value"
-              }
-            ],
-            "httpBody": null
-          },
-          "extra": {
-            "commands": [
-              {
-                "commandName": "",
-                "params": [
-                  {
-                    "key": "",
-                    "value": ""
-                  }
-                ]
-              }
-            ],
-            "extraInfo": [
-              {
-                "key": "",
-                "value": ""
-              }
-            ]
-          },
-          "javascriptConfig": {
-            "removeJavascript": true,
-            "loadInWebView": false,
-            "javaScript": ""
+        ]
+      }
+    ],
+    "helperFunctions": [
+      {
+        "functionName": "example",
+        "msgTitle": "RECAPTCHA",
+        "msgBody": "Validate the recaptcha and when you finished click on Done",
+        "type": "captcha",
+        "functions": [
+          {
+            "request": {
+              "url": "empty",
+              "method": "get",
+              "headers": [
+                {
+                  "key": "key",
+                  "value": "value"
+                }
+              ],
+              "httpBody": null
+            },
+            "extra": {
+              "commands": [
+                {
+                  "commandName": "",
+                  "params": [
+                    {
+                      "key": "",
+                      "value": ""
+                    }
+                  ]
+                }
+              ],
+              "extraInfo": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "javascriptConfig": {
+              "removeJavascript": false,
+              "loadInWebView": true,
+              "javaScript": "const DefaultLayouts = { ultraWideFull: 'ultraWideFull', ultraWide: 'ultraWide', wideFull: 'wideFull', wide: 'wide', wideStrechedFull: 'wideStrechedFull', wideStrechedFullDouble: 'WideStrechedFullDouble', wideStreched: 'wideStreched', wideStrechedDouble: 'wideStrechedDouble', wideStrechedFullList: 'wideStrechedFullList', wideStrechedList: 'wideStrechedList', doublets: 'doublets', doubletsDouble: 'doubletsDouble', doubletsFull: 'doubletsFull', doubletsFullDouble: 'doubletsFullDouble', doubletsConstant: 'doubletsConstant', doubletsDoubleConstant: 'doubletsDoubleConstant', doubletsFullConstant: 'doubletsFullConstant', doubletsFullDoubleConstant: 'doubletsFullDoubleConstant', longDoublets: 'longDoublets', longDoubletsDouble: 'longDoubletsDouble', longDoubletsFull: 'longDoubletsFull', longDoubletsFullDouble: 'longDoubletsFullDouble', longDoubletsConstant: 'longDoubletsConstant', longDoubletsDoubleConstant: 'longDoubletsDoubleConstant', longDoubletsFullConstant: 'longDoubletsFullConstant', longDoubletsFullDoubleConstant: 'longDoubletsFullDoubleConstant', triplets: 'triplets', tripletsDouble: 'tripletsDouble', tripletsFull: 'tripletsFull', tripletsFullDouble: 'tripletsFullDouble', tripletsConstant: 'tripletsConstant', tripletsDoubleConstant: 'tripletsDoubleConstant', tripletsFullConstant: 'tripletsFullConstant', tripletsFullDoubleConstant: 'tripletsFullDoubleConstant', longTriplets: 'longTriplets', longTripletsDouble: 'longTripletsDouble', longTripletsFull: 'longTripletsFull', longTripletsFullDouble: 'longTripletsFullDouble', longTripletsConstant: 'longTripletsConstant', longTripletsDoubleConstant: 'longTripletsDoubleConstant', longTripletsFullConstant: 'longTripletsFullConstant', longTripletsFullDoubleConstant: 'longTripletsFullDoubleConstant', none: ''};const CellDesings = { Special1: 'Special1', Special2: 'Special2', Special3: 'Special3', CELLHelperText: 'CELLHelperText', small1: 'small1', small2: 'small2', normal1: 'normal1', normal2: 'normal2', normal3: 'normal3', normal4: 'normal4', normal5: 'normal5', normal6: 'normal6', normal7: 'normal7', wide1: 'wide1', wide2: 'wide2', wide3: 'wide3', wide4: 'wide4', wide5: 'wide5', wide6: 'wide6', wide7: 'wide7', wide8: 'wide8', wide9: 'wide9', wide10: 'wide10', wide11: 'wide11'};const Paging = { leading: 'leading', centered: 'centered', none: ''};const Orientation = { horizontal: 'horizontal', vertical: 'vertical'};function MainPage(request, extra, javascriptConfig, output) { this.request = request; this.extra = extra; this.javascriptConfig = javascriptConfig; this.output = output;}function ModuleRequest(url, method, headers, httpBody) { this.url = url; this.method = method; this.headers = headers; this.httpBody = httpBody;}function Extra(commands, extraInfo) { this.commands = commands; this.extraInfo = extraInfo;}function Commands(commandName, params) { this.commandName = commandName; this.params = params;}function JavascriptConfig(removeJavascript, loadInWebView, javaScript) { this.removeJavascript = removeJavascript; this.loadInWebView = loadInWebView; this.javaScript = javaScript;}function KeyValue(key, value) { this.key = key; this.value = value;}function Output(cellDesing, orientation, defaultLayout, paging, section, layout, data) { this.cellDesing = cellDesing; this.orientation = orientation; this.defaultLayout = defaultLayout; this.paging = paging; this.section = section; this.layout = layout; this.data = data;}function Section(sectionName, separator) { this.sectionName = sectionName; this.separator = separator;}function Layout(insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing) { this.insets = insets; this.visibleCellsWidthS = visibleCellsWidthS; this.visibleCellsWidthM = visibleCellsWidthM; this.visibleCellsWidthL = visibleCellsWidthL; this.visibleCellsHeight = visibleCellsHeight; this.heightForVisibleCells = heightForVisibleCells; this.cellSize = cellSize; this.ratio = ratio; this.constant = constant; this.horizontalSpacing = horizontalSpacing; this.verticalSpacing = verticalSpacing;}function Insets(top, bottom, left, right) { this.top = top; this.bottom = bottom; this.left = left; this.right = right;}function Size(width, height) { this.width = width; this.height = height;}function Ratio(inRelation, number1, number2) { this.inRelation = inRelation; this.number1 = number1; this.number2 = number2;}function Data(image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView) { this.image = image; this.title = title; this.description = description; this.field1 = field1; this.field2 = field2; this.field3 = field3; this.field4 = field4; this.isChapter = isChapter; this.link = link; this.openInWebView = openInWebView;}function quickData(link, image, title, field1) { return new Data(image, title, 'unknown', field1, 'unknown', 'unknown', 'unknown', false, link);}function shuffle(a) { var j, x, i; for (i = a.length - 1; i > 0; i--) { j = Math.floor(Math.random() * (i + 1)); x = a[i]; a[i] = a[j]; a[j] = x; } return a;}var savedData = document.getElementById('ketsu-final-data');var parsedJson = JSON.parse(savedData.innerHTML);let output = [];var emptyKeyValue = [new KeyValue('', '')];const pop = [];popchap = document.querySelectorAll('.hothome div.bs'); for (list of popchap) { let title = list.querySelector('.tt').textContent; var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null); var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null); var ep = list.querySelector('.epxs').textContent; pop.push(new Data(image, title, '', ep, '', '', '', false, link)); } const lastchap = []; lastchapchap = document.querySelectorAll('div.uta'); for (list of lastchapchap) { let title = list.querySelector('h4').textContent; var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null); var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null); var ep =''; try { ep = list.querySelector('ul li').innerText.split('\\n')[0]; } catch{} lastchap.push(new Data(image, title, '', ep, '', '', '', false, link)); } const commands = [ new Commands('variable', [ new KeyValue('data_pop', pop), new KeyValue('data_last', lastchap), new KeyValue('current', parsedJson.request.url) ])];let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra('', emptyKeyValue), new JavascriptConfig(true, false, ''), output);var finalJson = JSON.stringify(MainPageObject);savedData.innerHTML = finalJson;"
+            }
           }
-        }
-      ]
-    }
-  ],
-  "helperFunctions": [
-    {
-      "functionName": "example",
-      "msgTitle": "RECAPTCHA",
-      "msgBody": "Validate the recaptcha and when you finished click on Done",
-      "type": "captcha",
-      "functions": [
-        {
-          "request": {
-            "url": "empty",
-            "method": "get",
-            "headers": [
-              {
-                "key": "key",
-                "value": "value"
-              }
-            ],
-            "httpBody": null
-          },
-          "extra": {
-            "commands": [
-              {
-                "commandName": "",
-                "params": [
-                  {
-                    "key": "",
-                    "value": ""
-                  }
-                ]
-              }
-            ],
-            "extraInfo": [
-              {
-                "key": "",
-                "value": ""
-              }
-            ]
-          },
-          "javascriptConfig": {
-            "removeJavascript": false,
-            "loadInWebView": true,
-            "javaScript": "const DefaultLayouts = { ultraWideFull: 'ultraWideFull', ultraWide: 'ultraWide', wideFull: 'wideFull', wide: 'wide', wideStrechedFull: 'wideStrechedFull', wideStrechedFullDouble: 'WideStrechedFullDouble', wideStreched: 'wideStreched', wideStrechedDouble: 'wideStrechedDouble', wideStrechedFullList: 'wideStrechedFullList', wideStrechedList: 'wideStrechedList', doublets: 'doublets', doubletsDouble: 'doubletsDouble', doubletsFull: 'doubletsFull', doubletsFullDouble: 'doubletsFullDouble', doubletsConstant: 'doubletsConstant', doubletsDoubleConstant: 'doubletsDoubleConstant', doubletsFullConstant: 'doubletsFullConstant', doubletsFullDoubleConstant: 'doubletsFullDoubleConstant', longDoublets: 'longDoublets', longDoubletsDouble: 'longDoubletsDouble', longDoubletsFull: 'longDoubletsFull', longDoubletsFullDouble: 'longDoubletsFullDouble', longDoubletsConstant: 'longDoubletsConstant', longDoubletsDoubleConstant: 'longDoubletsDoubleConstant', longDoubletsFullConstant: 'longDoubletsFullConstant', longDoubletsFullDoubleConstant: 'longDoubletsFullDoubleConstant', triplets: 'triplets', tripletsDouble: 'tripletsDouble', tripletsFull: 'tripletsFull', tripletsFullDouble: 'tripletsFullDouble', tripletsConstant: 'tripletsConstant', tripletsDoubleConstant: 'tripletsDoubleConstant', tripletsFullConstant: 'tripletsFullConstant', tripletsFullDoubleConstant: 'tripletsFullDoubleConstant', longTriplets: 'longTriplets', longTripletsDouble: 'longTripletsDouble', longTripletsFull: 'longTripletsFull', longTripletsFullDouble: 'longTripletsFullDouble', longTripletsConstant: 'longTripletsConstant', longTripletsDoubleConstant: 'longTripletsDoubleConstant', longTripletsFullConstant: 'longTripletsFullConstant', longTripletsFullDoubleConstant: 'longTripletsFullDoubleConstant', none: ''};const CellDesings = { Special1: 'Special1', Special2: 'Special2', Special3: 'Special3', CELLHelperText: 'CELLHelperText', small1: 'small1', small2: 'small2', normal1: 'normal1', normal2: 'normal2', normal3: 'normal3', normal4: 'normal4', normal5: 'normal5', normal6: 'normal6', normal7: 'normal7', wide1: 'wide1', wide2: 'wide2', wide3: 'wide3', wide4: 'wide4', wide5: 'wide5', wide6: 'wide6', wide7: 'wide7', wide8: 'wide8', wide9: 'wide9', wide10: 'wide10', wide11: 'wide11'};const Paging = { leading: 'leading', centered: 'centered', none: ''};const Orientation = { horizontal: 'horizontal', vertical: 'vertical'};function MainPage(request, extra, javascriptConfig, output) { this.request = request; this.extra = extra; this.javascriptConfig = javascriptConfig; this.output = output;}function ModuleRequest(url, method, headers, httpBody) { this.url = url; this.method = method; this.headers = headers; this.httpBody = httpBody;}function Extra(commands, extraInfo) { this.commands = commands; this.extraInfo = extraInfo;}function Commands(commandName, params) { this.commandName = commandName; this.params = params;}function JavascriptConfig(removeJavascript, loadInWebView, javaScript) { this.removeJavascript = removeJavascript; this.loadInWebView = loadInWebView; this.javaScript = javaScript;}function KeyValue(key, value) { this.key = key; this.value = value;}function Output(cellDesing, orientation, defaultLayout, paging, section, layout, data) { this.cellDesing = cellDesing; this.orientation = orientation; this.defaultLayout = defaultLayout; this.paging = paging; this.section = section; this.layout = layout; this.data = data;}function Section(sectionName, separator) { this.sectionName = sectionName; this.separator = separator;}function Layout(insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing) { this.insets = insets; this.visibleCellsWidthS = visibleCellsWidthS; this.visibleCellsWidthM = visibleCellsWidthM; this.visibleCellsWidthL = visibleCellsWidthL; this.visibleCellsHeight = visibleCellsHeight; this.heightForVisibleCells = heightForVisibleCells; this.cellSize = cellSize; this.ratio = ratio; this.constant = constant; this.horizontalSpacing = horizontalSpacing; this.verticalSpacing = verticalSpacing;}function Insets(top, bottom, left, right) { this.top = top; this.bottom = bottom; this.left = left; this.right = right;}function Size(width, height) { this.width = width; this.height = height;}function Ratio(inRelation, number1, number2) { this.inRelation = inRelation; this.number1 = number1; this.number2 = number2;}function Data(image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView) { this.image = image; this.title = title; this.description = description; this.field1 = field1; this.field2 = field2; this.field3 = field3; this.field4 = field4; this.isChapter = isChapter; this.link = link; this.openInWebView = openInWebView;}function quickData(link, image, title, field1) { return new Data(image, title, 'unknown', field1, 'unknown', 'unknown', 'unknown', false, link);}function shuffle(a) { var j, x, i; for (i = a.length - 1; i > 0; i--) { j = Math.floor(Math.random() * (i + 1)); x = a[i]; a[i] = a[j]; a[j] = x; } return a;}var savedData = document.getElementById('ketsu-final-data');var parsedJson = JSON.parse(savedData.innerHTML);let output = [];var emptyKeyValue = [new KeyValue('', '')];const pop = [];popchap = document.querySelectorAll('.hothome div.bs'); for (list of popchap) { let title = list.querySelector('.tt').textContent; var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null); var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null); var ep = list.querySelector('.epxs').textContent; pop.push(new Data(image, title, '', ep, '', '', '', false, link)); } const lastchap = []; lastchapchap = document.querySelectorAll('div.uta'); for (list of lastchapchap) { let title = list.querySelector('h4').textContent; var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null); var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null); var ep =''; try { ep = list.querySelector('ul li').innerText.split('\\n')[0]; } catch{} lastchap.push(new Data(image, title, '', ep, '', '', '', false, link)); } const commands = [ new Commands('variable', [ new KeyValue('data_pop', pop), new KeyValue('data_last', lastchap), new KeyValue('current', parsedJson.request.url) ])];let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra('', emptyKeyValue), new JavascriptConfig(true, false, ''), output);var finalJson = JSON.stringify(MainPageObject);savedData.innerHTML = finalJson;"
-          }
-        }
-      ]
-    }
-  ]
-}
+        ]
+      }
+    ]
+  }
+  

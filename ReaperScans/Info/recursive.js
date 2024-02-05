@@ -52,44 +52,68 @@ function Output(image, title, link, description, genres, field1, field2, field3,
     this.chapters = chapters;
 }
 
-var baseUrl = '';
-if (window.location) {
-    baseUrl = window.location.hostname + window.location.pathname
+function cleanText(obj) {
+	obj = obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
+	return obj;
 }
 
+let emptyKeyValue = [new KeyValue('', '')];
+
+var preset = {
+    request : new ModuleRequest('', 'get', emptyKeyValue, null),
+    extra : new Extra([new Commands('', emptyKeyValue)], emptyKeyValue),
+    javascriptConfig : new JavascriptConfig(true, false, ''),
+}
 
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
-let emptyKeyValue = [new KeyValue('', '')];
 
+// URL Fetch
+var currUrl = parsedJson.request.url;
+
+let params  = new URLSearchParams(new URL(parsedJson.request.url).searchParams);
+
+let currentPage = parseInt(params.get('page')); console.log(parsedJson.request.url);
+let nextPage = currentPage + 1
+
+// Details
+var title = cleanText(document.querySelector('h1').textContent);
+var image = document.querySelector('.w-full img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+
+var Synopsis = cleanText(document.querySelector('.mt-3').textContent);
+
+var genres = ['N/A', 'None', 'Null'];
 var AgeRating = document.querySelectorAll('dd.text-neutral-200')[2].textContent; 
 var status = document.querySelectorAll('dd.text-neutral-200')[3].textContent;
 var LastUpdated = document.querySelectorAll('dd.text-neutral-200')[5].textContent;
+var chapterAmount = document.querySelectorAll('span.font-medium')[3]
 
-var Summary;
-try {
-    Synopsis = document.querySelectorAll('.mt-3').textContent.replaceAll('\\n','').trim();
-} catch {
-    Synopsis = '';
-}
-
-var title = document.querySelector('h1').textContent.trim();
-var image = document.querySelector('.w-full img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+// Chapters
+var episodes = parsedJson.output;
 var chapters = document.querySelector('ul').querySelectorAll('li');
 
-var episodes = [];
-
-if (chapters.length > 0) {
-    for (var x = 0; x = 32; x++) {
-        var element = chapters[x];
-        if (element) {
-            var cLink = element.querySelector('a').href;
-            let chapter = new Chapter(element.querySelector('p').outerText, new ModuleRequest(cLink, 'get', emptyKeyValue, null), false); console.log(chapter);
-            episodes.push(chapter);
-        }
-    }
+for (index of chapters) {
+    var cLink = chapter.querySelector('a').href;
+    let chapter = new Chapter(cleanText(index.querySelector('p').textContent), new ModuleRequest(cLink, 'get', emptyKeyValue, null), false);
+    episodes.push(chapter); 
 }
 
-let infoPageObject = new Info(new ModuleRequest(baseUrl, '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, Synopsis, AgeRating, status, LastUpdated, '', 'Chapters : ' + document.querySelectorAll('span.font-medium')[3], episodes));
-var finalJson = JSON.stringify(infoPageObject);
-savedData.innerHTML = finalJson;
+let infoPageObject
+
+if (chapters.length == 32) {
+    infoPageObject = new Info(
+        new ModuleRequest(currUrl + `?page=${nextPage}`, 'get', emptyKeyValue, null), 
+        preset.extra, 
+        preset.javascriptConfig, 
+        new Output(image, title, parsedJson.request, Synopsis, genres, AgeRating, status, LastUpdated, 'Chapters : ' + chapterAmount, episodes)
+    );
+} else {
+    infoPageObject = new Info(
+        preset.request, 
+        preset.extra, 
+        preset.javascriptConfig, 
+        new Output(image, title, parsedJson.request, Synopsis, genres, AgeRating, status, LastUpdated, 'Chapters : ' + chapterAmount, episodes)
+    );
+}
+
+savedData.innerHTML = JSON.stringify(infoPageObject);
