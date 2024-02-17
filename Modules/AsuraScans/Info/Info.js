@@ -70,7 +70,7 @@ var type = document.querySelector('div.tsinfo > div:nth-child(2) a').textContent
 
 var Synopsis;
 try {
-    Synopsis = document.querySelector('[itemprop=\"depion\"]').textContent.replaceAll('\\n','').trim();
+    Synopsis = cleanText(document.querySelector('[itemprop=\"description\"] > p').textContent);
 } catch{
 
 }
