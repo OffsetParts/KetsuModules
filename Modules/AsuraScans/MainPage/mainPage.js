@@ -158,13 +158,11 @@ let emptyExtra = new Extra(commands, emptyKeyValue);
 // Functions
 
 function scaleImg(img) {
-	img = img.replaceAll('130x170', '330x450').replaceAll('200x260', '330x450');
-	return img;
+	return img.replaceAll('130x170', '330x450').replaceAll('200x260', '330x450');
 }
 
 function cleanText(obj) {
-	obj = obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
-	return obj;
+	return obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
 }
 
 // Greatests of All Time

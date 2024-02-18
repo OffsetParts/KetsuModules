@@ -54,8 +54,7 @@ function Output(image, title, link, description, genres, field1, field2, field3,
 
 // Functions
 function cleanText(obj) {
-	obj = obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
-	return obj;
+	return obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
 }
 
 
@@ -68,14 +67,9 @@ var genres = []; genres = Array.from(document.querySelectorAll('.wd-full a')).ma
 var status = document.querySelector('div.tsinfo > div:nth-child(1) i').textContent;
 var type = document.querySelector('div.tsinfo > div:nth-child(2) a').textContent;
 
-var Synopsis;
-try {
-    Synopsis = cleanText(document.querySelector('[itemprop=\"description\"] > p').textContent);
-} catch{
+var synopsis = cleanText(document.querySelector('[itemprop=\"description\"] > p').textContent);
 
-}
-
-var title = cleanText(document.querySelector('.entry-title').textContent.trim());
+var title = cleanText(document.querySelector('.entry-title').textContent);
 var image = document.querySelector('.thumb img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 var chapters = document.querySelector('.clstyle').querySelectorAll('li');
 
@@ -83,12 +77,12 @@ var episodes = [];
 if (chapters.length > 0) {
     for (var x = chapters.length - 1; x >= 0; x--) {
         var element = chapters[x];
-        var cLink = element.querySelector('a').href;
-        let chapter = new Chapter('Chapter ' + (chapters.length - x), new ModuleRequest(cLink, 'get', emptyKeyValue, null), false);
+        var link = element.querySelector('a').href;
+        let chapter = new Chapter('Chapter ' + (chapters.length - x), new ModuleRequest(link, 'get', emptyKeyValue, null), false);
         episodes.push(chapter);
     }
 }
 
-let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, Synopsis, genres, status, type, '', 'Chapters : ' + episodes.length, episodes));
+let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, status, type, '', 'Chapters : ' + episodes.length, episodes));
 var finalJson = JSON.stringify(infoPageObject);
 savedData.innerHTML = finalJson;
