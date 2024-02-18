@@ -12,7 +12,7 @@
     "moduleType": "Image",
     "baseURL": "https://asuratoon.com/",
     "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
-    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/AsuraScans/asura.json",
+    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/asura.json",
     "preferedServer": "",
     "preferedDownloadServer": "",
     "blackListed": [
