@@ -57,7 +57,16 @@ function cleanText(obj) {
 	return obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
 }
 
-
+function getText(node, accumulator) {
+    if (node.nodeType === 3) {
+        accumulator.push(node.textContent);
+    } else if (node.nodeType === 1 && node.tagName.toLowerCase() !== 'script') {
+        for (let child of node.childNodes) {
+            getText(child, accumulator);
+        }
+    }
+    return cleanText(accumulator.join(''));
+}
 
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
@@ -67,7 +76,13 @@ var genres = []; genres = Array.from(document.querySelectorAll('.wd-full a')).ma
 var status = document.querySelector('div.tsinfo > div:nth-child(1) i').textContent;
 var type = document.querySelector('div.tsinfo > div:nth-child(2) a').textContent;
 
-var synopsis = cleanText(document.querySelector('[itemprop=\"description\"] > p').textContent);
+var synopsis = [];
+
+try {
+    synopsis = getText( document.querySelector( '[itemprop=\"description\"]'), synopsis);
+} catch (err) {
+    console.log(err);
+}
 
 var title = cleanText(document.querySelector('.entry-title').textContent);
 var image = document.querySelector('.thumb img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
