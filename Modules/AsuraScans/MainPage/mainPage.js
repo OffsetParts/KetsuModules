@@ -83,6 +83,12 @@ const Orientation = {
 	vertical: 'vertical'
 };
 
+const RatioRelation = {
+	width: 'width',
+	height: 'height'
+};
+
+
 // Functions
 function MainPage(request, extra, javascriptConfig, output) {
 	this.request = request;
@@ -134,6 +140,39 @@ function Section(sectionName, separator) {
 	this.separator = separator;
 }
 
+function Layout ( insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing ) {
+	this.insets = insets;
+	this.visibleCellsWidthS = visibleCellsWidthS;
+	this.visibleCellsWidthM = visibleCellsWidthM;
+	this.visibleCellsWidthL = visibleCellsWidthL;
+	this.visibleCellsHeight = visibleCellsHeight;
+	this.heightForVisibleCells = heightForVisibleCells;
+	this.cellSize = cellSize;
+	this.ratio = ratio;
+	this.constant = constant;
+	this.horizontalSpacing = horizontalSpacing;
+	this.verticalSpacing = verticalSpacing;
+}
+
+function Insets ( top, bottom, left, right ) {
+	this.top = top;
+	this.bottom = bottom;
+	this.left = left;
+	this.right = right;
+}
+
+function Size ( width, height ) {
+	this.width = width;
+	this.height = height;
+}
+
+function Ratio ( inRelation, number1, number2 ) {
+	this.inRelation = inRelation;
+	this.number1 = number1;
+	this.number2 = number2;
+}
+
+
 function Data(image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView) {
 	this.image = image;
 	this.title = title;
@@ -158,12 +197,28 @@ let emptyExtra = new Extra(commands, emptyKeyValue);
 // Functions
 
 function scaleImg(img) {
-	return img.replaceAll('130x170', '330x450').replaceAll('200x260', '330x450');
+	return img.replaceAll('130x170', '530x650').replaceAll('-222x300', '');
 }
 
 function cleanText(obj) {
 	return obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
 }
+
+// Custom Layouts
+let Poster = new Layout(
+	new Insets(5, 5, 10, 10), // insets
+	1, // visibleCellsWidthS
+	2, // visibleCellsWidthM
+	3, // visibleCellsWidthL
+	1, // visibleCellsHeight
+	375, // heightForVisibleCells
+	new Size(413, 650), // cellSize 
+	new Ratio(RatioRelation.height, 216, 340), // ratio 
+	new Size(0, 0), // constant
+	15, // horizontalSpacing
+	15 // verticalSpacing
+);
+
 
 // Greatests of All Time
 let GOATs = [];
@@ -185,7 +240,9 @@ for (list of months) {
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 
-	var genres = list.querySelector('div.leftseries > span').textContent;
+	let genresElm = list.querySelector('div.leftseries > span');
+	let genres = genresElm ? genresElm.textContent : '';
+
 	var rating = ('Rating : ' + cleanText(list.querySelector('.numscore').textContent));
 	Monthly.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
@@ -197,7 +254,9 @@ for (list of weeks) {
 	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
 	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
 
-	var genres = list.querySelector('div.leftseries > span').textContent;
+	let genresElm = list.querySelector('div.leftseries > span');
+	let genres = genresElm ? genresElm.textContent : '';
+
 	var rating = ('Rating : ' + cleanText(list.querySelector('.numscore').textContent));
 	Weekly.push(new Data(image, title, genres, '', rating, '', '', false, link));
 }
@@ -228,7 +287,7 @@ for (list of latestChapters) {
 }
 
 let output = [];
-output.push(new Output(CellDesings.wide5, Orientation.horizontal, DefaultLayouts.wideFull, Paging.leading, new Section('GOATs', false), null, GOATs));
+output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATs));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section('Monthly', false), null, Monthly));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, Weekly));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
