@@ -180,11 +180,23 @@ function cleanText(obj) {
 }
 
 function cleanUrl(url) {
-    return 'https://hianime.to' + url.replace('/watch', '').replace('?w=latest', '');
+    return 'https://hianime.to' + url.replace('/watch', '').replace('?w=latest', '');  
 }
 
 // Layouts
-var testLayout = new Layout(new Insets(0, 0, 10, 10), 1, 2, 3, 6, 300, new Size(0, 0), null, new Size(0, 0), 0, 0);
+var testLayout = new Layout(
+    new Insets(0, 0, 10, 10), 
+    1, 
+    2, 
+    3, 
+    6, 
+    300, 
+    new Size(0, 0), 
+    null, 
+    new Size(0, 0), 
+    0, 
+    0
+);
 
 //Init
 var savedData = document.getElementById('ketsu-final-data');
