@@ -52,73 +52,67 @@ function Output(image, title, link, description, genres, field1, field2, field3,
     this.chapters = chapters;
 }
 
-// Functions
 function cleanText(str) {
-    return str.replace(/[\\n\\t]/g, '').replaceAll('”', '\"').replaceAll('“', '\"');
+    return str.replace(/[\n\t]/g, '').trim();
 }
 
 function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
-/* function testFormat(str) {
+function testFormat(str) {
     let hasSpecialChar = false;
     let specialChars = [];
-
     for (let i = 0; i < str.length; ++i) {
         let ch = str.charCodeAt(i);
-        if (((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch >= 48 && ch <= 57))) {
+        if (!((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch >= 48 && ch <= 57))) {
             hasSpecialChar = true;
-            specialChars.push(`Detected char: ${ch} at index: ${i}`);
+            specialChars.push(`Detected char:${ch} at index:${i}`);
         }
     }
-
     if (hasSpecialChar) {
-        console.log(specialChars.join('\\n'));
+        console.log(specialChars.join('\n'));
     }
-
     return hasSpecialChar;
-} */
+}
 
 function getText(node, accumulator = []) {
     if (node.nodeType === Node.TEXT_NODE) {
-        accumulator.push(cleanText(node.textContent));
+        if (testFormat(node.textContent)) {
+            accumulator.push("");
+        } else {
+            accumulator.push(node.textContent);
+        }
     } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'script') {
         for (let child of node.childNodes) {
             getText(child, accumulator);
         }
     }
-    return cleanText(accumulator.join('')).trim();
+    return cleanText(accumulator.join(''));
 }
 
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
-
-var genres = []; genres = Array.from(document.querySelectorAll('.wd-full a')).map(g => g.textContent);
+var genres = [];
+genres = Array.from(document.querySelectorAll('.wd-full a')).map(g => g.textContent);
 var status = document.querySelector('div.tsinfo > div:nth-child(1) i').textContent;
 var type = document.querySelector('div.tsinfo > div:nth-child(2) a').textContent;
-
 var synopsis = [];
-synopsis = getText( document.querySelector( '[itemprop=\"description\"]'), synopsis);
-
+synopsis = getText(document.querySelector('[itemprop="description"]'), synopsis);
 var title = cleanText(document.querySelector('.entry-title').textContent);
-var image = document.querySelector('.thumb img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-var chapters = document.querySelectorAll('.clstyle li');
-
+var image = document.querySelector('.thumb img').src;
+image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+var chapters = document.querySelector('.clstyle').querySelectorAll('li');
 var episodes = [];
-for (let x = chapters.length - 1; x >= 0; x--) {
-    var element = chapters[x];
-
-    if (!element) {
-        continue; // Skip this iteration if element is undefined
+if (chapters.length > 0) {
+    for (var x = chapters.length; x >= 0; --x) {
+        var element = chapters[x];
+        var link = element.querySelector('a').href;
+        let chapter = new Chapter('Chapter ' + (chapters.length - x), new ModuleRequest(link, 'get', emptyKeyValue, null), false);
+        episodes.push(chapter);
     }
-
-    var link = element.querySelector('a').href;
-    let chapter = new Chapter('Chapter ' + (chapters.length - x), new ModuleRequest(link, 'get', emptyKeyValue, null), false);
-    episodes.push(chapter);
 }
-
 let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, status, type, '', 'Chapters : ' + episodes.length, episodes));
 var finalJson = JSON.stringify(infoPageObject);
 savedData.innerHTML = finalJson;
