@@ -57,10 +57,17 @@ function cleanText(str) {
     return str.replace(/[\\n\\t]/g, '');
 }
 
-function quickRequest(url) {
-	return new ModuleRequest(url, 'get', emptyKeyValue, null);
+function cleanUrl(url) {
+    return 'https://flixscans.org' + (url).trim();
 }
 
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
+}
 
 function getText(node, accumulator = []) {
     if (node.nodeType === Node.TEXT_NODE) {
@@ -70,6 +77,7 @@ function getText(node, accumulator = []) {
             getText(child, accumulator);
         }
     }
+
     return cleanText(accumulator.join('')).trim();
 }
 
@@ -77,8 +85,8 @@ var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
 
-var genres = [];
-var type = 'Action - Webtoon';
+var genres = ['Action', 'Adventure', 'Comics'];
+var type = 'Webtoon';
 
 var synopsis = getText(document.querySelector('p'));
 
@@ -94,7 +102,7 @@ for (let x = chapters.length - 1; x >= 0; x--) {
         continue; // Skip this iteration if element is undefined
     }
 
-    let chapter = new Chapter('Chapter ' + (chapters.length - x), quickRequest(element.href), false);
+    let chapter = new Chapter('Chapter ' + (chapters.length - x), quickRequest(element.href, true), false);
     episodes.push(chapter);
 }
 
