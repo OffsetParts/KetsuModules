@@ -197,8 +197,16 @@ function cleanText(str) {
     return str.replace(/[\\n\\t]/g, '').trim();
 }
 
-function quickRequest(url) {
-	return new ModuleRequest(url, 'get', emptyKeyValue, null);
+function cleanUrl(url) {
+    return 'https://flixscans.org' + (url).trim();
+}
+
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
 }
 
 let output = [];
@@ -216,7 +224,7 @@ lastAdded.forEach(iteration => {
     try {
         const title = cleanText(iteration.querySelector('[dir=\"ltr\"]').textContent);
         const image = quickRequest(iteration.querySelector('img').src);
-        const link = quickRequest(iteration.querySelector('a').href);
+        const link = quickRequest(iteration.querySelector('a').href, true);
         const lchapter = cleanText(iteration.querySelector( 'li a' ).textContent);
 
         lastAddedArray.push(new Data(image, title, lchapter, '', '', '', '', false, link));
