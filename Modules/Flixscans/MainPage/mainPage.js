@@ -199,8 +199,16 @@ function cleanText(str) {
     return str.replace(/[\\n\\t]/g, '').trim();
 }
 
-function quickRequest(url) {
-	return new ModuleRequest(url, 'get', emptyKeyValue, null);
+function cleanUrl(url) {
+    return 'https://flixscans.org' + (url).trim();
+}
+
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
 }
 
 // Custom Layouts
@@ -221,7 +229,7 @@ let Poster = new Layout(
 // Popular
 let TodaySpecials = Array.from(document.querySelectorAll('.p-2 .overflow-auto > *')).map(list => {
 	const title = cleanText(list.querySelector('[dir=\"ltr\"]').textContent);
-	const link = quickRequest(list.querySelector('a').href);
+	const link = quickRequest(list.querySelector('a').href, true);
 	const image = quickRequest(list.querySelector('img').src);
 
 	return new Data(image, title, '', '', '', '', '', false, link);
@@ -230,7 +238,7 @@ let TodaySpecials = Array.from(document.querySelectorAll('.p-2 .overflow-auto > 
 // Latest Chapters
 let Latests = Array.from(document.querySelectorAll('.p-2 .shadow-lg')).map(list => {
 	const title = cleanText(list.querySelector('[dir=\"ltr\"] > a').textContent);
-	const link = quickRequest(list.querySelector('a').href);
+	const link = quickRequest(list.querySelector('a').href, true);
 	const image = quickRequest(list.querySelector('img').src);
 	const ep = cleanText(list.querySelector('ul li a').textContent);
 
