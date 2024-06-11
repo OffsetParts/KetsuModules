@@ -241,6 +241,13 @@
         "info": "Read free manhwa translations at Flamescans.",
         "link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/flames.json",
         "Zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/flames.json"
+    }, {
+        "name": "Flixscans | ENG",
+        "author": "Scrumptious",
+        "image": "https://flixscans.org/storage/en/logo-action.png",
+        "info": "Read free manhwa translations at Flixscans.",
+        "link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/Flixscans/flixscans.json",
+        "Zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/Flixscans/flixscans.json"
     }],
     "text": [{
         "name": "Livre1 | FR",

@@ -88,7 +88,6 @@ const RatioRelation = {
 	height: 'height'
 };
 
-
 // Functions
 function MainPage(request, extra, javascriptConfig, output) {
 	this.request = request;
@@ -125,19 +124,19 @@ function KeyValue(key, value) {
 	this.value = value;
 }
 
-function Insets (top, bottom, left, right) {
+function Insets(top, bottom, left, right) {
 	this.top = top;
 	this.bottom = bottom;
 	this.left = left;
 	this.right = right;
 }
 
-function Size (width, height) {
+function Size(width, height) {
 	this.width = width;
 	this.height = height;
 }
 
-function Ratio (inRelation, number1, number2) {
+function Ratio(inRelation, number1, number2) {
 	this.inRelation = inRelation;
 	this.number1 = number1;
 	this.number2 = number2;
@@ -148,7 +147,7 @@ function Section(sectionName, separator) {
 	this.separator = separator;
 }
 
-function Layout (insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing) {
+function Layout(insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing) {
 	this.insets = insets;
 	this.visibleCellsWidthS = visibleCellsWidthS;
 	this.visibleCellsWidthM = visibleCellsWidthM;
@@ -188,149 +187,141 @@ function Output(cellDesing, orientation, defaultLayout, paging, section, layout,
 //Init
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
-
-var emptyKeyValue = [new KeyValue('', '')];
-var XHRequest = [new KeyValue('X-Requested-With', 'XMLHttpRequest')];
+let emptyKeyValue = [new KeyValue('', '')];
+let XHRequest = [new KeyValue('X-Requested-With', 'XMLHttpRequest')];
 var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
 let emptyExtra = new Extra(commands, emptyKeyValue);
 
 var initialText = parsedJson.extra.extraInfo[0].value;
 const dummyRequest = new ModuleRequest('', 'get', emptyKeyValue, null);
-const streamTape = new ModuleRequest('ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/beta-ketsu/main/zoro.json', 'get', emptyKeyValue, null);
-const infoText = new Data(dummyRequest, `Subs are only available on newer versions of Ketsu, and the RapidCloud resolver won't work if you have the App Store version.\nClick on this message if you are using the App Store version of KETSU and not getting subtitles. If you do so don't forget to refresh this page.`, '', '', '', '', '', false, streamta, false);
+
+// If outdated run the zoro version
+const ZoroReplacement = new ModuleRequest('ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/beta-ketsu/main/zoro.json', 'get', emptyKeyValue, null);
+const infoText = new Data(dummyRequest, `Subs are only available on newer versions of Ketsu, and the RapidCloud resolver won't work if you have the App Store version.\nClick on this message if you are using the App Store version of KETSU and not getting subtitles. If you do so don't forget to refresh this page.`, '', '', '', '', '', false, ZoroReplacement, false);
 
 let Output = [];
 
 // Functions
-function cleanText(obj) {
-	return obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
+
+function createLayout(insets, size, ratio) {
+    return new Layout(insets, 1, 1, 1, 1, 0, size, ratio, new Size(0, 0), 0, 0);
+}
+
+function cleanText(str) {
+    return str.replace(/[\\n\\t]/g, '');
 }
 
 function cleanUrl(url) {
-    return 'https://hianime.to' + url.replace('/watch', '').replace('?w=latest', '');
+    return 'https://hianime.to' + (url.replace('/watch', '').replace('?w=latest', '')).trim();
 }
 
-let Spotlight = [];
-let topSlider = document.querySelectorAll('div.deslide-wrap div.swiper-slide');
-for (slide of topSlider) {
+
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
+}
+
+var topSlider = document.querySelectorAll('#slider .swiper-wrapper .swiper-slide');
+var Spotlight = Array.from(topSlider).map(slide => {
     var title = slide.querySelector('div.desi-head-title').textContent;
-    var image = slide.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-    let link  = cleanUrl(slide.querySelector('div.desi-buttons a').href);
-    link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+    var image = quickRequest(slide.querySelector('img').src);
+    let link  = quickRequest(slide.querySelector('div.desi-buttons a').href, true);
 
-    var description = cleanText(slide.querySelector('div.desi-description').textContent);
-    var type = slide.querySelector('div.sc-detail > div:nth-child(1)').innerText;
-    var data = 'First Aired : ' + slide.querySelector('div.sc-detail > div:nth-child(3)').innerText;
-    Spotlight.push(new Data(image, title + ' - ' + type, description, data, '', '', '', false, link, false));
-}
+    // var info = cleanText(slide.querySelector('div.desi-description').textContent);
+    // var type = cleanText(slide.querySelector('div.sc-detail > div:nth-child(1)').textContent);
+    var airing = 'First Aired: ' + slide.querySelector('div.sc-detail > div:nth-child(3)').textContent;
+    Spotlight.push(new Data(image, title + ' - ' + type, info, airing, '', '', '', false, link, false));
+})
 
-var TopAiring = [];
 var bestAiring = document.querySelectorAll('div.anif-block-01 li');
-for (list of bestAiring) {
+var TopAiring = bestAiring.map(list => {
     try {
         var title = list.querySelector('h3').textContent;
-        let link = cleanUrl(list.querySelector('a').href);
-        var image = list.querySelector('img').src;
+        var image = quickRequest(list.querySelector('img').src);
+        let link = quickRequest(list.querySelector('a').href, true);
         var episode = list.querySelector('div.tick-sub').textContent;
 
-        TopAiring.push(new Data(image, title, '', episode, '', '', '', false, link, false));
+        return new Data(image, title, '', episode, '', '', '', false, link, false);
     } catch (error) {
         console.log(error);
     }
-}
+});
 
-var Popular = [];
 var popularArray = document.querySelectorAll('div.anif-block-03 li');
-for (list of popularArray) {
+var Popular = popularArray.map(list => {
     try {
-        var ticks = list.querySelectorAll('div.tick-item');
+        var ticks = Array.from(list.querySelectorAll('div.tick-item'));
         var title = list.querySelector('h3').textContent;
-        let link = cleanUrl(list.querySelector('a').href);
-        var image = list.querySelector('img').src;
+        var image = quickRequest(list.querySelector('img').src);
+        let link = quickRequest(list.querySelector('a').href, true);
         var total = list.querySelector('div.tick-eps').textContent;
         var subisode = list.querySelector('div.tick-sub').textContent;
         var dubisode = list.querySelector('div.tick-dub').textContent;
 
-        let eps = ``;
-        if(total){
-            eps =  `${cleanText(subisode)}/${cleanText(total)}`;
-        } else if (dubisode) {
-            eps = `${cleanText(subisode)}/${cleanText(dubisode)}`;
-        } else {
-            eps = `${cleanText(subisode)}`;
-        }
+        var eps = total && subisode ? `${cleanText(subisode)}/${cleanText(total)}`
+            : subisode && dubisode ? `${cleanText(subisode)}/${cleanText(dubisode)}`
+            : subisode ? `${cleanText(subisode)}`
+            : dubisode ? `${cleanText(dubisode)}`
+            : '';
 
-        let language = '';
-        if(ticks.length > 1 && ticks[0].classList.contains('tick-sub') && ticks[1].classList.contains('tick-dub')){
-            language = 'SUB/DUB';
-        } else if(ticks[0].classList.contains('tick-sub')){
-            language = 'SUB';
-        } else if(ticks[1].classList.contains('tick-dub')){
-            language = 'DUB';
-        }
+		var [tickSub, tickDub] = ticks;
+        var language = ticks.length > 1 && tickSub.classList.contains('tick-sub') && tickDub.classList.contains('tick-dub') ? 'SUB/DUB'
+            : tickSub.classList.contains('tick-sub') ? 'SUB'
+            : tickDub.classList.contains('tick-dub') ? 'DUB'
+            : '';
 
-        Popular.push(new Data(image, title, '', eps, language, '', '', false, link, false));
+        return new Data(image, title, '', eps, language, '', '', false, link, false);
     } catch (error) {
         console.log(error);
     }
-}
+});
 
-var NewAnimes = [];
+
 var newArray = Array.from(document.querySelectorAll('div.block_area_home') || []);
-newArray.filter((e) => e.querySelector('.cat-heading').innerText.includes('New')).pop()?.querySelectorAll('.flw-item') || [];
-for (let list of newArray) {
+var filteredArray = newArray.filter((e) => e.querySelector('.cat-heading').innerText.includes('New')).pop()?.querySelectorAll('.flw-item') || [];
+
+var NewAnimes = filteredArray.map(list => {
     try {
-        let ticks =  list.querySelectorAll('.tick.ltr div.tick-item');
-        let title = list.querySelector('img').alt;
-        let link = cleanUrl(list.querySelector('a').href); link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-        let image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+        var ticks = Array.from(list.querySelectorAll('.tick.ltr div.tick-item'));
+        var title = list.querySelector('img').alt;
+        const link = quickRequest(cleanUrl(list.querySelector('a').href), true);
+        var image = quickRequest(list.querySelector('img').src);
         var total = list.querySelector('div.tick-eps').textContent;
         var subisode = list.querySelector('div.tick-sub').textContent;
         var dubisode = list.querySelector('div.tick-dub').textContent;
 
-        let eps = ``;
-        if(total){
-            eps =  `${cleanText(subisode)}/${cleanText(total)}`;
-        } else if (dubisode) {
-            eps = `${cleanText(subisode)}/${cleanText(dubisode)}`;
-        } else {
-            eps = `${cleanText(subisode)}`;
-        }
+        var eps = total ? `${cleanText(subisode)}/${cleanText(total)}`
+            : dubisode && subisode ? `${cleanText(subisode)}/${cleanText(dubisode)}`
+            : subisode ? `${cleanText(subisode)}` : dubisode ? `${cleanText(dubisode)}` : '';
 
-        let language = '';
-        if(ticks.length > 1 && ticks[0].classList.contains('tick-sub') && ticks[1].classList.contains('tick-dub')){
-            language = 'SUB/DUB';
-        } else if(ticks[0].classList.contains('tick-sub')){
-            language = 'SUB';
-        } else if(ticks[1].classList.contains('tick-dub')){
-            language = 'DUB';
-        }
+		var [tickSub, tickDub] = ticks;
+        var language = ticks.length > 1 && tickSub.classList.contains('tick-sub') && tickDub.classList.contains('tick-dub') ? 'SUB/DUB'
+            : tickSub.classList.contains('tick-sub') ? 'SUB'
+            : tickDub.classList.contains('tick-dub') ? 'DUB'
+            : '';
 
-        NewAnimes.push(new Data(image, title, '', eps, language, '', '', false, link));
-    } catch(e){
-        console.log(e)
+        return new Data(image, title, '', eps, language, '', '', false, link);
+    } catch (error) {
+        console.log(error);
     }
-    
-}
+});
 
-let Weekly = [ ];
-var weeklyArray = document.querySelectorAll('#top-viewed-week > ul > li');
-for (let list of weeklyArray) {
-    try {
-        let title = list.querySelector('img').alt;
-        let link = cleanUrl(list.querySelector('a').href); link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-        let image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-        // let views = '??';
-        Weekly.push(new Data(image, title, '', '', '', '', '', false, link));
-    } catch(e) {
-        console.log(e)
-    }
-}
+let weeklyArray = Array.from(document.querySelectorAll('#top-viewed-week > ul > li'));
+let Weekly = weeklyArray.map(list => {
+	var title = list.querySelector('img').alt;
+	const link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
 
-let layout = new Layout(new Insets(0, 0, 0, 0), 1, 1, 1, 1, 0, new Size(400, 105), new Ratio('width', 6, 10), new Size(0, 0), 0, 0);
-let layout1 = new Layout(new Insets(0, 0, 10, 10), 1, 1, 1, 1, 0, new Size(400, 105), new Ratio('width', 6, 10), new Size(0, 0), 0, 0);
+	return new Data(image, title, '', '', '', '', '', false, link);
+});
 
-output.push(new Output(CellDesings.Special3, Orientation.horizontal, DefaultLayouts.wideStrechedFull, Paging.leading, new Section('', true), layout, shuffle(sliderArray)));
+let layout = createLayout(new Insets(0, 0, 0, 0), new Size(400, 105), new Ratio('width', 6, 10));
+let layout1 = createLayout(new Insets(0, 0, 10, 10), new Size(400, 105), new Ratio('width', 6, 10));
+
+output.push(new Output(CellDesings.Special3, Orientation.horizontal, DefaultLayouts.wideStrechedFull, Paging.leading, new Section('', true), layout, sliderArray));
 
 output.push(new Output(CellDesings.Special1, Orientation.horizontal, DefaultLayouts.triplets, Paging.none, new Section('Top Airing : ', true), null, TopAiring));
 output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Last Episodes: ', true), null, LastEpisodes));
@@ -339,19 +330,11 @@ output.push(new Output(CellDesings.normal2, Orientation.horizontal, DefaultLayou
 
 let date = new Date();
 let year = date.getFullYear();
-let day = date.getDate();
-let month = date.getMonth() + 1;
+let day = date.getDate().toString().padStart(2, '0');
+let month = (date.getMonth() + 1).toString().padStart(2, '0');
 let timezoneOffset = date.getTimezoneOffset();
-
-if (month < 10) {
-    month = '0' + month;
-}
-if (day < 10) {
-    day = '' + '0' + day
-}
 
 let nextRequest = `https://hianime.to/ajax/schedule/list?tzOffset=${timezoneOffset}&date=${year}-${month}-${day}`;
 let MainPageObject = new MainPage(new ModuleRequest(nextRequest, 'get', XHRequest, null), new Extra([ new Commands('', emptyKeyValue) ], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
-let finalJson = JSON.stringify(MainPageObject);
+var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;
-window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');
