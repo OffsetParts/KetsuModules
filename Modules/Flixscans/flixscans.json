@@ -6,9 +6,9 @@
     "developer": "Scrumptious",
     "moduleID": "20240611",
     "moduleImage": "https://ayoub-zrr.xyz/storage/en/favicon.ico",
-    "moduleVersion": 1.13,
+    "moduleVersion": 1.14,
     "moduleLenguage": "ENG",
-    "changelog":"Updated the domain",
+    "changelog":"Updated the domain again...",
     "moduleType": "Image",
     "baseURL": "https://ayoub-zrr.xyz/webtoons/action/home",
     "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
@@ -42,7 +42,7 @@
   "mainPage": [
     {
       "request": {
-        "url": "https://flixscans.org/webtoons/action/home",
+        "url": "https://ayoub-zrr.xyz/webtoons/action/home",
         "method": "get",
         "headers": [
           {
