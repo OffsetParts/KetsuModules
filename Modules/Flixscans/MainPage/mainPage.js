@@ -229,7 +229,7 @@ let Poster = new Layout(
 // Popular
 let TodaySpecials = Array.from(document.querySelectorAll('.p-2 .overflow-auto > *')).map(list => {
 	const title = cleanText(list.querySelector('[dir=\"ltr\"]').textContent);
-	const link = quickRequest(list.querySelector('a').href, true);
+	const link = quickRequest(list.href, true);
 	const image = quickRequest(list.querySelector('img').src);
 
 	return new Data(image, title, '', '', '', '', '', false, link);

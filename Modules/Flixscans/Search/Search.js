@@ -217,21 +217,29 @@ var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML); 
 let emptyKeyValue = [new KeyValue('','')];
 
-var lastAdded = document.querySelectorAll('.grid-cols-1 > div');
-let lastAddedArray = [];
-
-lastAdded.forEach(iteration => {
+let lastAddedArray = Array.from(document.querySelectorAll('.grid-cols-1 > div')).map(iteration => {
     try {
-        const title = cleanText(iteration.querySelector('[dir=\"ltr\"]').textContent);
-        const image = quickRequest(iteration.querySelector('img').src);
-        const link = quickRequest(iteration.querySelector('a').href, true);
-        const lchapter = cleanText(iteration.querySelector( 'li a' ).textContent);
+        const titleElement = iteration.querySelector('[dir=\"ltr\"]');
+        const imageElement = iteration.querySelector('img');
+        const linkElement = iteration.querySelector('a');
+        const lchapterElement = iteration.querySelector('li a');
 
-        lastAddedArray.push(new Data(image, title, lchapter, '', '', '', '', false, link));
+        if (!titleElement || !imageElement || !linkElement || !lchapterElement) {
+            throw new Error('One or more elements are missing in this iteration.');
+        }
+
+        const title = cleanText(titleElement.textContent);
+        const image = quickRequest(imageElement.src);
+        const link = quickRequest(linkElement.href, true);
+        const lchapter = cleanText(lchapterElement.textContent);
+
+        return new Data(image, title, lchapter, '', '', '', '', false, link);
     } catch (error) {
         console.error('Error processing iteration:', error);
+        return null; // Return null or a specific error object to handle errors.
     }
-});
+}).filter(item => item !== null); // Filter out null values resulting from errors.
+
 
 output.push(new Output(CellDesings.wide8, Orientation.vertical, DefaultLayouts.none, Paging.none, new Section('', false), searchLayout, lastAddedArray));
 let searchPageObject = new Search(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), '', new JavascriptConfig(false, false, ''), output);
