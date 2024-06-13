@@ -200,7 +200,7 @@ function cleanText(str) {
 }
 
 function cleanUrl(url) {
-    return 'https://flixscans.org' + (url).trim();
+    return 'https://ayoub-zrr.xyz' + (url).trim();
 }
 
 function quickRequest(url, clean) {
