@@ -5,7 +5,11 @@
     "moduleDesc": "GalaxyAction Site Reader",
     "developer": "Scrumptious",
     "moduleID": "20240611",
+<<<<<<< HEAD:Modules/GalaxyAction/Galatic.json
     "moduleImage": "https://galaxyaction.net/storage/en/favicon.ico",
+=======
+    "moduleImage": "https://flixscans.net/storage/en/favicon.ico",
+>>>>>>> 872de3606d80777e19f8a04829947b1ff4229e1f:Modules/Flixscans/flixscans.json
     "moduleVersion": 1.16,
     "moduleLenguage": "ENG",
     "changelog":"Rebranding to GalaxyAction",
