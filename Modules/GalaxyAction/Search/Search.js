@@ -198,7 +198,7 @@ function cleanText(str) {
 }
 
 function cleanUrl(url) {
-    return 'https://flixscans.net' + (url).trim();
+    return 'https://galaxyaction.net' + (url).trim();
 }
 
 function quickRequest(url, clean) {

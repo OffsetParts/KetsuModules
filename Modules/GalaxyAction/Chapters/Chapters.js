@@ -44,9 +44,9 @@ var emptyKeyValue = [new KeyValue('', '')];
 var output = [];
 
 function getImages() {
-	var images = document.querySelectorAll('.mt-4 > .justify-center');
+	var images = document.querySelectorAll('.my-4 > .justify-center img');
 	for (var x = 0; x < images.length; x++) {
-		var img = images[x].querySelector('img').src;
+		var img = images[x].src;
 		output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
 	}
 	
