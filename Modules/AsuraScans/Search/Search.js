@@ -193,11 +193,21 @@ function Data(image,title,description,field1,field2,field3,field4,isChapter,link
 }
 
 // Functions
-function cleanText(obj) {
-	obj = obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
-	return obj;
+function cleanUrl(url) {
+	return 'https://asuracomic.net' + (url).trim();
 }
 
+function cleanText(str) {
+	return str.replace(/[\\n\\t]/g, '').trim();
+}
+
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
+}
 
 let output = [];
 
@@ -205,18 +215,15 @@ var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML); 
 let emptyKeyValue = [new KeyValue('','')];
 
-var lastAdded = document.querySelectorAll('.listupd .bs');
-let lastAddedArray = [];
-
-for(var x = 0; x < lastAdded.length; x++) {
-    var last  = lastAdded[x];
-    let title = last.querySelector('.bsx a').title;
-    var link  = last.querySelector('.bsx a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-    var image = last.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-    var lChap = cleanText('Last chapter : ' + last.querySelector('.adds .epxs').textContent);
-    let data  = new Data(image, title, lChap, 'Manhwa', '', '', '', false, link);
-    lastAddedArray.push(data);
-}
+const lastAdded = document.querySelectorAll('[class*=\"gap-3 p-4\"] a');
+const lastAddedArray = Array.from(lastAdded).map(last => {
+    const title = last.querySelector('span[class*=\"block\"]').textContent;
+    const link = quickRequest(last.href, true);
+    const image = quickRequest(last.querySelector('img').src);
+    const type = last.querySelector('span[class*=\"font-bold\"]').textContent;
+    const rating = cleanText('Rating : ' + last.querySelector('[class*=\"ml-1\"]').textContent); // used to last chapter but that is not available;
+    return new Data(image, title, rating, type, '', '', '', false, link);
+});
 
 var testLayout = new Layout(new Insets(10, 10, 10, 10), 1, 2, 3, 1, 500, new Size(400, 400), new Ratio('width', 4, 11), new Size(0, 0), 10, 10);
 output.push(new Output(CellDesings.wide8, Orientation.vertical, DefaultLayouts.none, Paging.none, new Section('', false), testLayout, lastAddedArray));

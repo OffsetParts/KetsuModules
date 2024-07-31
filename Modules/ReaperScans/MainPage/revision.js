@@ -299,4 +299,4 @@ async function startProcessing() {
 
 startProcessing();
 
-window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('finished');
+window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');

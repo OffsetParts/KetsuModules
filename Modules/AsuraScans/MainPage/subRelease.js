@@ -1,4 +1,5 @@
 // Style: MainPage
+
 const DefaultLayouts = {
 	ultraWideFull: 'ultraWideFull',
 	ultraWide: 'ultraWide',
@@ -186,24 +187,6 @@ function Data(image, title, description, field1, field2, field3, field4, isChapt
 	this.openInWebView = openInWebView;
 }
 
-//Init
-var savedData = document.getElementById('ketsu-final-data');
-var parsedJson = JSON.parse(savedData.innerHTML);
-
-var emptyKeyValue = [new KeyValue('', '')];
-var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
-let emptyExtra = new Extra(commands, emptyKeyValue);
-
-// Functions
-
-function scaleImg(img) {
-	return img.replaceAll('130x170', '530x650').replaceAll('-222x300', '');
-}
-
-function cleanText(str) {
-    return str.replace(/[\\n\\t]/g, '').trim();
-}
-
 // Custom Layouts
 let Poster = new Layout(
 	new Insets(5, 5, 10, 10), // insets
@@ -219,80 +202,78 @@ let Poster = new Layout(
 	15 // verticalSpacing
 );
 
+//Init
+var savedData = document.getElementById('ketsu-final-data');
+var parsedJson = JSON.parse(savedData.innerHTML);
 
-// Greatests of All Time
-let GOATs = [];
-goats = document.querySelectorAll('.wpop-alltime li');
-for (list of goats) {
-	let title = list.querySelector('h2').textContent;
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+var emptyKeyValue = [new KeyValue('', '')];
+var commands = [new Commands('helperFunctions', [new KeyValue('isCustomRequest', 'true')])];
+let emptyExtra = new Extra(commands, emptyKeyValue);
 
-	var genres = list.querySelector('div.leftseries > span').textContent;
-	var rating = ('Rating : ' + cleanText(list.querySelector('.numscore').textContent));
-	GOATs.push(new Data(image, title, genres, '', rating, '', '', false, link));
+// Functions
+
+function cleanUrl(url) {
+	return 'https://asuracomic.net' + (url).trim();
 }
 
-let Monthly = [];
-months = document.querySelectorAll('.wpop-monthly li');
-for (list of months) {
-	let title = list.querySelector('h2').textContent;
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-
-	let genresElm = list.querySelector('div.leftseries > span');
-	let genres = genresElm ? genresElm.textContent : '';
-
-	var rating = ('Rating : ' + cleanText(list.querySelector('.numscore').textContent));
-	Monthly.push(new Data(image, title, genres, '', rating, '', '', false, link));
+function cleanText(str) {
+	return str.replace(/[\\n\\t]/g, '').trim();
 }
 
-let Weekly = [];
-weeks = document.querySelectorAll('.wpop-weekly li');
-for (list of weeks) {
-	let title = list.querySelector('h2').textContent;
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-
-	let genresElm = list.querySelector('div.leftseries > span');
-	let genres = genresElm ? genresElm.textContent : '';
-
-	var rating = ('Rating : ' + cleanText(list.querySelector('.numscore').textContent));
-	Weekly.push(new Data(image, title, genres, '', rating, '', '', false, link));
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
 }
+
+// Update: 7/25/2024
+/* Asura changed their site so not all top lists load at once (weekly list defaulted)
+Hence only weekly will be displayed for now*/
+
+const weeklyElm = document.querySelectorAll('[id*=\"weekly\"] > div');
+let WeeklyList = Array.from(weeklyElm).map(list => {
+	let title = cleanText(list.querySelector('span a').textContent);
+	var link = quickRequest(list.querySelector('span a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
+	/* var genres = Array.from(list.querySelector('span p').querySelectorAll('a')).map(g => cleanText(g.textContent)); just for testing
+	var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"999\"]').textContent); */
+
+	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
+});
 
 // Popular
-let Popular = [];
-pops = document.querySelectorAll('.hothome div.bs');
-for (list of pops) {
-	let title = cleanText(list.querySelector('.tt').textContent);
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = list.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-	// var ep = list.querySelector('.epxs').outerText;
-	Popular.push(new Data(image, title, '', '', '', '', '', false, link));
-}
+const popularElm = document.querySelectorAll('div.hidden > [class*=\"p-1.5\"]');
+let Popular = Array.from(popularElm).map(list => {
+	let title = cleanText(list.querySelector('span.block').textContent);
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
+	
+	/* var ep = list.querySelector('[class*=\"13px\"]').textContent;
+	var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"12px\"]').textContent); */
+
+	return new Data(image, title, '1', '2', '3', '4', '5', false, link);
+});
 
 // Latest Chapters
-let Latests = [];
-latestChapters = document.querySelectorAll('div.uta');
-for (list of latestChapters) {
-	let title = list.querySelector('h4').textContent; 
-	var link = list.querySelector('a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-	var image = scaleImg(list.querySelector('img').src); image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+const latestElms = document.querySelectorAll('[class*=\"w-full p-1\"]');
+let Latests = Array.from(latestElms).map(list => {
+	let title = cleanText(list.querySelector('span').textContent);
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
 
-	var ep = list.querySelector('ul li a').textContent;
-    var udate = list.querySelector('ul li span').textContent;
+	var ep = cleanText(list.querySelector('a span').textContent);
+	// var udate = list.querySelector('p').textContent;
 
-	Latests.push(new Data(image, title, ep, udate, '', '', '', false, link));
-}
+	return new Data(image, title, ep, '', '1', '2', '3', false, link);
+});
 
 let output = [];
-output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATs));
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section('Monthly', false), null, Monthly));
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, Weekly));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, WeeklyList));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
 output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
-let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
+let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), emptyExtra, new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;

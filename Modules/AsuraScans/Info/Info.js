@@ -53,12 +53,21 @@ function Output(image, title, link, description, genres, field1, field2, field3,
 }
 
 // Functions
-function cleanText(str) {
-    return str.replace(/[\\n\\t]/g, '').replaceAll('”', '\"').replaceAll('“', '\"');
+
+function cleanUrl(url) {
+	return 'https://asuracomic.net' + (url).trim();
 }
 
-function sleep(milliseconds) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
+function cleanText(str) {
+	return str.replace(/[\\n\\t]/g, '').trim();
+}
+
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
 }
 
 /* function testFormat(str) {
@@ -95,30 +104,24 @@ var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
 
-var genres = []; genres = Array.from(document.querySelectorAll('.wd-full a')).map(g => g.textContent);
-var status = document.querySelector('div.tsinfo > div:nth-child(1) i').textContent;
-var type = document.querySelector('div.tsinfo > div:nth-child(2) a').textContent;
+var genres = Array.from(document.querySelectorAll('[class*=\"flex flex-row flex-wrap gap-3\"] > button')).map(g => g.textContent);
+var state = document.querySelector('h3[class*=\"capitalize\"]').textContent;
+var type = document.querySelector('h3[class*=\"text-white hover:text-themecolor\"]').textContent;
 
-var synopsis = [];
-synopsis = getText( document.querySelector( '[itemprop=\"description\"]'), synopsis);
+var synopsis = getText(document.querySelector( 'span[class*=\"A2A2A2\"]'));
 
-var title = cleanText(document.querySelector('.entry-title').textContent);
-var image = document.querySelector('.thumb img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-var chapters = document.querySelectorAll('.clstyle li');
+var title = cleanText(document.querySelector('[class*=\"text-xl\"]').textContent);
+var image = quickRequest(document.querySelector('[alt=\"poster\"]').src);
+var chapterElms = document.querySelectorAll('div[class*=\"border-[#A2A2A2]/20\"]');
 
-var episodes = [];
-for (let x = chapters.length - 1; x >= 0; x--) {
-    var element = chapters[x];
+var chapters = Array.from(chapterElms) // Convert NodeList to Array
+    .map((element, index) => {
+        var link = element.querySelector('a').href;
+        let chapter = new Chapter('Chapter ' + (chapterElms.length - index), quickRequest(link, true), false);
+        return chapter;
+    })
+    .reverse(); // Reverse the array to maintain the original order // Reverse the array to maintain the original order
 
-    if (!element) {
-        continue; // Skip this iteration if element is undefined
-    }
-
-    var link = element.querySelector('a').href;
-    let chapter = new Chapter('Chapter ' + (chapters.length - x), new ModuleRequest(link, 'get', emptyKeyValue, null), false);
-    episodes.push(chapter);
-}
-
-let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, status, type, '', 'Chapters : ' + episodes.length, episodes));
+let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, state, type, '', 'Chapters : ' + chapters.length, chapters));
 var finalJson = JSON.stringify(infoPageObject);
 savedData.innerHTML = finalJson;

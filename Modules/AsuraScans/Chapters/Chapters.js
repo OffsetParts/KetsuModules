@@ -44,12 +44,10 @@ var emptyKeyValue = [new KeyValue('', '')];
 var output = [];
 
 function getImages() {
-	var images = document.querySelectorAll('.rdminimal img');
-	for (var x = 0; x < images.length; x++) {
-		var img = images[x].src;
-		output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
-	}
-	
+	const images = document.querySelectorAll('[alt=\"chapter\"]');
+	output = Array.from(images).map(image => 
+		new ModuleRequest(image.src, 'get', emptyKeyValue, null)
+	);
 	return output;
 }
 
