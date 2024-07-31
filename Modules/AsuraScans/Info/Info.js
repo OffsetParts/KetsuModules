@@ -55,7 +55,7 @@ function Output(image, title, link, description, genres, field1, field2, field3,
 // Functions
 
 function cleanUrl(url) {
-	return 'https://asuracomic.net' + (url).trim();
+	return 'https://asuracomic.net/series' + (url).trim();
 }
 
 function cleanText(str) {
