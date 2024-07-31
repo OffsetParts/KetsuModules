@@ -194,7 +194,7 @@ function Data(image,title,description,field1,field2,field3,field4,isChapter,link
 
 // Functions
 function cleanUrl(url) {
-	return 'https://asuracomic.net' + (url).trim();
+	return 'https://asuracomic.net/' + (url).trim();
 }
 
 function cleanText(str) {

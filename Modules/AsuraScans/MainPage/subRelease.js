@@ -213,7 +213,7 @@ let emptyExtra = new Extra(commands, emptyKeyValue);
 // Functions
 
 function cleanUrl(url) {
-	return 'https://asuracomic.net' + (url).trim();
+	return 'https://asuracomic.net/' + (url).trim();
 }
 
 function cleanText(str) {
