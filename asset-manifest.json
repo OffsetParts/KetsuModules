@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/KetsuModules/static/css/main.f855e6bc.css",
-    "main.js": "/KetsuModules/static/js/main.10fe911a.js",
-    "static/js/453.ed3810f9.chunk.js": "/KetsuModules/static/js/453.ed3810f9.chunk.js",
-    "static/media/logo.svg": "/KetsuModules/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/KetsuModules/index.html",
-    "main.f855e6bc.css.map": "/KetsuModules/static/css/main.f855e6bc.css.map",
-    "main.10fe911a.js.map": "/KetsuModules/static/js/main.10fe911a.js.map",
-    "453.ed3810f9.chunk.js.map": "/KetsuModules/static/js/453.ed3810f9.chunk.js.map"
+    "main.css": "/static/css/main.e6c13ad2.css",
+    "main.js": "/static/js/main.cc201a3a.js",
+    "static/js/453.ed3810f9.chunk.js": "/static/js/453.ed3810f9.chunk.js",
+    "index.html": "/index.html",
+    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
+    "main.cc201a3a.js.map": "/static/js/main.cc201a3a.js.map",
+    "453.ed3810f9.chunk.js.map": "/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f855e6bc.css",
-    "static/js/main.10fe911a.js"
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.cc201a3a.js"
   ]
 }
