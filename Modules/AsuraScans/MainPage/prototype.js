@@ -1,7 +1,5 @@
 // Style: MainPage
 
-var Cleared = 0;
-
 const DefaultLayouts = {
 	ultraWideFull: 'ultraWideFull',
 	ultraWide: 'ultraWide',
@@ -219,7 +217,7 @@ let emptyExtra = new Extra(commands, emptyKeyValue);
 } */
 
 function cleanUrl(url) {
-	return 'https://asuracomic.net' + (url).trim();
+	return 'https://asuracomic.net/' + (url).trim();
 }
 
 function cleanText(str) {
@@ -234,43 +232,28 @@ function quickRequest(url, clean) {
 	}
 }
 
-/* async function wait(ms) {
+async function wait(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function waitForAllElmWith(substring) {
-	await wait(5000);
-	return new Promise((resolve) => {
-		// Check if the element is already in the DOM
-		const existingElement = document.querySelectorAll(substring);
-		if (existingElement) {
-			Cleared += 1;
-			resolve(existingElement);
-		}
+async function getElement(selector, ms, maxTries) {
+    return new Promise((resolve, reject) => {
+        let attempts = 0;
 
-		// Create a MutationObserver to watch for changes in the DOM
-		const observer = new MutationObserver((mutations, obs) => {
-			for (let mutation of mutations) {
-				if (mutation.type === 'childList') {
-					const newElement = document.querySelectorAll(substring);
-					if (newElement) {
-						obs.disconnect(); // Stop observing once the element is found
-						Cleared += 1;
-						resolve(newElement);
-					} else {
-						throw new Error('Element not found');
-					}
-				}
-			}
-		});
+        const interval = setInterval(() => {
+            const element = document.querySelector(selector);
+            attempts++;
 
-		// Start observing the document body for changes
-		observer.observe(document.body, {
-			childList: true,
-			subtree: true
-		});
-	});
-} */
+            if (element) {
+                clearInterval(interval);
+                resolve(element);
+            } else if (attempts >= maxTries) {
+                clearInterval(interval);
+                reject(new Error(`Element with selector \"${selector}\" not found within ${maxTries} tries`));
+            }
+        }, ms);
+    });
+}
 
 
 // Update: 7/25/2024
@@ -279,8 +262,11 @@ Hence only weekly will be displayed for now with an addition of the featured sec
 
 
 // Featured // nvm featured doesn't seem to work properly
-/* let Featured = await waitForAllElmWith('.animated > [class*=\"slide\"]').then((featuredElms) => {
-	Featured = Array.from(featuredElms).map(list => { 
+(async () => {
+try{
+	var featuredParent = document.querySelector('.animated');
+	let featuredElms = await getElement('.animated [class*=\"slide\"]', 500, 20);
+	let Featured = Array.from(featuredParent.querySelectorAll('li')).map(list => { 
 		let title = cleanText(list.querySelector('span a').textContent);
 		var link = quickRequest(list.querySelector('span a').href, true);
 		var image = quickRequest(list.querySelector('img').src);
@@ -288,53 +274,56 @@ Hence only weekly will be displayed for now with an addition of the featured sec
 		console.log(rating, title);
 
 		return new Data(image, title, '1', '2', '3', '4', '5', false, link);
-	
 	});
-}); */
 
-const weeklyElm = document.querySelectorAll('[id*=\"weekly\"] > div');
-let WeeklyList = Array.from(weeklyElm).map(list => {
-	let title = cleanText(list.querySelector('span a').textContent);
-	var link = quickRequest(list.querySelector('span a').href, true);
-	var image = quickRequest(list.querySelector('img').src);
-	/* var genres = Array.from(list.querySelector('span p').querySelectorAll('a')).map(g => cleanText(g.textContent)); just for testing
-	var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"999\"]').textContent); */
+	const weeklyElm = document.querySelectorAll('[id*=\"weekly\"] > div');
+	let WeeklyList = Array.from(weeklyElm).map(list => {
+		let title = cleanText(list.querySelector('span a').textContent);
+		var link = quickRequest(list.querySelector('span a').href, true);
+		var image = quickRequest(list.querySelector('img').src);
+		/* var genres = Array.from(list.querySelector('span p').querySelectorAll('a')).map(g => cleanText(g.textContent)); just for testing
+		var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"999\"]').textContent); */
 
-	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
-});
+		return new Data(image, title, '0', '1', '2', '3', '4', false, link);
+	});
 
-// Popular
-const popularElm = document.querySelectorAll('div.hidden > [class*=\"p-1.5\"]');
-let Popular = Array.from(popularElm).map(list => {
-	let title = cleanText(list.querySelector('span.block').textContent);
-	var link = quickRequest(list.querySelector('a').href, true);
-	var image = quickRequest(list.querySelector('img').src);
-	
-	/* var ep = list.querySelector('[class*=\"13px\"]').textContent;
-	var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"12px\"]').textContent); */
+	// Popular
+	const popularElm = document.querySelectorAll('div.hidden > [class*=\"p-1.5\"]');
+	let Popular = Array.from(popularElm).map(list => {
+		let title = cleanText(list.querySelector('span.block').textContent);
+		var link = quickRequest(list.querySelector('a').href, true);
+		var image = quickRequest(list.querySelector('img').src);
+		
+		/* var ep = list.querySelector('[class*=\"13px\"]').textContent;
+		var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"12px\"]').textContent); */
 
-	return new Data(image, title, '1', '2', '3', '4', '5', false, link);
-});
+		return new Data(image, title, '1', '2', '3', '4', '5', false, link);
+	});
 
-// Latest Chapters
-const latestElms = document.querySelectorAll('[class*=\"w-full p-1\"]');
-let Latests = Array.from(latestElms).map(list => {
-	let title = cleanText(list.querySelector('span').textContent);
-	var link = quickRequest(list.querySelector('a').href, true);
-	var image = quickRequest(list.querySelector('img').src);
+	// Latest Chapters
+	const latestElms = document.querySelectorAll('[class*=\"w-full p-1\"]');
+	let Latests = Array.from(latestElms).map(list => {
+		let title = cleanText(list.querySelector('span').textContent);
+		var link = quickRequest(list.querySelector('a').href, true);
+		var image = quickRequest(list.querySelector('img').src);
 
-	var ep = cleanText(list.querySelector('a span').textContent);
-	// var udate = list.querySelector('p').textContent;
+		var ep = cleanText(list.querySelector('a span').textContent);
+		// var udate = list.querySelector('p').textContent;
 
-	return new Data(image, title, ep, '', '1', '2', '3', false, link);
-});
+		return new Data(image, title, ep, '', '1', '2', '3', false, link);
+	});
 
-let output = [];
-output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('Featured', false), Poster, Featured));
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, WeeklyList));
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
-output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
+	let output = [];
+	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('Featured', false), Poster, Featured));
+	output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, WeeklyList));
+	output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
+	output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
-let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), emptyExtra, new JavascriptConfig(true, false, ''), output);
-var finalJson = JSON.stringify(MainPageObject);
-savedData.innerHTML = finalJson;
+
+	let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), emptyExtra, new JavascriptConfig(true, false, ''), output);
+	var finalJson = JSON.stringify(MainPageObject);
+	savedData.innerHTML = finalJson;
+} catch (e) {
+	console.error(e);
+}});
+window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');

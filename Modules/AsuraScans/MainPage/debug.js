@@ -285,3 +285,13 @@ output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayou
 let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), emptyExtra, new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;
+
+var found = undefined;
+document.querySelectorAll("script").forEach((el) => {
+        let text = el.innerHTML;
+        if ( text.match("self.__next_f.push") && text.includes("summary") && found == undefined) {
+                found = text.replaceAll('\"',"");
+        }
+})
+
+console.log(found)

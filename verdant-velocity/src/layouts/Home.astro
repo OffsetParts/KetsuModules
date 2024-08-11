@@ -1,0 +1,17 @@
+---
+import "../assets/styling/css.css"
+import { Navigation } from "../components/Navigation"
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<Navigation />
+		<slot/>
+	</body>
+</html>

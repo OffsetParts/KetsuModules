@@ -59,7 +59,8 @@ function cleanUrl(url) {
 }
 
 function cleanText(str) {
-	return str.replace(/[\\n\\t]/g, '').trim();
+    str.replace(/[\"'&<>]/g, '\\$&'); // escape special characters
+	return str.replace(/[\\n\\t]/g, '').trim(); // cleanup
 }
 
 function quickRequest(url, clean) {
@@ -69,25 +70,6 @@ function quickRequest(url, clean) {
 		return new ModuleRequest(url, 'get', emptyKeyValue, null);
 	}
 }
-
-/* function testFormat(str) {
-    let hasSpecialChar = false;
-    let specialChars = [];
-
-    for (let i = 0; i < str.length; ++i) {
-        let ch = str.charCodeAt(i);
-        if (((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch >= 48 && ch <= 57))) {
-            hasSpecialChar = true;
-            specialChars.push(`Detected char: ${ch} at index: ${i}`);
-        }
-    }
-
-    if (hasSpecialChar) {
-        console.log(specialChars.join('\\n'));
-    }
-
-    return hasSpecialChar;
-} */
 
 function getText(node, accumulator = []) {
     if (node.nodeType === Node.TEXT_NODE) {
