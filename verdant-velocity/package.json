@@ -1,8 +1,7 @@
 {
   "name": "verdant-velocity",
-  "homepage": "http://exiled.me/",
   "type": "module",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

@@ -4,10 +4,8 @@ import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
-export default defineConfig({
-  site: 'http://exiled.me',
-  base: 'verdant-velocity',
+export default defineConfig({ 
   integrations: [react(), tailwind()],
-  output: "server",
+  output: "hybrid",
   adapter: vercel()
 });
