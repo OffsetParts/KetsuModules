@@ -8,6 +8,6 @@ export default defineConfig({
   site: 'http://exiled.me',
   base: 'verdant-velocity',
   integrations: [react(), tailwind()],
-  output: "hybrid",
+  output: "server",
   adapter: vercel()
 });
