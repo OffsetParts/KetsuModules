@@ -1,7 +1,7 @@
 import { renderers } from './renderers.mjs';
-import { g as getActionQueryString, d as deserializeActionResult, e as ensure404Route, a as default404Instance, D as DEFAULT_404_ROUTE, m as manifest } from './chunks/_@astrojs-manifest_jib3BI0D.mjs';
-import { A as AstroError, q as i18nNoLocaleFoundInPath, s as appendForwardSlash, t as joinPaths, R as ResponseSentError, u as MiddlewareNoDataOrNextCalled, v as MiddlewareNotAResponse, G as GetStaticPathsRequired, w as InvalidGetStaticPathsReturn, x as InvalidGetStaticPathsEntry, y as GetStaticPathsExpectedParams, z as GetStaticPathsInvalidRouteParam, B as trimSlashes, P as PageNumberParamNotFound, C as NoMatchingStaticPathFound, H as PrerenderDynamicEndpointPathCollide, J as ReservedSlotName, L as LocalsNotAnObject, K as PrerenderClientAddressNotAvailable, Q as ClientAddressNotAvailable, S as StaticClientAddressNotAvailable, T as RewriteWithBodyUsed, U as AstroResponseHeadersReassigned, V as fileExtension, W as slash, X as prependForwardSlash, Y as removeTrailingForwardSlash } from './chunks/astro/assets-service_hu8gJn31.mjs';
-import { R as ROUTE_TYPE_HEADER, g as REROUTE_DIRECTIVE_HEADER, h as createSlotValueFromString, r as renderTemplate, e as renderComponent, D as DEFAULT_404_COMPONENT, i as renderSlotToString, j as renderJSX, k as chunkToString, l as isRenderInstruction, n as clientLocalsSymbol, o as clientAddressSymbol$1, A as ASTRO_VERSION, p as responseSentSymbol$1, q as renderPage, t as REWRITE_DIRECTIVE_HEADER_KEY, u as REWRITE_DIRECTIVE_HEADER_VALUE, v as renderEndpoint, w as REROUTABLE_STATUS_CODES } from './chunks/astro/server_D5x-W2HZ.mjs';
+import { g as getActionQueryString, d as deserializeActionResult, e as ensure404Route, a as default404Instance, D as DEFAULT_404_ROUTE, m as manifest } from './chunks/_@astrojs-manifest_DxXjmm3q.mjs';
+import { A as AstroError, q as i18nNoLocaleFoundInPath, s as appendForwardSlash, t as joinPaths, R as ResponseSentError, u as MiddlewareNoDataOrNextCalled, v as MiddlewareNotAResponse, G as GetStaticPathsRequired, w as InvalidGetStaticPathsReturn, x as InvalidGetStaticPathsEntry, y as GetStaticPathsExpectedParams, z as GetStaticPathsInvalidRouteParam, B as trimSlashes, P as PageNumberParamNotFound, C as NoMatchingStaticPathFound, H as PrerenderDynamicEndpointPathCollide, J as ReservedSlotName, L as LocalsNotAnObject, K as PrerenderClientAddressNotAvailable, Q as ClientAddressNotAvailable, S as StaticClientAddressNotAvailable, T as RewriteWithBodyUsed, U as AstroResponseHeadersReassigned, V as fileExtension, W as slash, X as prependForwardSlash, Y as removeTrailingForwardSlash } from './chunks/astro/assets-service_DIrrV6bA.mjs';
+import { R as ROUTE_TYPE_HEADER, g as REROUTE_DIRECTIVE_HEADER, h as createSlotValueFromString, r as renderTemplate, e as renderComponent, D as DEFAULT_404_COMPONENT, i as renderSlotToString, j as renderJSX, k as chunkToString, l as isRenderInstruction, n as clientLocalsSymbol, o as clientAddressSymbol$1, A as ASTRO_VERSION, p as responseSentSymbol$1, q as renderPage, t as REWRITE_DIRECTIVE_HEADER_KEY, u as REWRITE_DIRECTIVE_HEADER_VALUE, v as renderEndpoint, w as REROUTABLE_STATUS_CODES } from './chunks/astro/server_CVtHo3X7.mjs';
 import { serialize, parse } from 'cookie';
 import { bold, red, yellow, dim, blue } from 'kleur/colors';
 import 'clsx';
@@ -2640,7 +2640,7 @@ const _manifest = Object.assign(manifest, {
     middleware: onRequest
 });
 const _args = {
-    "middlewareSecret": "81d610f0-c837-4735-abbd-3612049a16aa",
+    "middlewareSecret": "7bd52b25-ebce-4509-9caf-a4d04db41dc5",
     "skewProtection": false
 };
 const _exports = createExports(_manifest, _args);
