@@ -44,7 +44,7 @@ var emptyKeyValue = [new KeyValue('', '')];
 var output = [];
 
 function getImages() {
-	const images = document.querySelectorAll('[alt=\"chapter\"]');
+	const images = document.querySelectorAll('[alt=\"chapter page\"]');
 	output = Array.from(images).map(image => 
 		new ModuleRequest(image.src, 'get', emptyKeyValue, null)
 	);

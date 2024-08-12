@@ -8,6 +8,10 @@ export const Main = () => {
             <section id="information">
                 <Bento />
             </section>
+
+            <section id="Zetsu">
+                
+            </section>
         </div>
 
     )

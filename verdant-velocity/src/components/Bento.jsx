@@ -6,14 +6,14 @@ import { useLanyard } from "react-use-lanyard";
 
 export const Bento = () => {
     return (
-        <div className="min-h-screen bg-zinc-900 py-12 text-zinc-50 flex justify-center items-center">
+        <div className="min-h-screen bg-zinc-950 py-12 text-zinc-50 flex justify-center items-center">
             <div className="mx-auto grid max-w-4xl grid-cols-12 gap-2">
                 <Header />
                 <Projects />
-                <Experience />
+                {/* <Experience /> */}
+                {/* <NowPlaying /> */}
+                <FeaturedProjects />
                 <Contact />
-                <NowPlaying />
-                <UpcomingProjects />
             </div>
         </div>
     )
@@ -44,7 +44,7 @@ const Block = ({ className, ...rest }) => {
             initial="hidden"
             animate={control}
             className={twMerge(
-                "col-span-4 border rounded border-zinc-700 hover:border-indigo-400 bg-zinc-800 p-3",
+                "col-span-4 border rounded border-zinc-700 hover:border-red-600 bg-zinc-900 p-3",
                 className
             )}
             {...rest}
@@ -54,16 +54,16 @@ const Block = ({ className, ...rest }) => {
 
 const Header = () => (
     <Block className="row-span-2 md:col-span-7">
-        <h1 className="mb-10 text-3xl font-medium leading-tight">i <span className="text-rose-400">procrastinate</span> quite a bit</h1>
+        <h1 className="mb-10 text-3xl font-medium leading-tight"> <span className="text-red-600">Welcome</span> to ZKetsu no Kaisen</h1>
     </Block>
 )
 
 const Projects = () => (
     <Block className="row-span-2 md:col-span-5">
-        <h1 className="mb-3 text-2xl font-medium leading-tight">Projects</h1>
+        <h1 className="mb-3 text-2xl font-medium leading-tight">Modules</h1>
         <ul>
-            <p><a href="https://github.com/HeyDadCoolWhip/quote"><span className="text-indigo-500 hover:text-indigo-300 hover:underline">Quote</span></a> - A quote grabber made for a CS class</p>
-            <p><span className="text-indigo-500">mke</span> - This website</p>
+            <p><a href="#Ketsu"><span className="text-indigo-500 hover:text-indigo-300 hover:underline">Ketsu</span></a> </p>
+            <p><a href="#Katsu"><span className="text-indigo-500">Katsu</span></a> </p>
         </ul>
     </Block>
 )
@@ -97,8 +97,8 @@ const Experience = () => {
 
 const Contact = () => {
     return (
-        <Block className="row-span-2 md:col-span-3">
-            <h1 className="text-2xl font-medium leading-tight"><a href="" className="text-[#6228d7] hover:underline decoration-white" >rikter</a> <br /> co-dev/friend <a className="text-yxn underline animate-wave" href="https://yxn.rikter.xyz/">yxn</a></h1>
+        <Block className="row-span-2 md:col-span-12">
+            <h1 className="text-2xl font-medium leading-tight"><a className="text-teal-400 hover:underline decoration-white" >Connections</a> <br /> Ketsu <a className="text-online underline animate-wave" href="https://ketsu.app">page</a></h1>
         </Block>
     )
 }
@@ -141,19 +141,21 @@ const NowPlaying = () => {
     )
 };
 
-const UpcomingProjects = () => (
+const FeaturedProjects = () => (
     <Block className="row-span-2 md:col-span-12">
-        <h1 className="mb-3 text-2xl font-medium leading-tight" >Upcoming Projects</h1>
+        <h1 className="mb-3 text-2xl font-medium leading-tight" >Featured Projects</h1>
         <ul className="pl-4">
             <p>
-                Sparrow - A Roblox tycoon with an isometric camera system to act as if a bird is overwatching a company
+                <span className="text-violet-600">Asurascans</span> - popular manga scanlation group
                 <br />
-                <b className="pl-4">Features</b>
-                <ul className="pl-6">
-                    - Isometric Camera system <span>&#40;</span> pretty much the only feature thats worth noting <span>&#41;</span>
-                </ul>
+                My proudest module for my favorite group, this is the module that started it all for me;
             </p>
-            <p>More soon</p>
+            <p>
+                <span className="text-red-500"> Flamescans </span> - another popular manga scanlation group
+            </p>
+            <p>
+                <span className="text-fuchsia-400"> Galaxyaction</span>, formerly flixscans - a more niche group with quality scanlations
+            </p>
         </ul>
     </Block>
 )
