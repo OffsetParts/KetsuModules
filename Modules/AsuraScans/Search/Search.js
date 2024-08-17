@@ -212,17 +212,18 @@ function quickRequest(url, clean) {
 let output = [];
 
 var savedData = document.getElementById('ketsu-final-data');
-var parsedJson = JSON.parse(savedData.innerHTML); 
+var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('','')];
 
 const lastAdded = document.querySelectorAll('[class*=\"gap-3 p-4\"] a');
-const lastAddedArray = Array.from(lastAdded).map(last => {
-    const title = last.querySelector('span[class*=\"block\"]').textContent;
-    const link = quickRequest(last.href, true);
-    const image = quickRequest(last.querySelector('img').src);
-    const type = last.querySelector('span[class*=\"font-bold\"]').textContent;
-    const rating = cleanText('Rating : ' + last.querySelector('[class*=\"ml-1\"]').textContent); // used to last chapter but that is not available;
-    return new Data(image, title, rating, type, '', '', '', false, link);
+const lastAddedArray = Array.from(lastAdded).map(list => {
+    const title = list.querySelector('span[class*=\"block\"]').textContent;
+    const link = quickRequest(list.href, true);
+    const image = quickRequest(list.querySelector('img').src);
+    const lastChapter = cleanText(list.querySelector('[class*=\"text-[13px]\"]').textContent);
+    // const type = list.querySelector('span[class*=\"font-bold\"]').textContent;
+    // const rating = cleanText('Rating : ' + list.querySelector('[class*=\"ml-1\"]').textContent);
+    return new Data(image, title, lastChapter, '', '', '', '', false, link);
 });
 
 var testLayout = new Layout(new Insets(10, 10, 10, 10), 1, 2, 3, 1, 500, new Size(400, 400), new Ratio('width', 4, 11), new Size(0, 0), 10, 10);

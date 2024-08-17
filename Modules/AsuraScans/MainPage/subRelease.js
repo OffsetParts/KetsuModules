@@ -1,5 +1,4 @@
-// Style: MainPage
-
+// Style
 const DefaultLayouts = {
 	ultraWideFull: 'ultraWideFull',
 	ultraWide: 'ultraWide',
@@ -89,6 +88,37 @@ const RatioRelation = {
 	height: 'height'
 };
 
+function Insets ( top, bottom, left, right ) {
+	this.top = top;
+	this.bottom = bottom;
+	this.left = left;
+	this.right = right;
+}
+
+function Size ( width, height ) {
+	this.width = width;
+	this.height = height;
+}
+
+function Ratio ( inRelation, number1, number2 ) {
+	this.inRelation = inRelation;
+	this.number1 = number1;
+	this.number2 = number2;
+}
+
+function Layout ( insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing ) {
+	this.insets = insets;
+	this.visibleCellsWidthS = visibleCellsWidthS;
+	this.visibleCellsWidthM = visibleCellsWidthM;
+	this.visibleCellsWidthL = visibleCellsWidthL;
+	this.visibleCellsHeight = visibleCellsHeight;
+	this.heightForVisibleCells = heightForVisibleCells;
+	this.cellSize = cellSize;
+	this.ratio = ratio;
+	this.constant = constant;
+	this.horizontalSpacing = horizontalSpacing;
+	this.verticalSpacing = verticalSpacing;
+}
 
 // Functions
 function MainPage(request, extra, javascriptConfig, output) {
@@ -141,39 +171,6 @@ function Section(sectionName, separator) {
 	this.separator = separator;
 }
 
-function Layout ( insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing ) {
-	this.insets = insets;
-	this.visibleCellsWidthS = visibleCellsWidthS;
-	this.visibleCellsWidthM = visibleCellsWidthM;
-	this.visibleCellsWidthL = visibleCellsWidthL;
-	this.visibleCellsHeight = visibleCellsHeight;
-	this.heightForVisibleCells = heightForVisibleCells;
-	this.cellSize = cellSize;
-	this.ratio = ratio;
-	this.constant = constant;
-	this.horizontalSpacing = horizontalSpacing;
-	this.verticalSpacing = verticalSpacing;
-}
-
-function Insets ( top, bottom, left, right ) {
-	this.top = top;
-	this.bottom = bottom;
-	this.left = left;
-	this.right = right;
-}
-
-function Size ( width, height ) {
-	this.width = width;
-	this.height = height;
-}
-
-function Ratio ( inRelation, number1, number2 ) {
-	this.inRelation = inRelation;
-	this.number1 = number1;
-	this.number2 = number2;
-}
-
-
 function Data(image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView) {
 	this.image = image;
 	this.title = title;
@@ -195,14 +192,15 @@ let Poster = new Layout(
 	3, // visibleCellsWidthL
 	1, // visibleCellsHeight
 	375, // heightForVisibleCells
-	new Size(413, 650), // cellSize 
-	new Ratio(RatioRelation.height, 216, 340), // ratio 
+	new Size(413, 650), // cellSize
+	new Ratio(RatioRelation.height, 216, 340), // ratio
 	new Size(0, 0), // constant
 	15, // horizontalSpacing
 	15 // verticalSpacing
 );
 
 //Init
+let output = [];
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 
@@ -211,7 +209,6 @@ var commands = [new Commands('helperFunctions', [new KeyValue('isCustomRequest',
 let emptyExtra = new Extra(commands, emptyKeyValue);
 
 // Functions
-
 function cleanUrl(url) {
 	return 'https://asuracomic.net/' + (url).trim();
 }
@@ -224,14 +221,163 @@ function quickRequest(url, clean) {
 	if (clean == true) {
 		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
 	} else if (clean == false || clean == null) {
-		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+		return new ModuleRequest(cleanText(url), 'get', emptyKeyValue, null);
 	}
 }
 
-// Update: 7/25/2024
-/* Asura changed their site so not all top lists load at once (weekly list defaulted)
-Hence only weekly will be displayed for now*/
+function scriptFilter(match, obj) {
+    document.querySelectorAll('script').forEach((elm) => {
+        let content = elm.innerHTML;
+        if (content.match('self.__next_f.push') && content.includes(match)) {
+            const regex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
+            let match = content.match(regex);
+    
+            if (match) {
+                var dictionary = match[2]
+                .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
+                .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
+                .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
+                .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
+                .replace(/\\\\n$/, '');   
+                obj.array = JSON.parse(dictionary);
+            }
+        }
+    });
+}
 
+function dynamicCiteriaSearch(obj, criteria) {
+	let results = [];
+  
+	function recursiveSearch(obj) {
+		if (Array.isArray(obj)) {
+			obj.forEach(item => {
+				if (typeof item === 'object' && item !== null) {
+					let matches = Object.keys(criteria).every(key => {
+						const expectedType = criteria[key].type;
+						const valueType = typeof item[key];
+  
+						// Check if key exists and type matches
+						if (expectedType && valueType === expectedType) {
+							const expectedValue = criteria[key].value;
+  
+							// If a specific value is provided, check it
+							if (expectedValue !== undefined) {
+								// Handle specific value checks based on type
+								if (valueType === 'string' && expectedValue instanceof RegExp) {
+									// Use regex for string matching
+									return expectedValue.test(item[key]);
+								} else if (valueType === 'number' && typeof expectedValue === 'function') {
+									// Use a function for number matching (e.g., range check)
+									return expectedValue(item[key]);
+								} else {
+									return item[key] === expectedValue;
+								}
+							}
+							return true; // No specific value check, just type match
+						}
+						return false;
+					});
+  
+					if (matches) {
+						results.push(item); // Push the matched object, not the parent array
+					}
+				}
+			});
+		}
+  
+		// Continue searching nested objects
+		if (typeof obj === 'object' && obj !== null) {
+			for (let key in obj) {
+				recursiveSearch(obj[key]);
+			}
+		}
+	}
+  
+	recursiveSearch(obj);
+	return results;
+  }
+  
+function findProperties(obj, keysToFind) {
+let results = [];
+
+function recursiveSearch(obj) {
+	if (typeof obj === 'object' && obj !== null) {
+		// Check if all keysToFind exist in the current object
+		let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
+			// Push the entire object containing all keysToFind
+			results.push(obj);
+		}
+
+		// Continue searching nested objects
+		for (let key in obj) {
+			recursiveSearch(obj[key]);
+		}
+	}
+}
+
+recursiveSearch(obj);
+return results;
+}
+
+/*
+UPDATE: 8/17/2024 @ 4:03 AM
+After some extensive testing, I have found a new methodology towards grabbing info for grabbing hydrazied data on numerous sites
+which I'll call Dynamic Criteria Search (DCS). This method is a more advanced version of nested arraies */
+
+
+/* {{ Dynamic Elements }} */
+
+let goatCriteria = { 'value': { type: 'string', value: 'all' } };
+
+let GoatData = { array: []}; let GOATData = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"all\\\\\"', GoatData);
+const goatData = dynamicCiteriaSearch(GoatData.array, goatCriteria);
+if (goatData) {
+	GOATData = Array.from(goatData[0]['children']).map(list => {
+		const info = findProperties(list, ['href', 'children'])[0];
+		let title = info.children;
+		let url = quickRequest(info.href, true);
+		let image = quickRequest('https:' + findProperties(list, ['src'])[0].src);
+		return new Data(image, title, '0', '1', '2', '3', '4', false, url);
+  	});
+
+  	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATData));
+}
+
+let FeaturedData = { array: [] }; scriptFilter('sliders', FeaturedData);
+let Featured = []; const sliderData = findProperties(FeaturedData.array, ['sliders']);
+if (sliderData) {
+	Featured = Array.from(sliderData[0]['sliders']).map(list => {
+		let title = list['name'];
+		var link = quickRequest('series/' + list['slug'], true);
+		var image = quickRequest('https:' + list['thumb_large']);
+
+		return new Data(image, title, '', '', '1', '2', '3', false, link);
+	});
+
+	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('Featured', false), Poster, Featured));
+}
+
+let monthlyCriteria = { 'value': { type: 'string', value: 'monthly' } };
+
+let MonthlyData = { array: []}; let MonthlyList = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"', MonthlyData);
+const monthlyData = dynamicCiteriaSearch(MonthlyData.array, monthlyCriteria);
+if (monthlyData) {
+  	MonthlyList = Array.from(monthlyData[0]['children']).map(list => {
+		const info = findProperties(list, ['href', 'children'])[0];
+		let title = info.children;
+		let url = quickRequest(info.href, true);
+		let image = quickRequest('https:' + findProperties( list, [ 'src' ] )[ 0 ].src);
+		/* const misc = findProperties(list, ['children',  'className'])[21];
+		let rating = misc.children; */
+		return new Data(image, title, '0', '1', '2', '3', '4', false, url);
+  	});
+
+  	output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section('Monthly', false), null, MonthlyList));
+}
+
+/* {{ Static Elements }} */
+
+// Weekly
 const weeklyElm = document.querySelectorAll('[id*=\"weekly\"] > div');
 let WeeklyList = Array.from(weeklyElm).map(list => {
 	let title = cleanText(list.querySelector('span a').textContent);
@@ -242,6 +388,7 @@ let WeeklyList = Array.from(weeklyElm).map(list => {
 
 	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
 });
+
 
 // Popular
 const popularElm = document.querySelectorAll('div.hidden > [class*=\"p-1.5\"]');
@@ -269,7 +416,6 @@ let Latests = Array.from(latestElms).map(list => {
 	return new Data(image, title, ep, '', '1', '2', '3', false, link);
 });
 
-let output = [];
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, WeeklyList));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
 output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));

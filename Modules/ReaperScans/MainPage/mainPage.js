@@ -212,7 +212,7 @@ class Output {
 //Init
 let output = [];
 const savedData = document.getElementById('ketsu-final-data');
-const parsedJson = JSON.parse(savedData.innerHTML);
+const parsedJson = JSON.parse(savedData.innerHTML); console.log(parsedJson.output.url);
 
 const emptyKeyValue = [new KeyValue('', '')];
 const commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
@@ -233,44 +233,56 @@ const Carousel = new Layout(
     5 // verticalSpacing
 );
 
-function cleanText(obj) {
-    return obj.replaceAll('\\n', '').replaceAll('\\t', '').trim();
+function cleanUrl(path) {
+	return 'https://reaperscans.com/' + (path).trim();
 }
 
-function createData(image, title, link) {
-    return new Data(image, title, '', '', '', '', '', false, link);
+function cleanText(str) {
+	return str.replace(/[\\n\\t]/g, '').trim();
 }
 
-function createModuleRequest(url) {
-    return new ModuleRequest(url, 'get', emptyKeyValue);
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
 }
+// Elements
+const PosterElms = document.querySelectorAll('[class*=main-embla__slide]');
+let Posters = Array.from(PosterElms).map(list => {
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
 
-// Greatests of All Time
-const goats = document.querySelectorAll('div .carousel-cell');
-const GOATs = Array.from(goats).map((list) => {
-    const link = createModuleRequest(list.querySelector('a').href);
-    const image = createModuleRequest(list.querySelector('img').src);
-    return createData(image, '', link);
+	return new Data(image, '', '0', '1', '2', '3', '4', false, link);
 });
 
-// Popular
-const pops = document.querySelectorAll('[role="list"] li');
-const Popular = Array.from(pops).slice(0, 3).map((list) => {
-    const [title, link, image] = [
-        cleanText(list.querySelector('.flex-1 a').textContent),
-        createModuleRequest(list.querySelector('a').href),
-        createModuleRequest(list.querySelector('img').src)
-    ];
-    return createData(image, title, link);
+const FeaturedElms = document.querySelectorAll('embla > [class*=embla__slide]');
+let Featured = Array.from(FeaturedElms).map(list => {
+    var title = cleanText(list.querySelector('h5').textContent);
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
+
+	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
 });
 
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, GOATs));
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsFull, Paging.leading, new Section('Popular Today', true), null, Popular));
+const LatestElms = document.querySelector('div.col-span-full').querySelectorAll('[role=group]');
+let Latest = Array.from(LatestElms).map(list => {
+    var title = cleanText(list.querySelector('h5').textContent);
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
+
+	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
+});
+
+
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, Posters));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsFull, Paging.leading, new Section('Popular Today', true), null, Featured));
 
 console.log('Output submitted');
 
 const MainPageObject = new MainPage(
-    new ModuleRequest('https://reaperscans.com/latest/comics', 'get', emptyKeyValue, null),
+    new ModuleRequest('s', 'get', emptyKeyValue, null),
     new Extra([new Commands('', emptyKeyValue)], emptyKeyValue),
     new JavascriptConfig(true, false, ''),
     output
