@@ -247,7 +247,7 @@ function scriptFilter(match, obj) {
 
 function dynamicCiteriaSearch(obj, criteria) {
 	let results = [];
-  
+
 	function recursiveSearch(obj) {
 		if (Array.isArray(obj)) {
 			obj.forEach(item => {
@@ -255,11 +255,11 @@ function dynamicCiteriaSearch(obj, criteria) {
 					let matches = Object.keys(criteria).every(key => {
 						const expectedType = criteria[key].type;
 						const valueType = typeof item[key];
-  
+
 						// Check if key exists and type matches
 						if (expectedType && valueType === expectedType) {
 							const expectedValue = criteria[key].value;
-  
+
 							// If a specific value is provided, check it
 							if (expectedValue !== undefined) {
 								// Handle specific value checks based on type
@@ -277,14 +277,14 @@ function dynamicCiteriaSearch(obj, criteria) {
 						}
 						return false;
 					});
-  
+
 					if (matches) {
 						results.push(item); // Push the matched object, not the parent array
 					}
 				}
 			});
 		}
-  
+
 		// Continue searching nested objects
 		if (typeof obj === 'object' && obj !== null) {
 			for (let key in obj) {
@@ -292,31 +292,31 @@ function dynamicCiteriaSearch(obj, criteria) {
 			}
 		}
 	}
-  
+
 	recursiveSearch(obj);
 	return results;
-  }
-  
-function findProperties(obj, keysToFind) {
-let results = [];
-
-function recursiveSearch(obj) {
-	if (typeof obj === 'object' && obj !== null) {
-		// Check if all keysToFind exist in the current object
-		let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
-			// Push the entire object containing all keysToFind
-			results.push(obj);
-		}
-
-		// Continue searching nested objects
-		for (let key in obj) {
-			recursiveSearch(obj[key]);
-		}
-	}
 }
 
-recursiveSearch(obj);
-return results;
+function findProperties(obj, keysToFind) {
+	let results = [];
+
+	function recursiveSearch(obj) {
+		if (typeof obj === 'object' && obj !== null) {
+			// Check if all keysToFind exist in the current object
+			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
+				// Push the entire object containing all keysToFind
+				results.push(obj);
+			}
+
+			// Continue searching nested objects
+			for (let key in obj) {
+				recursiveSearch(obj[key]);
+			}
+		}
+	}
+
+	recursiveSearch(obj);
+	return results;
 }
 
 /*
@@ -337,7 +337,7 @@ if (goatData) {
 		let title = info.children;
 		let url = quickRequest(info.href, true);
 		let image = quickRequest('https:' + findProperties(list, ['src'])[0].src);
-		return new Data(image, title, '0', '1', '2', '3', '4', false, url);
+		return new Data(image, title, '0', '', '', '3', '4', false, url);
   	});
 
   	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATData));
@@ -351,7 +351,7 @@ if (sliderData) {
 		var link = quickRequest('series/' + list['slug'], true);
 		var image = quickRequest('https:' + list['thumb_large']);
 
-		return new Data(image, title, '', '', '1', '2', '3', false, link);
+		return new Data(image, title, '0', '', '', '3', '4', false, link);
 	});
 
 	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('Featured', false), Poster, Featured));

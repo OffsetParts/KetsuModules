@@ -77,7 +77,7 @@ function findProperties(obj, keysToFind) {
           // Check if all keysToFind exist in the current object
           let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
               // Push the entire object containing all keysToFind
-              results.push(obj);
+              results.push(obj[key]);
           }
 
           // Continue searching nested objects
@@ -94,7 +94,7 @@ function findProperties(obj, keysToFind) {
 let FeaturedData = { array: [] }; scriptFilter('sliders', FeaturedData);
 let Featured = []; const sliderData = findProperties(FeaturedData.array, ['sliders']);
 if (sliderData) {
-	Featured = Array.from(sliderData[0]['sliders']).map(list => {
+	Featured = Array.from(sliderData[0]).map(list => {
 		let title = list['name'];
 		var link = 'series/' + list['slug'];
 		var image = 'https:' + list['thumb_large'];

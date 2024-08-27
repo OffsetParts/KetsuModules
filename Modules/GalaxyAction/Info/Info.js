@@ -71,14 +71,13 @@ function quickRequest(url, clean) {
 
 function getText(node, accumulator = []) {
     if (node.nodeType === Node.TEXT_NODE) {
-        accumulator.push(cleanText(node.textContent));
+        accumulator.push(node.textContent);
     } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'script') {
         for (let child of node.childNodes) {
             getText(child, accumulator);
         }
     }
-
-    return cleanText(accumulator.join('')).trim();
+    return cleanText(accumulator.join(' ')).trim();
 }
 
 var savedData = document.getElementById('ketsu-final-data');
@@ -88,7 +87,7 @@ let emptyKeyValue = [new KeyValue('', '')];
 var genres = ['Action', 'Adventure', 'Comics'];
 var type = 'Webtoon';
 
-var synopsis = getText(document.querySelector('p'));
+var synopsis = getText(document.querySelector('[class=modal-box] > div > div p'));
 
 var title = cleanText(document.querySelector('.text-2xl').textContent);
 var image = quickRequest(document.querySelector('.h-full.rounded').src);

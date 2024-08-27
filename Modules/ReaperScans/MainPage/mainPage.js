@@ -234,7 +234,7 @@ const Carousel = new Layout(
 );
 
 function cleanUrl(path) {
-	return 'https://reaperscans.com/' + (path).trim();
+	return 'https://reaperscans.com' + (path).trim();
 }
 
 function cleanText(str) {
@@ -245,10 +245,105 @@ function quickRequest(url, clean) {
 	if (clean == true) {
 		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
 	} else if (clean == false || clean == null) {
-		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+		return new ModuleRequest(cleanText(url), 'get', emptyKeyValue, null);
 	}
 }
-// Elements
+
+function scriptFilter(match, obj) {
+    document.querySelectorAll('script').forEach((elm) => {
+        let content = elm.innerHTML;
+        if (content.match('self.__next_f.push') && content.includes(match)) {
+            const regex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
+            let match = content.match(regex); if (match) {
+                var dictionary = match[2]
+                .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
+                .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
+                .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
+                .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
+                .replace(/\\\\n$/, '');   
+                obj.array = JSON.parse(dictionary);
+            }
+        }
+    });
+}
+
+function dynamicCiteriaSearch(obj, criteria) {
+    let results = [];
+
+    function recursiveSearch(obj) {
+        if (Array.isArray(obj)) {
+            obj.forEach(item => {
+                if (typeof item === 'object' && item !== null) {
+                    let matches = Object.keys(criteria).every(key => {
+                        const expectedType = criteria[key].type;
+                        const valueType = typeof item[key];
+
+                        // Check if key exists and type matches
+                        if (expectedType && valueType === expectedType) {
+                            const expectedValue = criteria[key].value;
+
+                            // If a specific value is provided, check it
+                            if (expectedValue !== undefined) {
+                                // Handle specific value checks based on type
+                                if (valueType === 'string' && expectedValue instanceof RegExp) {
+                                    // Use regex for string matching
+                                    return expectedValue.test(item[key]);
+                                } else if (valueType === 'number' && typeof expectedValue === 'function') {
+                                    // Use a function for number matching (e.g., range check)
+                                    return expectedValue(item[key]);
+                                } else {
+                                    return item[key] === expectedValue;
+                                }
+                            }
+                            return true; // No specific value check, just type match
+                        }
+                        return false;
+                    });
+
+                    if (matches) {
+                        results.push(item); // Push the matched object, not the parent array
+                    }
+                }
+            });
+        }
+
+        // Continue searching nested objects
+        if (typeof obj === 'object' && obj !== null) {
+            for (let key in obj) {
+                recursiveSearch(obj[key]);
+            }
+        }
+    }
+
+    recursiveSearch(obj);
+    return results;
+}
+
+function findProperties(obj, keysToFind) {
+    let results = [];
+
+    function recursiveSearch(obj) {
+        if (typeof obj === 'object' && obj !== null) {
+            // Check if all keysToFind exist in the current object
+            let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
+                // Push the entire object containing all keysToFind
+                results.push(obj);
+            }
+
+            // Continue searching nested objects
+            for (let key in obj) {
+                recursiveSearch(obj[key]);
+            }
+        }
+    }
+
+    recursiveSearch(obj);
+    return results;
+}
+
+/* {{ Dynamic Elements }} */
+
+
 const PosterElms = document.querySelectorAll('[class*=main-embla__slide]');
 let Posters = Array.from(PosterElms).map(list => {
 	var link = quickRequest(list.querySelector('a').href, true);
@@ -257,32 +352,40 @@ let Posters = Array.from(PosterElms).map(list => {
 	return new Data(image, '', '0', '1', '2', '3', '4', false, link);
 });
 
-const FeaturedElms = document.querySelectorAll('embla > [class*=embla__slide]');
-let Featured = Array.from(FeaturedElms).map(list => {
-    var title = cleanText(list.querySelector('h5').textContent);
-	var link = quickRequest(list.querySelector('a').href, true);
-	var image = quickRequest(list.querySelector('img').src);
 
-	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
-});
+let NewData = { array: [] }; scriptFilter('solo', NewData);
+let NewSeriesList = []; const NewSeriesData = findProperties(NewData.array, ['series']);
+if (NewSeriesData) {
+    NewSeriesList = Array.from(NewSeriesData[0]['series']).map(list => {
+        let title = list['title'];
+        let link = quickRequest('/series/' + list['series_slug'], true);
+        let image = quickRequest('https:' + list['thumbnail']);
+
+        return new Data(image, title, '0', '1', '2', '3', '4', false, link);
+    });
+
+}
+
+/* {{ Static Elements }} */
 
 const LatestElms = document.querySelector('div.col-span-full').querySelectorAll('[role=group]');
-let Latest = Array.from(LatestElms).map(list => {
-    var title = cleanText(list.querySelector('h5').textContent);
+let Latests = Array.from(LatestElms).map(list => {
+    var title = cleanText(list.querySelector('span [class*=line-clamp-1]').textContent);
 	var link = quickRequest(list.querySelector('a').href, true);
-	var image = quickRequest(list.querySelector('img').src);
+	var image = quickRequest(list.querySelector('img').src, true);
 
-	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
+    var lastChapter = cleanText(list.querySelector('h5').textContent);
+
+	return new Data(image, title, lastChapter, '1', '2', '3', '4', false, link);
 });
 
 
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, Posters));
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsFull, Paging.leading, new Section('Popular Today', true), null, Featured));
-
-console.log('Output submitted');
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsFull, Paging.leading, new Section('New Series', true), null, NewSeriesList));
+output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
 const MainPageObject = new MainPage(
-    new ModuleRequest('s', 'get', emptyKeyValue, null),
+    new ModuleRequest('', 'get', emptyKeyValue, null),
     new Extra([new Commands('', emptyKeyValue)], emptyKeyValue),
     new JavascriptConfig(true, false, ''),
     output

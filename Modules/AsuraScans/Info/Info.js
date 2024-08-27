@@ -58,9 +58,10 @@ function cleanUrl(url) {
 	return 'https://asuracomic.net/series/' + (url).trim();
 }
 
-function cleanText(str) {
-    str.replace(/[\"'&<>]/g, '\\$&'); // escape special characters
-	return str.replace(/[\\n\\t]/g, '').trim(); // cleanup
+function cleanText(text) {
+    return text
+        .replace(/\\s+|&nbsp;/g, ' ') // remove extra spaces
+        .replace(/[\"']/g, '\\$&'); // escape quotes
 }
 
 function quickRequest(url, clean) {
@@ -73,13 +74,13 @@ function quickRequest(url, clean) {
 
 function getText(node, accumulator = []) {
     if (node.nodeType === Node.TEXT_NODE) {
-        accumulator.push(cleanText(node.textContent));
+        accumulator.push(node.textContent);
     } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'script') {
         for (let child of node.childNodes) {
             getText(child, accumulator);
         }
     }
-    return cleanText(accumulator.join('')).trim();
+    return cleanText(accumulator.join(' ')).trim();
 }
 
 var savedData = document.getElementById('ketsu-final-data');

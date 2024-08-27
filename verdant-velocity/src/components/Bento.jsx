@@ -6,14 +6,11 @@ import { useLanyard } from "react-use-lanyard";
 
 export const Bento = () => {
     return (
-        <div className="min-h-screen bg-zinc-950 py-12 text-zinc-50 flex justify-center items-center">
+        <div className="min-h-screen bg-zinc-900 py-12 text-zinc-50 flex justify-center items-center">
             <div className="mx-auto grid max-w-4xl grid-cols-12 gap-2">
                 <Header />
-                <Projects />
-                {/* <Experience /> */}
-                {/* <NowPlaying /> */}
                 <FeaturedProjects />
-                <Contact />
+                <Credits />
             </div>
         </div>
     )
@@ -44,7 +41,7 @@ const Block = ({ className, ...rest }) => {
             initial="hidden"
             animate={control}
             className={twMerge(
-                "col-span-4 border rounded border-zinc-700 hover:border-red-600 bg-zinc-900 p-3",
+                "col-span-4 border rounded border-zinc-700 hover:border-red-600 bg-zinc-900 p-4",
                 className
             )}
             {...rest}
@@ -53,109 +50,32 @@ const Block = ({ className, ...rest }) => {
 }
 
 const Header = () => (
-    <Block className="row-span-2 md:col-span-7">
+    <Block className="row-span-2 md:col-span-12">
         <h1 className="mb-10 text-3xl font-medium leading-tight"> <span className="text-red-600">Welcome</span> to ZKetsu no Kaisen</h1>
     </Block>
 )
-
-const Projects = () => (
-    <Block className="row-span-2 md:col-span-5">
-        <h1 className="mb-3 text-2xl font-medium leading-tight">Modules</h1>
-        <ul>
-            <p><a href="#Ketsu"><span className="text-indigo-500 hover:text-indigo-300 hover:underline">Ketsu</span></a> </p>
-            <p><a href="#Katsu"><span className="text-indigo-500">Katsu</span></a> </p>
-        </ul>
-    </Block>
-)
-
-const ExperienceText = ({ language, languageColor, timeLearned, howManyProjects, ...rest }) => {
-    return (
-        <p className="py-1"><span className={languageColor} {...rest}>{language}</span> | {timeLearned} year experience | {howManyProjects} projects completed</p>
-    )
-}
-
-const Experience = () => {
-
-    const experience = {
-        javascript: ["JavaScript", "text-javascript", "<1", "1"],
-        python: ['Python', 'text-python', '1', 'N/A'],
-        nodejs: ['NodeJS', 'text-nodejs', '3+', '1'],
-        lua: ['Lua/Luau', 'text-python', '<6', '2']
-    }
-
-    return (
-        <Block className="row-span-2 md:col-span-6">
-            <h1 className="mb-3 text-2xl font-medium leading-tight">Experience</h1>
-            <ul>
-                {Object.entries(experience).map(([key, [languageName, languageClass, timeLearned, projects]]) => (
-                    <ExperienceText key={key} language={languageName} languageColor={languageClass} timeLearned={timeLearned} howManyProjects={projects} />
-                ))}
-            </ul>
-        </Block>
-    )
-}
-
-const Contact = () => {
-    return (
-        <Block className="row-span-2 md:col-span-12">
-            <h1 className="text-2xl font-medium leading-tight"><a className="text-teal-400 hover:underline decoration-white" >Connections</a> <br /> Ketsu <a className="text-online underline animate-wave" href="https://ketsu.app">page</a></h1>
-        </Block>
-    )
-}
-
-const NowPlaying = () => {
-
-    const { loading, status, websocket } = useLanyard({
-        userId: "685927736916705296",
-        socket: true
-    })
-
-    const activity = status?.discord_status;
-    const songName = status?.spotify?.song;
-    const albumArt = status?.spotify?.album_art_url
-    const trackId = status?.spotify?.track_id;
-    const artist = status?.spotify?.artist;
-
-    const statusMap = {
-        online: ['online', "text-online"],
-        offline: ['offline', "text-offline"],
-        idle: ['idling', "text-idle"],
-        dnd: ['on do not disturb', 'text-dnd']
-    }
-
-    const rgbaStatusMap = {
-        online: ['87, 242, 135, .75'],
-        offline: ['128, 128, 128, .75'],
-        idle: ['240, 178, 50, .75'],
-        dnd: ['237, 66, 69, .75']
-    }
-
-    const rgbaActivityStatusColor = rgbaStatusMap[activity] || ["128, 128, 128, .75"]
-    const [activityStatusText, activityStatusColor] = statusMap[activity] || ['offline', "text-offline"]
-
-    return (
-        <Block className="row-span-2 md:col-span-3">
-            <h1 className="text-2xl font-medium leading-tight">I am <span className={`${activityStatusColor}`}>{activityStatusText}</span></h1>
-            {songName && <p className="text-lg">Listening to <a href={`spotify:track:${trackId}`}><span className="text-emerald-500 underline decoration-white">{songName}</span></a> {artist && <span><br />by {artist}</span>}</p>}
-        </Block>
-    )
-};
 
 const FeaturedProjects = () => (
     <Block className="row-span-2 md:col-span-12">
         <h1 className="mb-3 text-2xl font-medium leading-tight" >Featured Projects</h1>
         <ul className="pl-4">
-            <p>
-                <span className="text-violet-600">Asurascans</span> - popular manga scanlation group
-                <br />
-                My proudest module for my favorite group, this is the module that started it all for me;
+            <p >
+                <span className="text-violet-600 hover:underline" > <a href="ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/asura.json">Asurascans</a> </span> - popular and HQ scanlation group
             </p>
             <p>
-                <span className="text-red-500"> Flamescans </span> - another popular manga scanlation group
+                <span className="text-red-500 hover:underline" > <a href="ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/flames.json">Flamescans</a> </span> - another popular manga scanlation group
             </p>
             <p>
-                <span className="text-fuchsia-400"> Galaxyaction</span>, formerly flixscans - a more niche group with quality scanlations
+                <span className="text-fuchsia-400 hover:underline"> <a href="ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/GalaxyAction/Galatic.json">Galaxyaction</a> </span>, formerly flixscans - a more niche group with quality scanlations
             </p>
         </ul>
     </Block>
 )
+
+const Credits = () => {
+    return (
+        <Block className="row-span-2 md:col-span-12">
+            <h1 className="text-2xl font-medium leading-tight"><a className="text-red-600 hover:underline" >Credits</a> <br /> Ketsu:<a className="text-online underline animate-wave" href="https://ketsu.app">Page</a></h1>
+        </Block>
+    )
+}

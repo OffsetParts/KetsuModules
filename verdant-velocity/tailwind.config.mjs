@@ -21,9 +21,9 @@ export default {
 				}
 			},
 			animation: {
-				wave: 'wave 1s infinite'
+				wave: 'wave 5s infinite'
 			}
 		},
 	},
-	plugins: [],
+	plugins: [require("tailgrids/plugin")],
 }

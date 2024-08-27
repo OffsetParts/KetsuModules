@@ -3,15 +3,15 @@ import React from "react"
 export const Navigation = () => {
 
     const items = {
-        information: ["#information", "Information"],
-        Zetsu_Modules: ["#Katsu", "Katsu_Modules"],
-        Ketsu_Modules: ["#Ketsu", "Ketsu_Modules"],
+        Animations: ["/modules#Animations", "Animations"],
+        Mangas: ["/modules#Mangas", "Mangas"],
+        Novels: ["/modules#Novels", "Novels"]
     }
 
     return (
         <header className="w-min h-12 bg-zinc-900 border border-zinc-700 rounded fixed isolate overflow-hidden top-4 start-0 end-0 ms-auto me-auto z-50 flex items-center px-3">
             <nav className="flex items-center gap-2">
-                <span className="text-red-500">ZKetsu</span>
+                <a href="/"><span className="text-red-500">ZKetsu</span></a>
                 <b>|</b>
                 <ul className="flex gap-2">
                     {Object.entries(items).map(([key, [href, text]]) => (

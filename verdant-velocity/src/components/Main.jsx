@@ -1,5 +1,4 @@
 import React from "react";
-import { Landing } from "./Landing"
 import { Bento } from "./Bento";
 
 export const Main = () => {
@@ -7,10 +6,6 @@ export const Main = () => {
         <div>
             <section id="information">
                 <Bento />
-            </section>
-
-            <section id="Zetsu">
-                
             </section>
         </div>
 
