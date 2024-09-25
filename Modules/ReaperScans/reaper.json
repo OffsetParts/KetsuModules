@@ -12,7 +12,7 @@
       "moduleType": "Image",
       "baseURL": "https://reaperscans.com",
       "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
-      "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/ReaperScans/reaper.json",
+      "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/ReaperScans/Reaper.json",
       "preferedServer": "",
       "preferedDownloadServer": "",
       "blackListed": [

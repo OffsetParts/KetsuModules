@@ -12,7 +12,7 @@
     "changelog": "1.1 - MangaDex can now support more than 500 chapters",
     "baseURL": "https://mangadex.org/",
     "moduleDeveloperSite": "https://bilnaa.github.io/main",
-    "UpdateSite": "https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/MangaDex/moduleTemplate.json",
+    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/MangaDex/moduleTemplate.json",
     "preferedServer": "",
     "preferedDownloadServer": "",
     "blackListed": [
@@ -42,7 +42,7 @@
   "mainPage": [
     {
       "request": {
-        "url": "https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/MangaDex/link.txt",
+        "url": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/MangaDex/link.txt",
         "method": "get",
         "headers": [
           {

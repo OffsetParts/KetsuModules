@@ -11,7 +11,7 @@
       "moduleType": "Video",
       "baseURL": "https://hianime.to/",
       "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
-      "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/HiAnime/hianime.json",
+      "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/HiAnime/HiAnime.json",
       "preferedServer": "MEGACLOUD",
       "preferedDownloadServer": "MEGACLOUD",
       "blackListed": [

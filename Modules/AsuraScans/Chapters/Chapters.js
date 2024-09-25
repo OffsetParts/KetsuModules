@@ -1,8 +1,8 @@
 function Chapters(request, extra, javascriptConfig, output) {
-  this.request = request;
-  this.extra = extra;
-  this.javascriptConfig = javascriptConfig;
-  this.output = output;
+	this.request = request;
+	this.extra = extra;
+	this.javascriptConfig = javascriptConfig;
+	this.output = output;
 }
 
 function ModuleRequest(url, method, headers, httpBody) {
@@ -44,8 +44,8 @@ var emptyKeyValue = [new KeyValue('', '')];
 var output = [];
 
 function getImages() {
-	const images = document.querySelectorAll('[alt=\"chapter page\"]');
-	output = Array.from(images).map(image => 
+	const images = document.querySelectorAll('[alt*=\"chapter page\"]');
+	output = Array.from(images).map(image =>
 		new ModuleRequest(image.src, 'get', emptyKeyValue, null)
 	);
 	return output;

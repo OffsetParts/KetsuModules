@@ -12,7 +12,7 @@
     "moduleType": "Image",
     "baseURL": "https://flamecomics.me",
     "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
-    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/flames.json",
+    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/Flames.json",
     "preferedServer": "",
     "preferedDownloadServer": "",
     "blackListed": [

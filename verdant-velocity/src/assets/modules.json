@@ -5,7 +5,7 @@
         "author": "Nabil",
         "image": "https://i.postimg.cc/pVFx8ZN2/lib-dessin.png",
         "info": "All the modules hosted by this website directly inside Ketsu.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/Librairie/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/Modules%20Library/moduleTemplate.json"
     }, {
         "name": "VostFree | FR",
         "author": "Nabil",
@@ -13,17 +13,11 @@
         "info": "Regardez gratuitement des animes avec le module du site VostFree.",
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilna95/bilna95.github.io/main/VostFree%20Ketsu/moduleTemplate.json"
     }, {
-        "name": "VoirAnime | FR",
+        "name": "HiAnime | ENG",
         "author": "Nabil",
-        "image": "https://i.postimg.cc/mg50q3sn/vato.png",
-        "info": "Regardez gratuitement des animes avec le module du site VoirAnime.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/VoirAnime/moduleTemplate.json"
-    }, {
-        "name": "Aniwatch | ENG",
-        "author": "Nabil",
-        "image": "https://i.postimg.cc/QC5gQWG6/zoro-logo.png",
-        "info": "Watch subbed and dubbed animes with the module of Zoro.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/Zoro.to/moduleTemplate.json"
+        "image": "https://i.postimg.cc/7ZJGjqVw/download.webp",
+        "info": "Watch subbed and dubbed animes with the HiAnime (Aniwatch) module",
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/mprotmod/Modules-KETSU/refs/heads/main/Module%20Parser%20KETSU/aniwatch.json"
     }, {
         "name": "Wiflix | FR",
         "author": "Nabil",
@@ -31,29 +25,11 @@
         "info": "Regardez gratuitement des films et séries avec le module du site Wiflix.",
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilna95/bilna95.github.io/main/wiflix.ws/moduleTemplate.json"
     }, {
-        "name": "French Anime | FR",
-        "author": "Nabil",
-        "image": "https://i.postimg.cc/W1M8FtJk/frenchanime.png",
-        "info": "Regardez gratuitement des animes avec le module du site French Anime.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilna95/bilna95.github.io/main/FrenchAnime/moduleTemplate.json"
-    }, {
-        "name": "French Stream | FR",
-        "author": "Frizrat",
-        "image": "https://i.postimg.cc/gkyWt2kQ/fstream-logo.png",
-        "info": "Regardez gratuitement des films avec le module du site French Stream.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/FrenchStream/FrenchStream.json"
-    }, {
         "name": "Drama Cool | ENG",
         "author": "Nabil",
         "image": "https://i.postimg.cc/Sss25qmT/drama-cool.png",
         "info": "Watch dramas from all Asia with the module of Drama Cool.",
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilna95/bilna95.github.io/main/Drama_Cool/moduleTemplate.json"
-    }, {
-        "name": "AnimeWorld | IT",
-        "author": "Frizrat",
-        "image": "https://i.postimg.cc/Qtw77TXC/Anime-World-logo.png",
-        "info": "Watch Italian subbed and dubbed animes with the module of AnimeWorld.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/AnimeWorld/AnimeWorld.json"
     }, {
         "name": "Goojara | ENG",
         "author": "Nabil",
@@ -61,31 +37,11 @@
         "info": "Watch movies and series for free with the module of Goojara.",
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/Goojara.to/moduleTemplate.json"
     }, {
-        "name": "Cineblog | IT",
-        "author": "Frizrat",
-        "image": "https://i.postimg.cc/7hghDrPg/CineBlog.png",
-        "info": "Watch Italian subbed and dubbed film with the module of Cineblog.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/Cineblog/Cineblog.json"
-    }, {
         "name": "9anime | ENG",
         "author": "Nabil",
         "image": "https://i.postimg.cc/V6KWhqVc/9anime.png",
         "info": "Watch subbed and dubbed animes with the module of 9anime.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/NineAnime/9anime.json"
-    },
-    {
-        "name": "OtakuFR | FR",
-        "author": "Nabil",
-        "image": "https://i.postimg.cc/2j9g6m8d/otakufr.png",
-        "info": "Regardez gratuitement des animes avec le module du site Otakufr.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/Otakufr/moduleTemplate.json"
-    },
-    {
-        "name": "Anime-Flex | FR",
-        "author": "Danyspb",
-        "image": "https://i.postimg.cc/yxfKr13F/anime-flex.png",
-        "info": "Regardez gratuitement des animes avec le module du site Anime-Flex.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/Anime-Flex/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/9Anime/module.json"
     },
     {
         "name": "MyKDrama | FR",
@@ -95,38 +51,11 @@
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/MyKDrama/moduleTemplate.json"
     },
     {
-        "name": "HDToday | ALL",
-        "author": "Nabil",
-        "image": "https://i.postimg.cc/hPwD4Cbj/hdtoday-logo.png",
-        "info": "Watch subbed and dubbed films and shows with the module of Hdtoday.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/main/hdtoday.json"
-    },
-    {
         "name": "Spacemov | ENG",
         "author": "Danyspb",
         "image": "https://i.postimg.cc/fTkrNh5s/space.png",
         "info": "Watch subbed and dubbed films and shows with the module of Spacemov.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/spacemove/moduleTemplate.json"
-    },
-    {
-        "name": "Streaming-Community | IT",
-        "author": "Frizrat",
-        "image": "https://streamingcommunity.stream/templates/streamingcommunity/images/logo.png",
-        "info": "Watch Italian subbed and dubbed film with the module of Streaming-Community.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/StreamingCommunity/StreamingCommunity.json"
-    },
-    {
-        "name": "Neko-Sama | FR",
-        "author": "Nabil",
-        "image": "https://zupimages.net/up/21/12/303j.png",
-        "info": "Regardez gratuitement des animes avec le module du site Neko-Sama.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/Neko-Sama/moduleTemplate.json"
-    },{
-        "name": "iAnimes | FR",
-        "author": "Danyspb & Nabil",
-        "image": "https://i.postimg.cc/KvXJYvw5/cover-IAnime.png",
-        "info": "Regardez gratuitement des animes, des films et des séries avec le module du site iAnimes.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/IAnime/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/SpaceMove/moduleTemplate.json"
     },
     {
         "name": "SuperCartoons | ENG",
@@ -141,35 +70,22 @@
         "image": "https://i.postimg.cc/QxNQ6Ysg/cor.jpg",
         "info": "Watch turkish subbed series with the module of Turkish123.",
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/Turkish123/moduleTemplate.json"
-    }, {
-        "name": "ADKami | FR",
-        "author": "Frizrat",
-        "image": "https://i.postimg.cc/4yX1tdVM/ADKami-Logo.png",
-        "info": "Regardez gratuitement des animes avec le module du site ADKami.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/ADKami/ADKami.json"
-    }, {
-        "name": "GumGum-Streaming | FR",
-        "author": "Frizrat",
-        "image": "https://i2.wp.com/gum-gum-streaming.com/wp-content/uploads/2017/06/index.png",
-        "info": "Regardez gratuitement des animes avec le module du site Gum-Gum Streaming.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/GumGum/GumGum.json"
-    }
-    ],
+    }],
     "Mangas": [
     {
         "name": "AsuraScans | ENG",
         "author": "Scrumptious",
         "image": "https://i.postimg.cc/MK0y10tY/asura-logo.png",
         "info": "Read webtoons/manhua/manhwa on AsuraScans",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/asura.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/asura.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/Asura.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/Asura.json"
     }, {
         "name": "FlameScans | ENG",
         "author": "Scrumptious",
         "image": "https://i.postimg.cc/W1y2xnfX/image.png",
         "info": "Read manhwa translations at Flamescans.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/flames.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/flames.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/Flames.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/Flames.json"
     }, {
         "name": "GalaxyAction | ENG",
         "author": "Scrumptious",
@@ -182,8 +98,8 @@
         "author": "Nabil",
         "image": "https://i.postimg.cc/4d38NsqH/Manga-Dex-logo.png",
         "info": "Read manga for free with the module of MangaDex.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/MangaDex/moduleTemplate.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/MangaDex/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/MangaDex/moduleTemplate.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/MangaDex/moduleTemplate.json"
     }, {
         "name": "Scans Mangas | FR",
         "author": "Frizrat",
@@ -217,15 +133,8 @@
         "author": "Nabil",
         "image": "https://i.postimg.cc/hvP5c4qS/logo-sen.png",
         "info": "Read raw mangas on the module for Senmanga.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/Senmanga/senmanga.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/Senmanga/senmanga.json"
-    }, {
-        "name": "LelScan-VF | FR",
-        "author": "Nabil",
-        "image": "https://i.postimg.cc/WzKq9LBY/lelscan-logo.png",
-        "info": "Lisez gratuitement des mangas avec le module du site LelScan-VF.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/LelScanVF/moduleTemplate.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/bilnaa.github.io/main/LelScanVF/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/SenManga/moduleTemplate.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/SenManga/moduleTemplate.json"
     },
     {
         "name": "Mangas-Origines | FR",
@@ -234,14 +143,6 @@
         "info": "Lisez gratuitement des mangas avec le module du site Mangas-Origines.",
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/Mangas-Origines/moduleTemplate.json",
         "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/Mangas-Origines/moduleTemplate.json"
-    },
-    {
-        "name": "KumaScans | ENG",
-        "author": "Danyspb",
-        "image": "https://i.postimg.cc/26PWWsJ8/kmsa.png",
-        "info": "A module for reading mangas weebtoon manhwa",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/KumaScan/moduleTemplate.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/Danyspb/Modules-Ketsu/main/KumaScan/moduleTemplate.json "
     },
     {
         "name": "CrunchyScan | FR",

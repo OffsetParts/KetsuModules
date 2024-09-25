@@ -6,13 +6,13 @@
     "developer": "Scrumptious",
     "moduleID": "20020901",
     "moduleImage": "https://i.postimg.cc/MK0y10tY/asura-logo.png",
-    "moduleVersion": 2.01,
+    "moduleVersion": 2.02,
     "moduleLenguage": "ENG",
     "changelog":"made quite a bit of improvements",
     "moduleType": "Image",
     "baseURL": "https://asuracomic.net/",
     "moduleDeveloperSite": "https://github.com/OffsetParts/KetsuModules/",
-    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/asura.json",
+    "UpdateSite": "https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/Asura.json",
     "preferedServer": "",
     "preferedDownloadServer": "",
     "blackListed": [
@@ -390,7 +390,7 @@
       "javascriptConfig": {
         "removeJavascript": true,
         "loadInWebView": false,
-        "javaScript": "function Chapters(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Package(images){this.images=images}var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);var emptyKeyValue=[new KeyValue('','')];var output=[];function getImages(){const images=document.querySelectorAll('[alt=\"chapter page\"]');output=Array.from(images).map(image=>new ModuleRequest(image.src,'get',emptyKeyValue,null));return output}let emptyExtra=new Extra([new Commands('',emptyKeyValue)],emptyKeyValue);var chaptersObject=new Chapters(new ModuleRequest('','',emptyKeyValue,null),emptyExtra,new JavascriptConfig(false,false,''),new Package(getImages()));var finalJson=JSON.stringify(chaptersObject);savedData.innerHTML=finalJson;"
+        "javaScript": "function Chapters(request,extra,javascriptConfig,output){this.request=request;this.extra=extra;this.javascriptConfig=javascriptConfig;this.output=output}function ModuleRequest(url,method,headers,httpBody){this.url=url;this.method=method;this.headers=headers;this.httpBody=httpBody}function Extra(commands,extraInfo){this.commands=commands;this.extraInfo=extraInfo}function Commands(commandName,params){this.commandName=commandName;this.params=params}function JavascriptConfig(removeJavascript,loadInWebView,javaScript){this.removeJavascript=removeJavascript;this.loadInWebView=loadInWebView;this.javaScript=javaScript}function KeyValue(key,value){this.key=key;this.value=value}function Package(images){this.images=images}var savedData=document.getElementById('ketsu-final-data');var parsedJson=JSON.parse(savedData.innerHTML);var emptyKeyValue=[new KeyValue('','')];var output=[];function getImages(){const images=document.querySelectorAll('[alt*=\"chapter page\"]');output=Array.from(images).map(image=>new ModuleRequest(image.src,'get',emptyKeyValue,null));return output}let emptyExtra=new Extra([new Commands('',emptyKeyValue)],emptyKeyValue);var chaptersObject=new Chapters(new ModuleRequest('','',emptyKeyValue,null),emptyExtra,new JavascriptConfig(false,false,''),new Package(getImages()));var finalJson=JSON.stringify(chaptersObject);savedData.innerHTML=finalJson;"
       },
       "output": {
         "videos": {
