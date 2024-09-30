@@ -1,8 +1,8 @@
 function Chapters(request, extra, javascriptConfig, output) {
-  this.request = request;
-  this.extra = extra;
-  this.javascriptConfig = javascriptConfig;
-  this.output = output;
+	this.request = request;
+	this.extra = extra;
+	this.javascriptConfig = javascriptConfig;
+	this.output = output;
 }
 
 function ModuleRequest(url, method, headers, httpBody) {

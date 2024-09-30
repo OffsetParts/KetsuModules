@@ -344,13 +344,13 @@ function findProperties(obj, keysToFind) {
 /* {{ Dynamic Elements }} */
 
 
-const PosterElms = document.querySelectorAll('[class*=main-embla__slide]');
+/* const PosterElms = document.querySelectorAll('[class*=main-embla__slide]');
 let Posters = Array.from(PosterElms).map(list => {
 	var link = quickRequest(list.querySelector('a').href, true);
 	var image = quickRequest(list.querySelector('img').src);
 
 	return new Data(image, '', '0', '1', '2', '3', '4', false, link);
-});
+}); */
 
 
 let NewData = { array: [] }; scriptFilter('solo', NewData);
@@ -379,8 +379,23 @@ let Latests = Array.from(LatestElms).map(list => {
 	return new Data(image, title, lastChapter, '1', '2', '3', '4', false, link);
 });
 
+fetch(apiEndpoint, fetchOptions)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`POST request failed: ${response.statusText}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('POST Response Data:', data);
+    // Process the data as needed
+  })
+  .catch(error => {
+    console.error('Error with POST request:', error);
+  });
 
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, Posters));
+
+// output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, Posters));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsFull, Paging.leading, new Section('New Series', true), null, NewSeriesList));
 output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
