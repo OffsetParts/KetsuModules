@@ -231,7 +231,7 @@ function scriptFilter(match, obj) {
         if (content.match('self.__next_f.push') && content.includes(match)) {
             const regex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
             let match = content.match(regex);
-    
+
             if (match) {
                 var dictionary = match[2]
                 .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon

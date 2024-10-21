@@ -1,8 +1,8 @@
 function Chapters(request, extra, javascriptConfig, output) {
-  this.request = request;
-  this.extra = extra;
-  this.javascriptConfig = javascriptConfig;
-  this.output = output;
+	this.request = request;
+	this.extra = extra;
+	this.javascriptConfig = javascriptConfig;
+	this.output = output;
 }
 
 function ModuleRequest(url, method, headers, httpBody) {
@@ -44,7 +44,7 @@ var emptyKeyValue = [new KeyValue('', '')];
 var output = [];
 
 function getImages() {
-	var images = document.querySelectorAll('.rdminimal img');
+	var images = document.querySelectorAll('[decoding=async]');;
 	for (var x = 0; x < images.length; x++) {
 		var img = images[x].src;
 		output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
