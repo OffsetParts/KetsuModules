@@ -60,10 +60,10 @@ const FeaturedProjects = () => (
         <h1 className="mb-3 text-2xl font-medium leading-tight" >Featured Projects</h1>
         <ul className="pl-4">
             <p >
-                <span className="text-violet-600 hover:underline" > <a href="ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/asura.json">Asurascans</a> </span> - popular and HQ scanlation group
+                <span className="text-violet-600 hover:underline" > <a href="ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/Asura.json">Asurascans</a> </span> - popular and HQ scanlation group
             </p>
             <p>
-                <span className="text-red-500 hover:underline" > <a href="ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/flames.json">Flamescans</a> </span> - another popular manga scanlation group
+                <span className="text-red-500 hover:underline" > <a href="ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/Flames.json">Flamescans</a> </span> - another popular manga scanlation group
             </p>
             <p>
                 <span className="text-fuchsia-400 hover:underline"> <a href="ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/GalaxyAction/Galatic.json">Galaxyaction</a> </span>, formerly flixscans - a more niche group with quality scanlations
