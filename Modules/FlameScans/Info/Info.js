@@ -57,30 +57,45 @@ var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
 
 // Functions
-function cleanText(obj) {
-	obj = obj.replaceAll('\\n','').replaceAll('\\t', '').replaceAll('(adsbygoogle = window.adsbygoogle || []).push({});', '').trim();
-	return obj;
+function cleanUrl(url) {
+	return 'https://flamecomics.xyz' + (url).trim();
 }
 
-var Synopsis = cleanText(document.querySelector('.entry-content-single').textContent);
+function cleanText(str) {
+	return str.replace(/[\\n\\t]/g, '').trim();
+}
 
-var title = document.querySelector('.entry-title').textContent;
-var genres = []; genres = Array.from(document.querySelectorAll('.mgen a')).map(g => g.textContent);
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(cleanText(url), 'get', emptyKeyValue, null);
+	}
+}
 
-var rating =  ('Rating : ' + cleanText(document.querySelector('.numscore').textContent)); 
-var status = cleanText(document.querySelector('.status').textContent);
-var type = document.querySelector('.tsinfo .imptdt i').textContent;
+var title = document.querySelector('h1').textContent;
+var image = quickRequest(document.querySelector('img').src, true);
+var rating =  'N/A';
+var status = cleanText(document.querySelector('div .mantine-Badge-root').textContent);
+var Synopsis = cleanText([...document.querySelectorAll('p')].find(el => el.textContent.trim().includes('In the past')).textContent);
 
+var genresElm = document.querySelectorAll('.mantine-Paper-root > .mantine-Stack-root > .mantine-Group-root');
+var genres = [...genresElm].map(item => {
+    // const subElm1 = item.querySelector('[class*=infoField]'); // Get subElm1
+    const subElm2 = item.querySelector('[class*=infoValue'); // Get subElm2
 
-var image = document.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-var chapters = document.querySelectorAll('.eplister ul li');
+    // Combine their textContent with ': '
+    return `${subElm2?.textContent.trim()}`;
+});
+
+var chapters = document.querySelectorAll('[class*=ChapterCard_chapterWrapper]');
 
 var episodes = [];
 if (chapters.length > 0) {
     for (var x = chapters.length - 1; x >= 0; x--) {
         var element = chapters[x];
-        var cLink = element.querySelector('a').href;
-        let chapter = new Chapter('Chapter ' + (chapters.length - x), new ModuleRequest(cLink, 'get', emptyKeyValue, null), false);
+        var cLink = element.href;
+        let chapter = new Chapter('Chapter ' + (chapters.length - x), quickRequest(cLink, true), false);
         episodes.push(chapter);
     }
 }

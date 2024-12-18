@@ -238,7 +238,7 @@ function scriptFilter(match, obj) {
                 .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
                 .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
                 .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
-                .replace(/\\\\n$/, '');   
+                .replace(/\\\\n$/, '');
                 obj.array = JSON.parse(dictionary);
             }
         }
@@ -396,7 +396,7 @@ let Popular = Array.from(popularElm).map(list => {
 	let title = cleanText(list.querySelector('span.block').textContent);
 	var link = quickRequest(list.querySelector('a').href, true);
 	var image = quickRequest(list.querySelector('img').src);
-	
+
 	/* var ep = list.querySelector('[class*=\"13px\"]').textContent;
 	var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"12px\"]').textContent); */
 

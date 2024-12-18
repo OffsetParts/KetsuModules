@@ -227,27 +227,26 @@ function quickRequest(url, clean) {
 
 function scriptFilter(match, obj) {
     document.querySelectorAll('script').forEach((elm) => {
-        let content = elm.innerHTML;
-        if (content.match('self.__next_f.push') && content.includes(match)) {
-            const regex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
-            let match = content.match(regex);
-    
-            if (match) {
-                var dictionary = match[2]
-                .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
-                .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
-                .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
-                .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
-                .replace(/\\\\n$/, '');   
-                obj.array = JSON.parse(dictionary);
-            }
+		let refinedData = '';
+        let clumpData = elm.textContent;
+        if (clumpData.match('self.__next_f.push') && clumpData.includes(match)) {
+            let outerFunctionRegex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
+            let match = cachedData.match(outerFunctionRegex); if (match) {
+				refinedData = JSON.parse(match[2]
+				.replace(/[a-zA-Z0-9]+:/g, '')         // Remove any alphanumeric prefix followed by a colon
+				.replace(/\\\\r\\\\n/g, '\\n')         // Replace escaped newlines
+				.replace(/\\\\\"/g, '\"')              // Unescape quotation marks
+				.replace(/\\\\\\\\/g, '\\\\')          // Handle any other escape sequences
+				.replace(/\\\\n$/, ''));
+			}
+			return refinedData;
         }
     });
 }
 
 function dynamicCiteriaSearch(obj, criteria) {
 	let results = [];
-  
+
 	function recursiveSearch(obj) {
 		if (Array.isArray(obj)) {
 			obj.forEach(item => {
@@ -255,11 +254,11 @@ function dynamicCiteriaSearch(obj, criteria) {
 					let matches = Object.keys(criteria).every(key => {
 						const expectedType = criteria[key].type;
 						const valueType = typeof item[key];
-  
+
 						// Check if key exists and type matches
 						if (expectedType && valueType === expectedType) {
 							const expectedValue = criteria[key].value;
-  
+
 							// If a specific value is provided, check it
 							if (expectedValue !== undefined) {
 								// Handle specific value checks based on type
@@ -277,46 +276,42 @@ function dynamicCiteriaSearch(obj, criteria) {
 						}
 						return false;
 					});
-  
+
 					if (matches) {
 						results.push(item); // Push the matched object, not the parent array
 					}
 				}
 			});
 		}
-  
+
 		// Continue searching nested objects
+		Object.values(obj).forEach(value => recursiveSearch(value));
+	}
+
+	recursiveSearch(obj);
+	return results;
+}
+
+function findProperties(obj, keysToFind) {
+	let results = [];
+
+	function recursiveSearch(obj) {
 		if (typeof obj === 'object' && obj !== null) {
+			// Check if all keysToFind exist in the current object
+			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
+				// Push the entire object containing all keysToFind
+				results.push(obj);
+			}
+
+			// Continue searching nested objects
 			for (let key in obj) {
 				recursiveSearch(obj[key]);
 			}
 		}
 	}
-  
+
 	recursiveSearch(obj);
 	return results;
-  }
-  
-function findProperties(obj, keysToFind) {
-let results = [];
-
-function recursiveSearch(obj) {
-	if (typeof obj === 'object' && obj !== null) {
-		// Check if all keysToFind exist in the current object
-		let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
-			// Push the entire object containing all keysToFind
-			results.push(obj);
-		}
-
-		// Continue searching nested objects
-		for (let key in obj) {
-			recursiveSearch(obj[key]);
-		}
-	}
-}
-
-recursiveSearch(obj);
-return results;
 }
 
 /* {{ Dynamic Elements }} */
@@ -332,9 +327,9 @@ if (goatData) {
 		let url = quickRequest(info.href, true);
 		let image = quickRequest('https:' + findProperties(list, ['src'])[0].src);
 		return new Data(image, title, '0', '1', '2', '3', '4', false, url);
-  	});
+});
 
-  	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATData));
+output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATData));
 }
 
 let FeaturedData = { array: [] }; scriptFilter('sliders', FeaturedData);
@@ -356,17 +351,17 @@ let monthlyCriteria = { 'value': { type: 'string', value: 'monthly' } };
 let MonthlyData = { array: []}; let MonthlyList = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"', MonthlyData);
 const monthlyData = dynamicCiteriaSearch(MonthlyData.array, monthlyCriteria);
 if (monthlyData) {
-  	MonthlyList = Array.from(monthlyData[0]['children']).map(list => {
-		const info = findProperties(list, ['href', 'children'])[0];
-		let title = info.children;
-		let url = quickRequest(info.href, true);
-		let image = quickRequest('https:' + findProperties( list, [ 'src' ] )[ 0 ].src);
-		/* const misc = findProperties(list, ['children',  'className'])[21];
-		let rating = misc.children; */
-		return new Data(image, title, '0', '1', '2', '3', '4', false, url);
-  	});
+	MonthlyList = Array.from(monthlyData[0]['children']).map(list => {
+			const info = findProperties(list, ['href', 'children'])[0];
+			let title = info.children;
+			let url = quickRequest(info.href, true);
+			let image = quickRequest('https:' + findProperties( list, [ 'src' ] )[ 0 ].src);
+			/* const misc = findProperties(list, ['children',  'className'])[21];
+			let rating = misc.children; */
+			return new Data(image, title, '0', '1', '2', '3', '4', false, url);
+	});
 
-  	output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section('Monthly', false), null, MonthlyList));
+	output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section('Monthly', false), null, MonthlyList));
 }
 
 /* {{ Static Elements }} */
@@ -390,7 +385,7 @@ let Popular = Array.from(popularElm).map(list => {
 	let title = cleanText(list.querySelector('span.block').textContent);
 	var link = quickRequest(list.querySelector('a').href, true);
 	var image = quickRequest(list.querySelector('img').src);
-	
+
 	/* var ep = list.querySelector('[class*=\"13px\"]').textContent;
 	var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"12px\"]').textContent); */
 
