@@ -219,28 +219,28 @@ let Poster = new Layout(
 	3, // visibleCellsWidthL
 	1, // visibleCellsHeight
 	375, // heightForVisibleCells
-	new Size(413, 650), // cellSize 
-	new Ratio(RatioRelation.height, 216, 340), // ratio 
+	new Size(413, 650), // cellSize
+	new Ratio(RatioRelation.height, 216, 340), // ratio
 	new Size(0, 0), // constant
 	15, // horizontalSpacing
 	15 // verticalSpacing
 );
 
 // Popular
-let TodaySpecials = Array.from(document.querySelectorAll('.p-2 .overflow-auto > *')).map(list => {
-	const title = cleanText(list.querySelector('[dir=\"ltr\"]').textContent);
-	const link = quickRequest(list.href, true);
+let TodaySpecials = Array.from(document.querySelectorAll('[class=popconslide] > .bs')).map(list => {
+	const title = cleanText(list.querySelector('.tt').textContent);
+	const link = quickRequest(list.querySelector('a').href, true);
 	const image = quickRequest(list.querySelector('img').src);
 
 	return new Data(image, title, '', '', '', '', '', false, link);
 });
 
 // Latest Chapters
-let Latests = Array.from(document.querySelectorAll('.p-2 .shadow-lg')).map(list => {
-	const title = cleanText(list.querySelector('[dir=\"ltr\"] > a').textContent);
+let Latests = Array.from(document.querySelectorAll('[class=listupd] > .bs > .bsx')).map(list => {
+	const title = cleanText(list.querySelector('a').title);
 	const link = quickRequest(list.querySelector('a').href, true);
 	const image = quickRequest(list.querySelector('img').src);
-	const ep = cleanText(list.querySelector('ul li a').textContent);
+	const ep = cleanText(list.querySelector('.fivchap').textContent);
 
 	return new Data(image, title, ep, '', '', '', '', false, link);
 });

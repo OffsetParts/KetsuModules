@@ -1,8 +1,8 @@
 function Chapters(request, extra, javascriptConfig, output) {
-  this.request = request;
-  this.extra = extra;
-  this.javascriptConfig = javascriptConfig;
-  this.output = output;
+	this.request = request;
+	this.extra = extra;
+	this.javascriptConfig = javascriptConfig;
+	this.output = output;
 }
 
 function ModuleRequest(url, method, headers, httpBody) {
@@ -41,20 +41,10 @@ var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 var emptyKeyValue = [new KeyValue('', '')];
 
-var output = [];
-
-function getImages() {
-	var images = document.querySelectorAll('.my-4 > .justify-center img');
-	for (var x = 0; x < images.length; x++) {
-		var img = images[x].src;
-		output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
-	}
-	
-	return output;
-}
+var output = Array.from(document.querySelectorAll('[id=readerarea] > img')).map(image => new ModuleRequest(image.src, 'get', emptyKeyValue, null));
 
 let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
-var chaptersObject = new Chapters(new ModuleRequest('', '', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, false, ''), new Package(getImages()));
+var chaptersObject = new Chapters(new ModuleRequest('', '', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, false, ''), new Package(output));
 
 var finalJson = JSON.stringify(chaptersObject);
 savedData.innerHTML = finalJson;

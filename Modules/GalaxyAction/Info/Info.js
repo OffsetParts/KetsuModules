@@ -84,27 +84,23 @@ var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
 
-var genres = ['Action', 'Adventure', 'Comics'];
-var type = 'Webtoon';
+var info = [...document.querySelectorAll('div.tsinfo > [class=imptdt]')]
+var Status = cleanText(info.filter(e => e.textContent.includes('Status')).pop().querySelector('i').textContent);
+var type = cleanText(info.filter(e => e.textContent.includes('Type')).pop().querySelector('a').textContent);
+var genres = Array.from(document.querySelectorAll('[class=mgen] > [rel=tag]')).map(g => g.textContent);
 
-var synopsis = getText(document.querySelector('[class=modal-box] > div > div p'));
+var synopsis = getText(document.querySelector('[itemprop=description]').textContent);
 
-var title = cleanText(document.querySelector('.text-2xl').textContent);
-var image = quickRequest(document.querySelector('.h-full.rounded').src);
-var chapters = document.querySelectorAll('.grid.grid-cols-1 a');
+var title = cleanText(document.querySelector('[class=entry-title]').textContent);
+var image = quickRequest(document.querySelector('[class=thumb] > img').src);
+var chapterElms = document.querySelectorAll('[class=eplister] li');
 
-var episodes = [];
-for (let x = chapters.length - 1; x >= 0; x--) {
-    var element = chapters[x];
+var chapters = Array.from(chapterElms).map((element, index) => {
+    var link = element.querySelector('a').href;
+    let chapter = new Chapter(element.querySelector('[class=chapternum]').textContent, quickRequest(link, true), false);
+    return chapter;
+}).reverse();
 
-    if (!element) {
-        continue; // Skip this iteration if element is undefined
-    }
-
-    let chapter = new Chapter('Chapter ' + (chapters.length - x), quickRequest(element.href, true), false);
-    episodes.push(chapter);
-}
-
-let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, status, type, '', 'Chapters : ' + episodes.length, episodes));
+let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, Status, type, '', 'Chapters : ' + chapterElms.length, chapters));
 var finalJson = JSON.stringify(infoPageObject);
 savedData.innerHTML = finalJson;

@@ -55,7 +55,7 @@ const DefaultLayouts = {
 
     none: ''
 };
-    
+
 const CellDesings = {
     Special1 : 'Special1',
     Special2 : 'Special2',
@@ -177,7 +177,7 @@ function Ratio(inRelation,number1,number2) {
     this.number1 = number1;
     this.number2 = number2;
 
-} 
+}
 
 function Data(image,title,description,field1,field2,field3,field4,isChapter,link,openInWebView) {
     this.image = image;
@@ -214,34 +214,21 @@ let output = [];
 var searchLayout = new Layout(new Insets(10,10,10,10),1,2,3,1,500,new Size(400,400),new Ratio('width',4,11),new Size(0,0),10,10);
 
 var savedData = document.getElementById('ketsu-final-data');
-var parsedJson = JSON.parse(savedData.innerHTML); 
+var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('','')];
 
-let lastAddedArray = Array.from(document.querySelectorAll('.grid-cols-1 > div')).map(iteration => {
-    try {
-        const titleElement = iteration.querySelector('[dir=\"ltr\"]');
-        const imageElement = iteration.querySelector('img');
-        const linkElement = iteration.querySelector('a');
-        const lchapterElement = iteration.querySelector('li a');
+let lastAddedArray = Array.from(document.querySelectorAll('div.listupd > div.bs')).map(Item => {
+        var title = cleanText(Item.querySelector('[class=tt]').textContent);
+        var image = quickRequest(Item.querySelector('img').src);
+        var link = quickRequest(Item.querySelector('a').href);
+        var lchapter = cleanText(Item.querySelector('div.epxs').textContent.match(/\\d+/)[0]);
+        // var rating = cleanText(Item.querySelector('[class=numscore]').textContent);
 
-        if (!titleElement || !imageElement || !linkElement || !lchapterElement) {
-            throw new Error('One or more elements are missing in this iteration.');
-        }
-
-        const title = cleanText(titleElement.textContent);
-        const image = quickRequest(imageElement.src);
-        const link = quickRequest(linkElement.href, true);
-        const lchapter = cleanText(lchapterElement.textContent);
-
-        return new Data(image, title, lchapter, '', '', '', '', false, link);
-    } catch (error) {
-        console.error('Error processing iteration:', error);
-        return null; // Return null or a specific error object to handle errors.
-    }
-}).filter(item => item !== null); // Filter out null values resulting from errors.
+        return new Data(image, title, '', lchapter, '', '', '', false, link);
+})
 
 
-output.push(new Output(CellDesings.wide8, Orientation.vertical, DefaultLayouts.none, Paging.none, new Section('', false), searchLayout, lastAddedArray));
+output.push(new Output(CellDesings.wide3, Orientation.vertical, DefaultLayouts.longDoubletsDouble, Paging.leading, new Section('', false), null, lastAddedArray));
 let searchPageObject = new Search(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), '', new JavascriptConfig(false, false, ''), output);
 var finalJson = JSON.stringify(searchPageObject);
 savedData.innerHTML = finalJson;
