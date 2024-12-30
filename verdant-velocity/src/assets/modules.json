@@ -93,6 +93,20 @@
         "info": "Read action and romance scanlations @ Galaxyaction.",
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/GalaxyAction/Galatic.json",
         "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/GalaxyAction/Galatic.json"
+    }, {
+        "name": "AsuraScans Free | ENG",
+        "author": "Scrumptious",
+        "image": "https://asurascansfree.com/wp-content/uploads/2024/12/Asura-scans-free-icon.png",
+        "info": "A stable and completely free version of asurascans developed by the devs @ Galaxyaction.",
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsurascansFree/AsuraFree.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsurascansFree/AsuraFree.json"
+    }, {
+        "name": "Vortexscans Free | ENG",
+        "author": "Scrumptious",
+        "image": "https://vortexscansfree.com/wp-content/uploads/2024/12/Logo-d426c8cb30892710.webp",
+        "info": "A stable and completely free version of asurascans developed by the devs @ Galaxyaction.",
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/VortexscansFree/VortexFree.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/VortexscansFree/VortexFree.json"
     },{
         "name": "MangaDex | ENG",
         "author": "Nabil",

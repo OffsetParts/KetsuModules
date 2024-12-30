@@ -198,7 +198,7 @@ function cleanText(str) {
 }
 
 function cleanUrl(url) {
-    return 'https://galaxyaction.net' + (url).trim();
+    return 'https://vortexscansfree.com' + (url).trim();
 }
 
 function quickRequest(url, clean) {
@@ -218,17 +218,17 @@ var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('','')];
 
 let lastAddedArray = Array.from(document.querySelectorAll('div.listupd > div.bs')).map(Item => {
-        var title = cleanText(Item.querySelector('[class=tt]').textContent);
-        var image = quickRequest(Item.querySelector('img').src);
-        var link = quickRequest(Item.querySelector('a').href);
-        if ((Item.querySelector('div.epxs').textContent.match(/\\d+/))) {
-            var lchapter = cleanText(Item.querySelector('div.epxs').textContent.match(/\\d+/)[0]);
-        } else {
-            var lchapter = '?';
-        }
-        // var rating = cleanText(Item.querySelector('[class=numscore]').textContent);
+    var title = cleanText(Item.querySelector('[class=tt]').textContent);
+    var image = quickRequest(Item.querySelector('img').src);
+    var link = quickRequest(Item.querySelector('a').href);
+    if ((Item.querySelector('div.epxs').textContent.match(/\\d+/))) {
+        var lchapter = cleanText(Item.querySelector('div.epxs').textContent.match(/\\d+/)[0]);
+    } else {
+        var lchapter = '?';
+    }
+    // var rating = cleanText(Item.querySelector('[class=numscore]').textContent);
 
-        return new Data(image, title, '', lchapter, '', '', '', false, link);
+    return new Data(image, title, '', lchapter, '', '', '', false, link);
 })
 
 

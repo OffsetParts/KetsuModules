@@ -200,7 +200,7 @@ function cleanText(str) {
 }
 
 function cleanUrl(url) {
-    return 'https://galaxyaction.net' + (url).trim();
+    return 'https://vortexscansfree.com' + (url).trim();
 }
 
 function quickRequest(url, clean) {
