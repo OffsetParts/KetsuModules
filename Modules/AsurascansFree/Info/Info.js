@@ -61,14 +61,6 @@ function cleanUrl(url) {
     return 'https://asurascansfree.com' + (url).trim();
 }
 
-function quickRequest(url, clean) {
-	if (clean == true) {
-		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
-	} else if (clean == false || clean == null) {
-		return new ModuleRequest(url, 'get', emptyKeyValue, null);
-	}
-}
-
 function getText(node, accumulator = []) {
     if (node.nodeType === Node.TEXT_NODE) {
         accumulator.push(node.textContent);
@@ -80,6 +72,14 @@ function getText(node, accumulator = []) {
     return cleanText(accumulator.join(' ')).trim();
 }
 
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
+}
+
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
@@ -89,7 +89,7 @@ var Status = cleanText(info.filter(e => e.textContent.includes('Status')).pop().
 var type = cleanText(info.filter(e => e.textContent.includes('Type')).pop().querySelector('a').textContent);
 var genres = Array.from(document.querySelectorAll('[class=mgen] > [rel=tag]')).map(g => g.textContent);
 
-var synopsis = getText(document.querySelector('[itemprop=description]').textContent);
+var synopsis = getText(document.querySelector('[itemprop=description]'));
 
 var title = cleanText(document.querySelector('[class=entry-title]').textContent);
 var image = quickRequest(document.querySelector('[class=thumb] > img').src);

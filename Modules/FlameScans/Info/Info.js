@@ -77,7 +77,7 @@ var title = document.querySelector('h1').textContent;
 var image = quickRequest(document.querySelector('img').src, true);
 var rating =  'N/A';
 var status = cleanText(document.querySelector('div .mantine-Badge-root').textContent);
-var Synopsis = cleanText([...document.querySelectorAll('p')].find(el => el.textContent.trim().includes('In the past')).textContent);
+var Synopsis = cleanText(document.querySelector('div [style*=transition] > p.mantine-Text-root').textContent);
 
 var genresElm = document.querySelectorAll('.mantine-Paper-root > .mantine-Stack-root > .mantine-Group-root');
 var genres = [...genresElm].map(item => {
@@ -88,17 +88,13 @@ var genres = [...genresElm].map(item => {
     return `${subElm2?.textContent.trim()}`;
 });
 
-var chapters = document.querySelectorAll('[class*=ChapterCard_chapterWrapper]');
+var chapterElms = document.querySelectorAll('[class*=ChapterCard_chapterWrapper]');
 
-var episodes = [];
-if (chapters.length > 0) {
-    for (var x = chapters.length - 1; x >= 0; x--) {
-        var element = chapters[x];
-        var cLink = element.href;
-        let chapter = new Chapter('Chapter ' + (chapters.length - x), quickRequest(cLink, true), false);
-        episodes.push(chapter);
-    }
-}
+var chapters = Array.from(chapterElms).map((element) => {
+    var link = element.querySelector('a').href;
+    let chapter = new Chapter(element.querySelector('[class=chapternum]').textContent, quickRequest(link), false);
+    return chapter;
+}).reverse();
 
 let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, Synopsis, genres, rating, status, '', 'Chapters : ' + chapters.length, episodes));
 var finalJson = JSON.stringify(infoPageObject);
