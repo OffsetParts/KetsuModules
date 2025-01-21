@@ -208,7 +208,7 @@ function createLayout(insets, size, ratio) {
 }
 
 function cleanText(str) {
-    return str.replace(/[\\n\\t]/g, '');
+	return str.replace(/[\\n\\t]/g, '').trim();
 }
 
 function cleanUrl(url) {
@@ -233,7 +233,7 @@ var Spotlight = Array.from(topSlider).map(slide => {
     // var info = cleanText(slide.querySelector('div.desi-description').textContent);
     // var type = cleanText(slide.querySelector('div.sc-detail > div:nth-child(1)').textContent);
     var airing = 'First Aired: ' + slide.querySelector('div.sc-detail > div:nth-child(3)').textContent;
-    Spotlight.push(new Data(image, title + ' - ' + type, info, airing, '', '', '', false, link, false));
+    Spotlight.push(new Data(image, title + ' - ' + 'type', 'info', airing, '', '', '', false, link, false));
 })
 
 var bestAiring = document.querySelectorAll('div.anif-block-01 li');
@@ -280,14 +280,14 @@ var Popular = popularArray.map(list => {
 });
 
 
-var newArray = Array.from(document.querySelectorAll('div.block_area_home') || []);
-var filteredArray = newArray.filter((e) => e.querySelector('.cat-heading').innerText.includes('New')).pop()?.querySelectorAll('.flw-item') || [];
+var newArray = Array.from(document.querySelectorAll('section.block_area_home') || []);
+var filteredArray = newArray.filter((e) => e.querySelector('.cat-heading').textContent.includes('New')).pop()?.querySelectorAll('div.flw-item');
 
 var NewAnimes = filteredArray.map(list => {
     try {
         var ticks = Array.from(list.querySelectorAll('.tick.ltr div.tick-item'));
         var title = list.querySelector('img').alt;
-        const link = quickRequest(cleanUrl(list.querySelector('a').href), true);
+        const link = quickRequest(list.querySelector('a').href, true);
         var image = quickRequest(list.querySelector('img').src);
         var total = list.querySelector('div.tick-eps').textContent;
         var subisode = list.querySelector('div.tick-sub').textContent;
@@ -311,18 +311,16 @@ var NewAnimes = filteredArray.map(list => {
 
 let weeklyArray = Array.from(document.querySelectorAll('#top-viewed-week > ul > li'));
 let Weekly = weeklyArray.map(list => {
-	var title = list.querySelector('img').alt;
+	var title = list.querySelector('a').title;
 	const link = quickRequest(list.querySelector('a').href, true);
-	var image = quickRequest(list.querySelector('img').src);
+	var image = quickRequest(list.querySelector('img').dataset.src);
 
 	return new Data(image, title, '', '', '', '', '', false, link);
 });
 
 let layout = createLayout(new Insets(0, 0, 0, 0), new Size(400, 105), new Ratio('width', 6, 10));
-let layout1 = createLayout(new Insets(0, 0, 10, 10), new Size(400, 105), new Ratio('width', 6, 10));
 
 output.push(new Output(CellDesings.Special3, Orientation.horizontal, DefaultLayouts.wideStrechedFull, Paging.leading, new Section('', true), layout, sliderArray));
-
 output.push(new Output(CellDesings.Special1, Orientation.horizontal, DefaultLayouts.triplets, Paging.none, new Section('Top Airing : ', true), null, TopAiring));
 output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Last Episodes: ', true), null, LastEpisodes));
 output.push(new Output(CellDesings.wide6, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.none, new Section('New On Aniwatch', true), null, NewAnimes));
@@ -331,10 +329,10 @@ output.push(new Output(CellDesings.normal2, Orientation.horizontal, DefaultLayou
 let date = new Date();
 let year = date.getFullYear();
 let day = date.getDate().toString().padStart(2, '0');
-let month = (date.getMonth() + 1).toString().padStart(2, '0');
+let month = date.getMonth().toString().padStart(2, '0');
 let timezoneOffset = date.getTimezoneOffset();
 
 let nextRequest = `https://hianime.to/ajax/schedule/list?tzOffset=${timezoneOffset}&date=${year}-${month}-${day}`;
-let MainPageObject = new MainPage(new ModuleRequest(nextRequest, 'get', XHRequest, null), new Extra([ new Commands('', emptyKeyValue) ], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
+let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra([ new Commands('', emptyKeyValue) ], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;
