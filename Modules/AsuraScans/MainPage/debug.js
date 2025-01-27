@@ -225,13 +225,13 @@ function quickRequest(url, clean) {
 	}
 }
 
-function scriptFilter(match, obj) {
+function scriptFilter(match) {
+	let refinedData = '';
+	let outerFunctionRegex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
     document.querySelectorAll('script').forEach((elm) => {
-		let refinedData = '';
-        let clumpData = elm.textContent;
-        if (clumpData.match('self.__next_f.push') && clumpData.includes(match)) {
-            let outerFunctionRegex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
-            let match = cachedData.match(outerFunctionRegex); if (match) {
+        let content = elm.textContent;
+        if (content.match('self.__next_f.push') && content.includes(match)) {
+            let match = content.match(outerFunctionRegex); if (match) {
 				refinedData = JSON.parse(match[2]
 				.replace(/[a-zA-Z0-9]+:/g, '')         // Remove any alphanumeric prefix followed by a colon
 				.replace(/\\\\r\\\\n/g, '\\n')         // Replace escaped newlines
@@ -239,9 +239,9 @@ function scriptFilter(match, obj) {
 				.replace(/\\\\\\\\/g, '\\\\')          // Handle any other escape sequences
 				.replace(/\\\\n$/, ''));
 			}
-			return refinedData;
         }
     });
+	return refinedData;
 }
 
 function dynamicCiteriaSearch(obj, criteria) {
@@ -318,23 +318,19 @@ function findProperties(obj, keysToFind) {
 
 let goatCriteria = { 'value': { type: 'string', value: 'all' } };
 
-let GoatData = { array: []}; let GOATData = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"all\\\\\"', GoatData);
-const goatData = dynamicCiteriaSearch(GoatData.array, goatCriteria);
-if (goatData) {
+let GOATData = []; const goatData = dynamicCiteriaSearch(scriptFilter('{\\\\\"value\\\\\":\\\\\"all\\\\\"'), goatCriteria); if (goatData) {
 	GOATData = Array.from(goatData[0]['children']).map(list => {
 		const info = findProperties(list, ['href', 'children'])[0];
 		let title = info.children;
-		let url = quickRequest(info.href, true);
+		let link = quickRequest(info.href, true);
 		let image = quickRequest('https:' + findProperties(list, ['src'])[0].src);
-		return new Data(image, title, '0', '1', '2', '3', '4', false, url);
+		return new Data(image, title, '0', '1', '2', '3', '4', false, link);
 });
 
 output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATData));
 }
 
-let FeaturedData = { array: [] }; scriptFilter('sliders', FeaturedData);
-let Featured = []; const sliderData = findProperties(FeaturedData.array, ['sliders']);
-if (sliderData) {
+let Featured = []; const sliderData = findProperties(scriptFilter('sliders'), ['sliders']); if (sliderData) {
 	Featured = Array.from(sliderData[0]['sliders']).map(list => {
 		let title = list['name'];
 		var link = quickRequest('series/' + list['slug'], true);

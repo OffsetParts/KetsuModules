@@ -1,27 +1,20 @@
-// Current model of extracting data from the website
-/* document.querySelectorAll("script").forEach((el) => {
-    let text = el.innerHTML;
-    if ( text.includes("self.__next_f.push") && text.includes("sss-class")) {
-            console.log(text.replaceAll("\"",""))
-    }
-}) */
-
-function scriptFilter(match, obj) {
-    document.querySelectorAll('script').forEach((elm) => {
-        let content = elm.innerHTML;
-        if (content.match('self.__next_f.push') && content.includes(match)) {
-            const regex = /self\.__next_f\.push\(\[(\d+),\s*"(.*?)"\]\)/u;
-            let match = content.match(regex); if (match) {
-                var dictionary = match[2]
-                .replace(/[a-zA-Z0-9]+:/g, '')     // Remove number prefixes
-                .replace(/\\r\\n/g, '\r\n')          // Replace escaped newlines
-                .replace(/\\"/g, '"')              // Unescape quotation marks
-                .replace(/\\\\/g, '\\')            // Handle any other escape sequences
-                .replace(/\\n$/, '');
-                obj.array = JSON.parse(dictionary); console.log(dictionary)
+function scriptFilter(match) {
+    let refinedData = '';
+    let outerFunctionRegex = /self\.__next_f\.push\(\[(\d+),\s*"(.*?)"\]\)/u;
+    document.querySelectorAll('script').forEach((element) => {
+        let content = element.innerHTML;
+        if (content.match(outerFunctionRegex) && content.includes(match)) {
+            let match = content.match(outerFunctionRegex); if (match) {
+                refinedData = JSON.parse(match[2]
+                    .replace(/[a-zA-Z0-9]+:/g, '')     // Remove number prefixes
+                    .replace(/\\r\\n/g, '\n')          // Replace escaped newlines
+                    .replace(/\\"/g, '"')              // Unescape quotation marks
+                    .replace(/\\\\/g, '\\')            // Handle any other escape sequences
+                    .replace(/\\n$/, ''));
             }
         }
     });
+    return refinedData;
 }
 
 function dynamicCiteriaSearch(obj, criteria) {
@@ -96,11 +89,9 @@ function findProperties(obj, keysToFind) {
 
     recursiveSearch(obj);
     return results;
-}
+} 
 
-let NewData = { array: [] }; scriptFilter('series', NewData);
-let NewSeriesList = []; const NewSeriesData = findProperties(NewData.array, ['series']);
-if (NewSeriesData) {
+let NewSeriesList = []; const NewSeriesData = findProperties(scriptFilter('series'), ['series']); if (NewSeriesData) {
     NewSeriesList = Array.from(NewSeriesData[0]['series']).map(list => {
         let title = list['title'];
         let link = '/series/' + list['series_slug'];

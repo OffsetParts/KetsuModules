@@ -225,21 +225,18 @@ function quickRequest(url, clean) {
 	}
 }
 
-function scriptFilter(match, obj) {
+function scriptFilter(match, obj = []) {
     document.querySelectorAll('script').forEach((elm) => {
-        let content = elm.innerHTML;
+        let content = elm.textContent;
         if (content.match('self.__next_f.push') && content.includes(match)) {
-            const regex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
-            let match = content.match(regex);
-
-            if (match) {
-                var dictionary = match[2]
+            let match = content.match(/self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u); if (match) {
+                var refinedData = JSON.parse(match[2]
                 .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
                 .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
                 .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
                 .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
-                .replace(/\\\\n$/, '');
-                obj.array = JSON.parse(dictionary);
+                .replace(/\\\\n$/, ''));
+				return refinedData
             }
         }
     });

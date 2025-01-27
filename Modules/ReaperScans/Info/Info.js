@@ -53,10 +53,63 @@ function Output(image, title, link, description, genres, field1, field2, field3,
     this.chapters = chapters;
 }
 
-function cleanText(obj) {
-	return obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
+function cleanUrl(path) {
+	return 'https://reaperscans.com' + (path).trim();
 }
 
+function cleanText(str) {
+	return str.replace(/[\\n\\t]/g, '').trim();
+}
+
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(cleanText(url), 'get', emptyKeyValue, null);
+	}
+}
+
+function scriptFilter(match) {
+    let refinedData = '';
+    document.querySelectorAll('script').forEach((elm) => {
+        let content = elm.textContent;
+        if (content.match('self.__next_f.push') && content.includes(match)) {
+            let match = content.match(/self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u); if (match) {
+                refinedData = JSON.parse(match[2]
+                    .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
+                    .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
+                    .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
+                    .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
+                    .replace(/\\\\n$/, ''));
+            }
+        }
+    });
+    return refinedData;
+}
+
+function findProperties(obj, keysToFind) {
+	let results = [];
+
+	function recursiveSearch(obj) {
+		if (typeof obj === 'object' && obj !== null) {
+			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
+				results.push(obj);
+			}
+
+			// Continue searching nested objects
+			for (let key in obj) {
+				recursiveSearch(obj[key]);
+			}
+		}
+	}
+
+	recursiveSearch(obj);
+	return results;
+}
+
+const xhr = new XMLHttpRequest();
+var savedData = document.getElementById('ketsu-final-data');
+var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
 
 var preset = {
@@ -65,49 +118,46 @@ var preset = {
     javascriptConfig : new JavascriptConfig(true, false, ''),
 }
 
-var savedData = document.getElementById('ketsu-final-data');
-var parsedJson = JSON.parse(savedData.innerHTML);
-
-var currUrl = parsedJson.request.url;
-
 // Details
 var title = cleanText(document.querySelector('h1').textContent);
-var image = document.querySelector('.w-full img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+var image = quickRequest(findProperties(scriptFilter('series_id'), ['src'])[0]['src'], true);
 
 var Synopsis = cleanText(document.querySelector('.mt-3').textContent);
 
 var genres = ['N/A', 'None', 'Null'];
-var AgeRating = document.querySelectorAll('dd.text-neutral-200')[2].textContent; 
+var AgeRating = document.querySelectorAll('dd.text-neutral-200')[2].textContent;
 var status = document.querySelectorAll('dd.text-neutral-200')[3].textContent;
 var LastUpdated = document.querySelectorAll('dd.text-neutral-200')[5].textContent;
 var chapterAmount = document.querySelectorAll('span.font-medium')[3]
 
 // Chapters
-var episodes = [];
-var chapters = document.querySelector('ul').querySelectorAll('li');
+let id = findProperties(scriptFilter('series_id'), ['series_id'])[0]['series_id'];
+let dataUrl = `https://api.reaperscans.com/chapter/query?perPage=999&query=&order=asec&series_id=${id}`;
 
-for (index of chapters) {
-    var cLink = chapter.querySelector('a').href;
-    let chapter = new Chapter(cleanText(index.querySelector('p').textContent), new ModuleRequest(cLink, 'get', emptyKeyValue, null), false);
-    episodes.push(chapter); 
-}
+xhr.open("GET", dataUrl, true);
 
-let infoPageObject
+xhr.onload = function () {
+    if (xhr.status === 200) {
+        console.log("Response:", JSON.parse(xhr.responseText));
+    } else {
+        console.error("Error:", xhr.status, xhr.statusText);
+    }
+};
 
-if (chapters.length == 32) {
-    infoPageObject = new Info(
-        new ModuleRequest(currUrl + `?page=2`, 'get', emptyKeyValue, null), 
-        preset.extra, 
-        preset.javascriptConfig, 
-        new Output(image, title, parsedJson.request, Synopsis, genres, AgeRating, status, LastUpdated, 'Chapters : ' + chapterAmount, episodes)
-    );
-} else {
-    infoPageObject = new Info(
-        preset.request, 
-        preset.extra, 
-        preset.javascriptConfig, 
-        new Output(image, title, parsedJson.request, Synopsis, genres, AgeRating, status, LastUpdated, 'Chapters : ' + chapterAmount, episodes)
-    );
-}
+// Set up a callback function to handle network errors
+xhr.onerror = function () {
+    console.error("Network error");
+};
+
+// Send the request
+xhr.send();
+
+
+let infoPageObject = new Info(
+    new ModuleRequest('', 'get', emptyKeyValue, null),
+    preset.extra,
+    preset.javascriptConfig,
+    new Output(image, title, parsedJson.request, Synopsis, genres, AgeRating, status, LastUpdated, 'Chapters : ' + chapterAmount, episodes)
+);
 
 savedData.innerHTML = JSON.stringify(infoPageObject);
