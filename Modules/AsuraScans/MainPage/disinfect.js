@@ -3,17 +3,18 @@ function scriptFilter(innerRegex) {
     let outerFunctionRegex = /self\.__next_f\.push\(\[(\d+),\s*"(.*?)"\]\)/u;
     document.querySelectorAll('script').forEach((element) => {
         let content = element.innerHTML;
-        if (content.match('self.__next_f.push') && content.includes(innerRegex)) {
-            let match = content.match(outerFunctionRegex); if (match) {
+			if (content.includes(innerRegex)) {
+            	let match = content.match(outerFunctionRegex); if (match) {
                 refinedData = JSON.parse(match[2]
                     .replace(/[a-zA-Z0-9]+:/g, '')     // Remove number prefixes
                     .replace(/\\r\\n/g, '\n')          // Replace escaped newlines
                     .replace(/\\"/g, '"')              // Unescape quotation marks
                     .replace(/\\\\/g, '\\')            // Handle any other escape sequences
-                    .replace(/\\n$/, ''));
+                    .replace(/\\n$/, '')
+				);
             }
         }
-    });
+    })
     return refinedData;
 }
 
@@ -24,7 +25,6 @@ function dynamicCiteriaSearch(obj, criteria) {
 		if (Array.isArray(obj)) {
 			obj.forEach(item => {
 				if (typeof item === 'object' && item !== null) {
-                    console.log('Passed Object check');
 					let matches = Object.keys(criteria).every(key => {
 						const expectedType = criteria[key].type;
 						const valueType = typeof item[key];
@@ -93,12 +93,12 @@ function findProperties(obj, keysToFind) {
 
 let goatCriteria = { 'value': { type: 'string', value: 'all' } };
 
-let GOATData = []; let goatData = dynamicCiteriaSearch(scriptFilter('{\\"value\":\\"all\\"'), goatCriteria); /* if (goatData) {
+let GOATData = []; let goatData = dynamicCiteriaSearch(scriptFilter('{\\"value\\":\\"all\\"'), goatCriteria); if (goatData) {
 	GOATData = Array.from(goatData[0]['children']).map(list => {
-        const info = findProperties(list, ['href', 'children'])[0];
+        const info = findProperties(list, ['href', 'children'])[1];
 		let title = info.children;
 		var link = info.href;
 		var image = 'https:' + findProperties(list, ['src'])[0].src;
-        console.log({ title, link, image });
+		console.log({title, link, image});
 	});
-} */
+}

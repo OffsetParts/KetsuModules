@@ -37,11 +37,18 @@ function Package(images) {
 	this.images = images;
 }
 
+var id = 'ketsu-final-data'
+let ketsu = document.createElement('div')
+ketsu.setAttribute('id', id)
+
+var emptyKeyValue = [ new KeyValue( '', '' ) ];
+let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
+
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
 // Functions
 function cleanUrl(url) {
-	return 'https:' + (url).trim();
+	return (url).trim();
 }
 
 function cleanText(str) {
@@ -56,87 +63,32 @@ function quickRequest(url, clean) {
 	}
 }
 
-function findProperties(obj, keysToFind) {
-	let results = [];
 
-	function recursiveSearch(obj) {
-		if (typeof obj === 'object' && obj !== null) {
-			// Check if all keysToFind exist in the current object
-			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
-				// Push the entire object containing all keysToFind
-				results.push(obj);
-			}
+let deploySource = () => (Array.from(document.querySelectorAll('[alt*=\"chapter page\"]')).map((images) => (
+	new ModuleRequest(images.src,'GET',emptyKeyValue,undefined)
+)))
 
-			// Continue searching nested objects
-			for (let key in obj) {
-				recursiveSearch(obj[key]);
-			}
-		}
+let finish = (images) => {
+	var output =  new Output(undefined,images,undefined)
+	var chaptersObject = new MChapters( new ModuleRequest( '', '', emptyKeyValue, null ), emptyExtra, new JavascriptConfig( false, false ), output);
+	var finalJson = JSON.stringify( chaptersObject );
+	document.body.querySelectorAll('#' + id).forEach((el) => (el.remove()))
+	document.body.prepend(ketsu)
+	ketsu.innerHTML = finalJson;
+	window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');
+}
+
+let tries = 0
+let maxTries = 15
+let interval = setInterval(() => {
+	let makeup = deploySource()
+	if (makeup.length > 0) {
+		clearInterval(interval)
+		finish(images)
+		return
 	}
-
-	recursiveSearch(obj);
-	return results;
-}
-
-function matchElementsWithRegexes(selector, regexList, property) {
-    let matchedElements = [];
-
-    // Query all matching elements by the selector
-    const elements = document.querySelectorAll(selector);
-
-    elements.forEach((element) => {
-        let value;
-
-        // Handle property or attribute
-        if (property.startsWith('attr:')) {
-            const attrName = property.split(':')[1];
-            value = element.getAttribute(attrName) || '';
-        } else {
-            value = element[property] || '';
-        }
-
-        // Check if all regexes match the value
-        const allRegexesMatch = regexList.every((regex) => regex.test(value));
-
-        if (allRegexesMatch) {
-            // console.log(value);
-            matchedElements.push(element);
-        }
-    });
-
-    return matchedElements;
-}
-
-function filtrateCache (cachedData) {
-    // Cache is the clumped data that we seek to filtrate for the desired specificed data
-    let refinedData = '';
-    let outerFunctionRegex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
-    let match = cachedData.match(outerFunctionRegex); if (match) {
-        refinedData = JSON.parse(match[2]
-		.replace(/[a-zA-Z0-9]+:/g, '')         // Remove any alphanumeric prefix followed by a colon
-		.replace(/\\\\r\\\\n/g, '\\n')         // Replace escaped newlines
-		.replace(/\\\\\"/g, '\"')              // Unescape quotation marks
-		.replace(/\\\\\\\\/g, '\\\\')          // Handle any other escape sequences
-		.replace(/\\\\n$/, ''));
-    }
-    return refinedData;
-}
-
-var savedData = document.getElementById('ketsu-final-data');
-var parsedJson = JSON.parse(savedData.innerHTML);
-var emptyKeyValue = [new KeyValue('', '')];
-
-var output = [];
-
-const matchedContent = matchElementsWithRegexes('p', [/{\\\\\"order\\\\\":(\\d+),\\\\\"url\\\\\":\\\\\"(.*?)\\\\\"}/g, /\\\\\"pages\\\\\"/], 'textContent')[0].textContent;
-
-output = Array.from(findProperties(filtrateCache(matchedContent), ['url', 'order'])).map(list => {
-    return quickRequest(list.url, true);
-});
-
-
-let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
-var chaptersObject = new Chapters(new ModuleRequest('', '', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, false, ''), new Package(output));
-
-var finalJson = JSON.stringify(chaptersObject);
-savedData.innerHTML = finalJson;
+	tries++
+	if (tries > maxTries) {
+		finish([]);
+	}
+},300)

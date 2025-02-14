@@ -225,21 +225,23 @@ function quickRequest(url, clean) {
 	}
 }
 
-function scriptFilter(match, obj = []) {
-    document.querySelectorAll('script').forEach((elm) => {
-        let content = elm.textContent;
-        if (content.match('self.__next_f.push') && content.includes(match)) {
-            let match = content.match(/self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u); if (match) {
-                var refinedData = JSON.parse(match[2]
-                .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
+function scriptFilter(innerRegex) {
+    let refinedData = '';
+    let outerFunctionRegex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
+    document.querySelectorAll('script').forEach((element) => {
+        let content = element.innerHTML;
+		if (content.includes(innerRegex)) {
+			let match = content.match(outerFunctionRegex); if (match) {
+			refinedData = JSON.parse(match[2]
+				.replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
                 .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
                 .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
                 .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
-                .replace(/\\\\n$/, ''));
-				return refinedData
-            }
-        }
+                .replace(/\\\\n$/, '')
+			);
+		}}
     });
+    return refinedData
 }
 
 function dynamicCiteriaSearch(obj, criteria) {
@@ -256,7 +258,6 @@ function dynamicCiteriaSearch(obj, criteria) {
 						// Check if key exists and type matches
 						if (expectedType && valueType === expectedType) {
 							const expectedValue = criteria[key].value;
-
 							// If a specific value is provided, check it
 							if (expectedValue !== undefined) {
 								// Handle specific value checks based on type
@@ -326,44 +327,26 @@ which I'll call Dynamic Criteria Search (DCS). This method is a more advanced ve
 
 let goatCriteria = { 'value': { type: 'string', value: 'all' } };
 
-let GoatData = { array: []}; let GOATData = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"all\\\\\"', GoatData);
-const goatData = dynamicCiteriaSearch(GoatData.array, goatCriteria);
-if (goatData) {
-	GOATData = Array.from(goatData[0]['children']).map(list => {
-		const info = findProperties(list, ['href', 'children'])[0];
+let GOAT = []; let goatData = dynamicCiteriaSearch(scriptFilter('{\\\\\"value\\\\\":\\\\\"all\\\\\"'), goatCriteria); if (goatData) {
+	GOAT = Array.from(goatData[0]['children']).map(list => {
+		const info = findProperties(list, ['href', 'children'])[1];
 		let title = info.children;
 		let url = quickRequest(info.href, true);
 		let image = quickRequest('https:' + findProperties(list, ['src'])[0].src);
 		return new Data(image, title, '0', '', '', '3', '4', false, url);
   	});
 
-  	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATData));
-}
-
-let FeaturedData = { array: [] }; scriptFilter('sliders', FeaturedData);
-let Featured = []; const sliderData = findProperties(FeaturedData.array, ['sliders']);
-if (sliderData) {
-	Featured = Array.from(sliderData[0]['sliders']).map(list => {
-		let title = list['name'];
-		var link = quickRequest('series/' + list['slug'], true);
-		var image = quickRequest('https:' + list['thumb_large']);
-
-		return new Data(image, title, '0', '', '', '3', '4', false, link);
-	});
-
-	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('Featured', false), Poster, Featured));
+  	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOAT));
 }
 
 let monthlyCriteria = { 'value': { type: 'string', value: 'monthly' } };
 
-let MonthlyData = { array: []}; let MonthlyList = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"', MonthlyData);
-const monthlyData = dynamicCiteriaSearch(MonthlyData.array, monthlyCriteria);
-if (monthlyData) {
+let MonthlyList = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"'); let monthlyData = dynamicCiteriaSearch(scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"'), monthlyCriteria); if (monthlyData) {
   	MonthlyList = Array.from(monthlyData[0]['children']).map(list => {
-		const info = findProperties(list, ['href', 'children'])[0];
+		const info = findProperties(list, ['href', 'children'])[1];
 		let title = info.children;
 		let url = quickRequest(info.href, true);
-		let image = quickRequest('https:' + findProperties( list, [ 'src' ] )[ 0 ].src);
+		let image = quickRequest('https:' + findProperties(list, ['src'])[0].src);
 		/* const misc = findProperties(list, ['children',  'className'])[21];
 		let rating = misc.children; */
 		return new Data(image, title, '0', '1', '2', '3', '4', false, url);
@@ -386,8 +369,18 @@ let WeeklyList = Array.from(weeklyElm).map(list => {
 	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
 });
 
+// Featured
+const FeaturedElms = document.querySelectorAll('.slide');
+let = Featured = Array.from(FeaturedElms).map(list => {
+	let title = cleanText(list.querySelector('a').textContent);
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
 
-// Popular
+	return new Data(image, title, '0', '', '', '3', '4', false, link);
+});
+
+
+// Popular Today
 const popularElm = document.querySelectorAll('div.hidden > [class*=\"p-1.5\"]');
 let Popular = Array.from(popularElm).map(list => {
 	let title = cleanText(list.querySelector('span.block').textContent);
@@ -414,9 +407,11 @@ let Latests = Array.from(latestElms).map(list => {
 });
 
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, WeeklyList));
+output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('Featured', false), Poster, Featured));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
 output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
-let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), emptyExtra, new JavascriptConfig(true, false, ''), output);
+let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, true, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;
+window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');
