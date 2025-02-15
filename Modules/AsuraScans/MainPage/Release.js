@@ -361,7 +361,7 @@ let MonthlyList = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"'); le
 const weeklyElm = document.querySelectorAll('[id*=\"weekly\"] > div');
 let WeeklyList = Array.from(weeklyElm).map(list => {
 	let title = cleanText(list.querySelector('span a').textContent);
-	var link = quickRequest(list.querySelector('span a').href, true);
+	var link = quickRequest(list.querySelector('span a').href);
 	var image = quickRequest(list.querySelector('img').src);
 	/* var genres = Array.from(list.querySelector('span p').querySelectorAll('a')).map(g => cleanText(g.textContent)); just for testing
 	var rating = 'Rating : ' + cleanText(list.querySelector('[class*=\"999\"]').textContent); */
@@ -373,7 +373,7 @@ let WeeklyList = Array.from(weeklyElm).map(list => {
 const FeaturedElms = document.querySelectorAll('.slide');
 let = Featured = Array.from(FeaturedElms).map(list => {
 	let title = cleanText(list.querySelector('a').textContent);
-	var link = quickRequest(list.querySelector('a').href, true);
+	var link = quickRequest(list.querySelector('a').href);
 	var image = quickRequest(list.querySelector('img').src);
 
 	return new Data(image, title, '0', '', '', '3', '4', false, link);
@@ -384,7 +384,7 @@ let = Featured = Array.from(FeaturedElms).map(list => {
 const popularElm = document.querySelectorAll('div.hidden > [class*=\"p-1.5\"]');
 let Popular = Array.from(popularElm).map(list => {
 	let title = cleanText(list.querySelector('span.block').textContent);
-	var link = quickRequest(list.querySelector('a').href, true);
+	var link = quickRequest(list.querySelector('a').href);
 	var image = quickRequest(list.querySelector('img').src);
 
 	/* var ep = list.querySelector('[class*=\"13px\"]').textContent;
@@ -397,7 +397,7 @@ let Popular = Array.from(popularElm).map(list => {
 const latestElms = document.querySelectorAll('[class*=\"w-full p-1\"]');
 let Latests = Array.from(latestElms).map(list => {
 	let title = cleanText(list.querySelector('span').textContent);
-	var link = quickRequest(list.querySelector('a').href, true);
+	var link = quickRequest(list.querySelector('a').href);
 	var image = quickRequest(list.querySelector('img').src);
 
 	var ep = cleanText(list.querySelector('a span').textContent);
