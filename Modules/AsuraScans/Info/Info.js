@@ -58,10 +58,26 @@ function cleanUrl(url) {
 	return 'https://asuracomic.net/series/' + (url).trim();
 }
 
+function filtrateCache(data) {
+    return JSON.parse(data
+		.replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
+		.replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
+		.replace(/\\\\\"/g, '\"')              // Unescape quotation marks
+		.replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
+		.replace(/\\\\n$/, '')
+	);
+}
+
 function cleanText(text) {
     return text
-        .replace(/\\s+|&nbsp;/g, ' ') // remove extra spaces
-        .replace(/[\"']/g, '\\$&'); // escape quotes
+        .replace(/\s+|&nbsp;/g, ' ')  // Replace excessive spaces and non-breaking spaces
+        .replace(/["']/g, '\$&')      // Escape quotes
+        .replace(/â\x80\x99/g, '’')   // Fix right single quotation mark
+        .replace(/â\x80\x9c/g, '“')   // Fix left double quote
+        .replace(/â\x80\x9d/g, '”')   // Fix right double quote
+        .replace(/â\x80\x93/g, '–')   // Fix en dash
+        .replace(/â\x80\x94/g, '—')   // Fix em dash
+        .normalize();                 // Normalize Unicode text
 }
 
 function quickRequest(url, clean) {

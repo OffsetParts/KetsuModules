@@ -52,9 +52,11 @@ function Output(image, title, link, description, genres, field1, field2, field3,
     this.chapters = chapters;
 }
 
-var savedData = document.getElementById('ketsu-final-data');
-var parsedJson = JSON.parse(savedData.innerHTML);
-let emptyKeyValue = [new KeyValue('', '')];
+var id = 'ketsu-final-data';
+let ketsu = document.createElement('div');
+ketsu.setAttribute('id', id);
+var emptyKeyValue = [ new KeyValue( '', '' ) ];
+let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
 
 // Functions
 function cleanUrl(url) {
@@ -76,7 +78,7 @@ function quickRequest(url, clean) {
 var title = document.querySelector('h1').textContent;
 var image = quickRequest(document.querySelector('img').src, true);
 var rating =  'N/A';
-var status = cleanText(document.querySelector('div .mantine-Badge-root').textContent);
+var state = cleanText(document.querySelector('div .mantine-Badge-root').textContent);
 var Synopsis = cleanText(document.querySelector('div [style*=transition] > p.mantine-Text-root').textContent);
 
 var genresElm = document.querySelectorAll('.mantine-Paper-root > .mantine-Stack-root > .mantine-Group-root');
@@ -88,14 +90,43 @@ var genres = [...genresElm].map(item => {
     return `${subElm2?.textContent.trim()}`;
 });
 
-var chapterElms = document.querySelectorAll('[class*=ChapterCard_chapterWrapper]');
+var chaptersData = () => (Array.from(document.querySelectorAll('[class*=ChapterCard_chapterWrapper]')).map((element) => {
+    new Chapter(element.querySelector('p[class*=mantine-Text-root]').textContent, quickRequest(element.querySelector('a').href), false);
+}).reverse());
 
-var chapters = Array.from(chapterElms).map((element) => {
-    var link = element.querySelector('a').href;
-    let chapter = new Chapter(element.querySelector('[class=chapternum]').textContent, quickRequest(link), false);
-    return chapter;
-}).reverse();
+let finish = (chapters) => {
+	var infoPageObject = new Info( new ModuleRequest( '', '', emptyKeyValue, null ), emptyExtra, new JavascriptConfig( false, false, ''), new Output(image, title, '', Synopsis, genres, rating, state, '', 'Chapters : ' + chapters.length, chapters));
+	var finalJson = JSON.stringify( infoPageObject );
+	document.body.querySelectorAll('#' + id).forEach((el) => (el.remove()));
+	document.body.prepend(ketsu);
+	ketsu.innerHTML = finalJson;
+	if (window.webkit && window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC) {
+        window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');
+    } else {
+        console.warn('WebKit handler not available.');
+    }
+}
 
-let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, Synopsis, genres, rating, status, '', 'Chapters : ' + chapters.length, episodes));
-var finalJson = JSON.stringify(infoPageObject);
-savedData.innerHTML = finalJson;
+let tries = 0;
+let maxTries = navigator.connection ? Math.ceil(navigator.connection.downlink * 5) : 10;
+const observer = new MutationObserver((mutations, obs) => {
+    let chapters = chaptersData();
+    if (chapters.length > 0) {
+        finish(chapters);
+        obs.disconnect(); // Stop observing when images are found
+    }
+    
+    tries++;
+    if (tries > maxTries) {
+        finish([]);
+        obs.disconnect();
+    }
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+// Fallback in case images are already present at the start
+if (chaptersData().length > 0) {
+    observer.disconnect();
+    finish(chaptersData());
+}

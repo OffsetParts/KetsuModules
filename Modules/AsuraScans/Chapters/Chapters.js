@@ -22,10 +22,10 @@ function Commands(commandName, params) {
 	this.params = params;
 }
 
-function JavascriptConfig(removeJavascript, loadInWebView) {
+function JavascriptConfig(removeJavascript, loadInWebView, javaScript) {
 	this.removeJavascript = removeJavascript;
 	this.loadInWebView = loadInWebView;
-	this.javaScript = '';
+	this.javaScript = javaScript;
 }
 
 function KeyValue(key, value) {
@@ -44,8 +44,6 @@ ketsu.setAttribute('id', id);
 var emptyKeyValue = [ new KeyValue( '', '' ) ];
 let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
 
-const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
-
 // Functions
 function cleanUrl(url) {
 	return (url).trim();
@@ -60,7 +58,7 @@ let deploySource = () => (
 );
 
 let finish = (images) => {
-	var chaptersObject = new Chapters( new ModuleRequest( '', '', emptyKeyValue, null ), emptyExtra, new JavascriptConfig( false, false ), new Package(images));
+	var chaptersObject = new Chapters( new ModuleRequest( '', '', emptyKeyValue, null ), emptyExtra, new JavascriptConfig(false, false, ''), new Package(images));
 	var finalJson = JSON.stringify( chaptersObject );
 	document.body.querySelectorAll('#' + id).forEach((el) => (el.remove()));
 	document.body.prepend(ketsu);
@@ -69,16 +67,25 @@ let finish = (images) => {
 }
 
 let tries = 0;
-let maxTries = 15;
-let interval = setInterval(() => {
-    let initial = deploySource();
-    if (initial.length > 0) {
-        clearInterval(interval);
-        finish(initial);
-        return;
+let maxTries = navigator.connection ? Math.ceil(navigator.connection.downlink * 5) : 10;
+const observer = new MutationObserver((mutations, obs) => {
+    let images = deploySource();
+    if (images.length > 0) {
+        finish(images);
+        obs.disconnect(); // Stop observing when images are found
     }
+    
     tries++;
     if (tries > maxTries) {
         finish([]);
+        obs.disconnect();
     }
-}, 300);
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+// Fallback in case images are already present at the start
+if (deploySource().length > 0) {
+    observer.disconnect();
+    finish(deploySource());
+}
