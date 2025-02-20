@@ -100,7 +100,7 @@ var chapterElms = document.querySelectorAll('div[class*=\"border-[#A2A2A2]/20\"]
 var chapters = Array.from(chapterElms) // Convert NodeList to Array
     .map((element, index) => {
         var link = element.querySelector('a').href;
-        let chapter = new Chapter('Chapter ' + (chapterElms.length - index), quickRequest(link), false);
+        let chapter = new Chapter('Chapter ' + (chapterElms.length - index), quickRequest(link, true), false);
         return chapter;
     })
     .reverse(); // Reverse the array to maintain the original order // Reverse the array to maintain the original order
