@@ -61,13 +61,7 @@ function cleanUrl(url) {
 function cleanText(text) {
     return text
         .replace(/\\s+|&nbsp;/g, ' ')  // Replace excessive spaces and non-breaking spaces
-        .replace(/[\"']/g, '\\$&')      // Escape quotes
-        .replace(/â\\x80\\x99/g, '’')   // Fix right single quotation mark
-        .replace(/â\\x80\\x9c/g, '“')   // Fix left double quote
-        .replace(/â\\x80\\x9d/g, '”')   // Fix right double quote
-        .replace(/â\\x80\\x93/g, '–')   // Fix en dash
-        .replace(/â\\x80\\x94/g, '—')   // Fix em dash
-        .normalize();                 // Normalize Unicode text
+        .replace(/[\"']/g, '\\$&');
 }
 
 function quickRequest(url, clean) {
