@@ -231,7 +231,6 @@ let lastAddedArray = Array.from(document.querySelectorAll('div.listupd > div.bs'
         return new Data(image, title, '', lchapter, '', '', '', false, link);
 })
 
-
 output.push(new Output(CellDesings.wide3, Orientation.vertical, DefaultLayouts.longDoubletsDouble, Paging.leading, new Section('', false), null, lastAddedArray));
 let searchPageObject = new Search(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), '', new JavascriptConfig(false, false, ''), output);
 var finalJson = JSON.stringify(searchPageObject);

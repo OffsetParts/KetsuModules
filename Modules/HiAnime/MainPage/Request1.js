@@ -187,19 +187,19 @@ function Output(cellDesing, orientation, defaultLayout, paging, section, layout,
 //Init
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
-let emptyKeyValue = [new KeyValue('', '')];
+var emptyKeyValue = [new KeyValue('', '')];
 let XHRequest = [new KeyValue('X-Requested-With', 'XMLHttpRequest')];
-var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
+var commands = [new Commands('helperFunctions', [new KeyValue('isCustomRequest', 'true')])];
 let emptyExtra = new Extra(commands, emptyKeyValue);
 
-var initialText = parsedJson.extra.extraInfo[0].value;
+// var onLoadTest = parsedJson.extra.extraInfo[0].value;
 const dummyRequest = new ModuleRequest('', 'get', emptyKeyValue, null);
 
 // If outdated run the zoro version
 const ZoroReplacement = new ModuleRequest('ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilnaa/beta-ketsu/main/zoro.json', 'get', emptyKeyValue, null);
-const infoText = new Data(dummyRequest, `Subs are only available on newer versions of Ketsu, and the RapidCloud resolver won't work if you have the App Store version.\nClick on this message if you are using the App Store version of KETSU and not getting subtitles. If you do so don't forget to refresh this page.`, '', '', '', '', '', false, ZoroReplacement, false);
+const infoText = new Data(dummyRequest, `Subs are only available on newer versions of Ketsu, and the RapidCloud resolver won't work if you have the App Store version.\\nClick on this message if you are using the App Store version of KETSU and not getting subtitles. If you do so don't forget to refresh this page.`, '', '', '', '', '', false, ZoroReplacement, false);
 
-let Output = [];
+let output = [];
 
 // Functions
 
@@ -208,7 +208,7 @@ function createLayout(insets, size, ratio) {
 }
 
 function cleanText(str) {
-	return str.replace(/[\\n\\t]/g, '').trim();
+	return str?.replace(/[\\n\\t]/g, '').trim() ?? '';
 }
 
 function cleanUrl(url) {
@@ -225,92 +225,110 @@ function quickRequest(url, clean) {
 }
 
 var topSlider = document.querySelectorAll('#slider .swiper-wrapper .swiper-slide');
+var loggedTitles = new Set();
+
 var Spotlight = Array.from(topSlider).map(slide => {
-    var title = slide.querySelector('div.desi-head-title').textContent;
-    var image = quickRequest(slide.querySelector('img').src);
+    var title = cleanText(slide.querySelector('div.desi-head-title').textContent);
+    var image = quickRequest(slide.querySelector('img').dataset?.src);
     let link  = quickRequest(slide.querySelector('div.desi-buttons a').href, true);
 
     // var info = cleanText(slide.querySelector('div.desi-description').textContent);
     // var type = cleanText(slide.querySelector('div.sc-detail > div:nth-child(1)').textContent);
-    var airing = 'First Aired: ' + slide.querySelector('div.sc-detail > div:nth-child(3)').textContent;
-    Spotlight.push(new Data(image, title + ' - ' + 'type', 'info', airing, '', '', '', false, link, false));
-})
+    var airing = cleanText('First Aired: ' + slide.querySelector('div.sc-detail > div:nth-child(3)').textContent);
+	if (!loggedTitles.has(title)) {
+		loggedTitles.add(title);
+		return new Data(image,'', '', title, airing, '', '', false, link, false);
+	}
+});
+
+var risingTides = document.querySelectorAll('div [class=trending-list] > div > div > div');
+var Trending = Array.from(risingTides).map(list => {
+	var title = list.querySelector('[class*=title]').textContent;
+	var image = quickRequest(list.querySelector('img').dataset?.src);
+	let link = quickRequest(list.querySelector('a').href, true);
+	// var ranking = list.querySelector('span').textContent;
+
+	return new Data(image, title, '', '', '', '', '', false, link, false);
+});
 
 var bestAiring = document.querySelectorAll('div.anif-block-01 li');
-var TopAiring = bestAiring.map(list => {
-    try {
-        var title = list.querySelector('h3').textContent;
-        var image = quickRequest(list.querySelector('img').src);
-        let link = quickRequest(list.querySelector('a').href, true);
-        var episode = list.querySelector('div.tick-sub').textContent;
+var TopAiring = Array.from(bestAiring).map(list => {
+	var title = list.querySelector('h3').textContent;
+	var image = quickRequest(list.querySelector('img').dataset?.src);
+	let link = quickRequest(list.querySelector('a').href, true);
+	// var episode = list.querySelector('div.tick-sub').classList.contains('tick-sub') ? list.querySelector('div.tick-sub').textContent : '';
 
-        return new Data(image, title, '', episode, '', '', '', false, link, false);
-    } catch (error) {
-        console.log(error);
-    }
+	return new Data(image, title, '', '', '', '', '', false, link, false);
 });
 
 var popularArray = document.querySelectorAll('div.anif-block-03 li');
-var Popular = popularArray.map(list => {
-    try {
-        var ticks = Array.from(list.querySelectorAll('div.tick-item'));
-        var title = list.querySelector('h3').textContent;
-        var image = quickRequest(list.querySelector('img').src);
-        let link = quickRequest(list.querySelector('a').href, true);
-        var total = list.querySelector('div.tick-eps').textContent;
-        var subisode = list.querySelector('div.tick-sub').textContent;
-        var dubisode = list.querySelector('div.tick-dub').textContent;
+var Popular = Array.from(popularArray).map(list => {
+	var title = list.querySelector('h3').textContent;
+	var image = quickRequest(list.querySelector('img').dataset?.src);
+	let link = quickRequest(list.querySelector('a')?.href, true) ?? null; if (!link) return;
 
-        var eps = total && subisode ? `${cleanText(subisode)}/${cleanText(total)}`
-            : subisode && dubisode ? `${cleanText(subisode)}/${cleanText(dubisode)}`
-            : subisode ? `${cleanText(subisode)}`
-            : dubisode ? `${cleanText(dubisode)}`
-            : '';
+	var ticks = Array.from(list.querySelectorAll('div.tick-item')) ?? [];
 
-		var [tickSub, tickDub] = ticks;
-        var language = ticks.length > 1 && tickSub.classList.contains('tick-sub') && tickDub.classList.contains('tick-dub') ? 'SUB/DUB'
-            : tickSub.classList.contains('tick-sub') ? 'SUB'
-            : tickDub.classList.contains('tick-dub') ? 'DUB'
-            : '';
+	var [tickSub, tickDub] = ticks;
+    let language = ticks.length > 1 && tickSub?.classList.contains('tick-sub') && tickDub?.classList.contains('tick-dub') 
+        ? 'SUB/DUB' 
+        : tickSub?.classList.contains('tick-sub') 
+        ? 'SUB' 
+        : tickDub?.classList.contains('tick-dub') 
+        ? 'DUB' 
+        : '';
 
-        return new Data(image, title, '', eps, language, '', '', false, link, false);
-    } catch (error) {
-        console.log(error);
-    }
+	// Extract episode information
+    var total = cleanText(list.querySelector('div.tick-eps')?.textContent);
+    var subisode = cleanText(list.querySelector('div.tick-sub')?.textContent);
+    var dubisode = cleanText(list.querySelector('div.tick-dub')?.textContent);
+
+    let eps = total 
+        ? `${subisode}/${total}`
+        : subisode && dubisode 
+        ? `${subisode}/${dubisode}` 
+        : subisode || dubisode;
+
+	return new Data(image, title, '', eps, language, '', '', false, link, false);
 });
 
 
-var newArray = Array.from(document.querySelectorAll('section.block_area_home') || []);
-var filteredArray = newArray.filter((e) => e.querySelector('.cat-heading').textContent.includes('New')).pop()?.querySelectorAll('div.flw-item');
+var newArray = Array.from(document.querySelectorAll('section.block_area_home') || [])
+.find(e => e.querySelector('.cat-heading')?.textContent.includes('New'));
 
-var NewAnimes = filteredArray.map(list => {
-    try {
-        var ticks = Array.from(list.querySelectorAll('.tick.ltr div.tick-item'));
-        var title = list.querySelector('img').alt;
-        const link = quickRequest(list.querySelector('a').href, true);
-        var image = quickRequest(list.querySelector('img').src);
-        var total = list.querySelector('div.tick-eps').textContent;
-        var subisode = list.querySelector('div.tick-sub').textContent;
-        var dubisode = list.querySelector('div.tick-dub').textContent;
+var NewAnimes = Array.from(newArray.querySelectorAll('div.flw-item')).map(list => {
+	var imgElement = list.querySelector('img');
+    var title = imgElement?.alt ?? 'Unknown Title';
+    var link = quickRequest(list.querySelector('a')?.href, true) ?? null; if (!link) return;
+    var image = quickRequest(imgElement.dataset?.src ?? '');
 
-        var eps = total ? `${cleanText(subisode)}/${cleanText(total)}`
-            : dubisode && subisode ? `${cleanText(subisode)}/${cleanText(dubisode)}`
-            : subisode ? `${cleanText(subisode)}` : dubisode ? `${cleanText(dubisode)}` : '';
+    var ticks = Array.from(list.querySelectorAll('div.tick-item')) ?? [];
 
-		var [tickSub, tickDub] = ticks;
-        var language = ticks.length > 1 && tickSub.classList.contains('tick-sub') && tickDub.classList.contains('tick-dub') ? 'SUB/DUB'
-            : tickSub.classList.contains('tick-sub') ? 'SUB'
-            : tickDub.classList.contains('tick-dub') ? 'DUB'
-            : '';
+	var [tickSub, tickDub] = ticks;
+    let language = ticks.length > 1 && tickSub?.classList.contains('tick-sub') && tickDub?.classList.contains('tick-dub') 
+        ? 'SUB/DUB' 
+        : tickSub?.classList.contains('tick-sub') 
+        ? 'SUB' 
+        : tickDub?.classList.contains('tick-dub') 
+        ? 'DUB' 
+        : '';
 
-        return new Data(image, title, '', eps, language, '', '', false, link);
-    } catch (error) {
-        console.log(error);
-    }
+    // Extract episode information
+    var total = cleanText(list.querySelector('div.tick-eps')?.textContent);
+    var subisode = cleanText(list.querySelector('div.tick-sub')?.textContent);
+    var dubisode = cleanText(list.querySelector('div.tick-dub')?.textContent);
+
+    let eps = total 
+        ? `${subisode}/${total}`
+        : subisode && dubisode 
+        ? `${subisode}/${dubisode}` 
+        : subisode || dubisode;
+
+	return new Data(image, title, '', eps, language, '', '', false, link);
 });
 
 let weeklyArray = Array.from(document.querySelectorAll('#top-viewed-week > ul > li'));
-let Weekly = weeklyArray.map(list => {
+let Weekly = Array.from(weeklyArray).map(list => {
 	var title = list.querySelector('a').title;
 	const link = quickRequest(list.querySelector('a').href, true);
 	var image = quickRequest(list.querySelector('img').dataset.src);
@@ -318,13 +336,14 @@ let Weekly = weeklyArray.map(list => {
 	return new Data(image, title, '', '', '', '', '', false, link);
 });
 
-let layout = createLayout(new Insets(0, 0, 0, 0), new Size(400, 105), new Ratio('width', 6, 10));
+let Poster = createLayout(new Insets(0, 0, 0, 0), new Size(400, 105), new Ratio('width', 6, 10));
 
-output.push(new Output(CellDesings.Special3, Orientation.horizontal, DefaultLayouts.wideStrechedFull, Paging.leading, new Section('', true), layout, sliderArray));
-output.push(new Output(CellDesings.Special1, Orientation.horizontal, DefaultLayouts.triplets, Paging.none, new Section('Top Airing : ', true), null, TopAiring));
-output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Last Episodes: ', true), null, LastEpisodes));
-output.push(new Output(CellDesings.wide6, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.none, new Section('New On Aniwatch', true), null, NewAnimes));
-output.push(new Output(CellDesings.normal2, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.none, new Section('Most Viewed Animes', true), null, MostViewed));
+output.push(new Output(CellDesings.Special3, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section( 'Spotlight', true ), Poster, Spotlight));
+output.push(new Output(CellDesings.wide4, Orientation.horizontal, DefaultLayouts.longDoublets, Paging.none, new Section( 'Trending', true ), null, Trending));
+output.push(new Output(CellDesings.wide6, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.none, new Section( 'Top Airing', true ), null, TopAiring));
+output.push(new Output(CellDesings.wide6, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section( 'Popular', true ), null, Popular));
+output.push(new Output(CellDesings.wide6, Orientation.horizontal, DefaultLayouts.longDoubletsDouble, Paging.none, new Section( 'New On HiAnime', true ), null, NewAnimes));
+output.push(new Output(CellDesings.wide1, Orientation.horizontal, DefaultLayouts.longDoublets, Paging.none, new Section( 'Weekly Highlights', true ), null, Weekly));
 
 let date = new Date();
 let year = date.getFullYear();
@@ -332,7 +351,7 @@ let day = date.getDate().toString().padStart(2, '0');
 let month = date.getMonth().toString().padStart(2, '0');
 let timezoneOffset = date.getTimezoneOffset();
 
-let nextRequest = `https://hianime.to/ajax/schedule/list?tzOffset=${timezoneOffset}&date=${year}-${month}-${day}`;
-let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra([ new Commands('', emptyKeyValue) ], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
+let nextRequest = `https:\/\/hianime.to/ajax/schedule/list?tzOffset=${timezoneOffset}&date=${year}-${month}-${day}`;
+let MainPageObject = new MainPage(new ModuleRequest(nextRequest, 'get', XHRequest, null), emptyExtra, new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;

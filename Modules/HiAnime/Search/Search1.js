@@ -79,42 +79,43 @@ const Orientation = {
     vertical: 'vertical'
 };
 
-function MainPage (request, extra, javascriptConfig, output) {
+function Search ( request, extra, separator, javascriptConfig, output ) {
     this.request = request;
     this.extra = extra;
+    this.separator = separator;
     this.javascriptConfig = javascriptConfig;
     this.output = output;
 }
 
-function ModuleRequest (url, method, headers, httpBody) {
+function ModuleRequest ( url, method, headers, httpBody ) {
     this.url = url;
     this.method = method;
     this.headers = headers;
     this.httpBody = httpBody;
 }
 
-function Extra (commands, extraInfo) {
+function Extra ( commands, extraInfo ) {
     this.commands = commands;
     this.extraInfo = extraInfo;
 }
 
-function Commands (commandName, params) {
+function Commands ( commandName, params ) {
     this.commandName = commandName;
     this.params = params;
 }
 
-function JavascriptConfig (removeJavascript, loadInWebView, javaScript) {
+function JavascriptConfig ( removeJavascript, loadInWebView, javaScript ) {
     this.removeJavascript = removeJavascript;
     this.loadInWebView = loadInWebView;
     this.javaScript = javaScript;
 }
 
-function KeyValue (key, value) {
+function KeyValue ( key, value ) {
     this.key = key;
     this.value = value;
 }
 
-function Output (cellDesing, orientation, defaultLayout, paging, section, layout, data) {
+function Output ( cellDesing, orientation, defaultLayout, paging, section, layout, data ) {
     this.cellDesing = cellDesing;
     this.orientation = orientation;
     this.defaultLayout = defaultLayout;
@@ -124,12 +125,12 @@ function Output (cellDesing, orientation, defaultLayout, paging, section, layout
     this.data = data;
 }
 
-function Section (sectionName, separator) {
+function Section ( sectionName, separator ) {
     this.sectionName = sectionName;
     this.separator = separator;
 }
 
-function Layout (insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing) {
+function Layout ( insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWidthL, visibleCellsHeight, heightForVisibleCells, cellSize, ratio, constant, horizontalSpacing, verticalSpacing ) {
     this.insets = insets;
     this.visibleCellsWidthS = visibleCellsWidthS;
     this.visibleCellsWidthM = visibleCellsWidthM;
@@ -143,25 +144,25 @@ function Layout (insets, visibleCellsWidthS, visibleCellsWidthM, visibleCellsWid
     this.verticalSpacing = verticalSpacing;
 }
 
-function Insets (top, bottom, left, right) {
+function Insets ( top, bottom, left, right ) {
     this.top = top;
     this.bottom = bottom;
     this.left = left;
     this.right = right;
 }
 
-function Size (width, height) {
+function Size ( width, height ) {
     this.width = width;
     this.height = height;
 }
 
-function Ratio (inRelation, number1, number2) {
+function Ratio ( inRelation, number1, number2 ) {
     this.inRelation = inRelation;
     this.number1 = number1;
     this.number2 = number2;
 }
 
-function Data (image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView) {
+function Data ( image, title, description, field1, field2, field3, field4, isChapter, link, openInWebView ) {
     this.image = image;
     this.title = title;
     this.description = description;
@@ -191,62 +192,32 @@ function quickRequest(url, clean) {
 	}
 }
 
-function checkTime () {
-    var now = new Date();
-    var hour = now.getHours();
-    var minute = now.getMinutes();
-    var time = hour + ':' + minute;
-    return time;
-}
-
-var actualtime = checkTime();
+var output = [];
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
-let emptyKeyValue = [ new KeyValue('', '') ];
-let XHRequest = [ new KeyValue('X-Requested-With', 'XMLHttpRequest') ];
+let emptyKeyValue = [new KeyValue('', '')];
 
-var nextRequest = '';
-let output = parsedJson.output;
+let results = document.querySelectorAll('.film_list-wrap .flw-item');
+let Searches = Array.from(results).map(short => {
+    let image = quickRequest(short.querySelector('img').dataset.src);
+    let title = cleanText(short.querySelector('img').alt);
 
-var format = document.querySelector('script').innerText.replace('*/', '').replace('/*', '');
-var htmldom = new DOMParser().parseFromString(JSON.parse(format).html, 'text/html');
-var scheduleList = htmldom.querySelectorAll('li');
+    let link = quickRequest(short.querySelector('a').href, true);
+    let nbEp = short.querySelector('.tick-sub')?.textContent.trim() || '';
+    let nbEpDub = short.querySelector('.tick-dub')?.textContent.trim() || '';
 
-let Schedule = Array.from(scheduleList).filter(anime => {
-    var time = cleanText(anime.querySelector('.time').innerText);
-    return (
-        parseInt(time.split(':')[0]) > parseInt(actualtime.split(':')[0]) ||
-        (parseInt(time.split(':')[0]) == parseInt(actualtime.split(':')[0]) &&
-            parseInt(time.split(':')[1]) > parseInt(actualtime.split(':')[1]))
-    );
-}).map(anime => {
-    var blankRequest = new ModuleRequest('', 'get', emptyKeyValue, null);
+    var duration = short.querySelector('[class=fd-infor] > .fdi-duration').textContent;
 
-    var link = quickRequest(anime.querySelector('a').getAttribute('href'), true);
-    var episode = cleanText(anime.querySelector('.fd-play').innerText);
-    var time = cleanText(anime.querySelector('.time').innerText);
-    var title = time + ' - ' + cleanText(anime.querySelector('h3').innerText) + ' ' + episode;
-    return new Data(blankRequest, title, '', '', '', '', '', false, link, false);
+    let type = short.querySelector('[class=fd-infor] > span').textContent;
+    let eps = nbEpDub && nbEp ? `${nbEp} subbed episodes | ${nbEpDub} dubbed episodes` : nbEp ?
+         `${nbEp} episode${parseInt(nbEp) > 1 ? 's' : ''}` : nbEpDub ?
+         `${nbEpDub} episode${parseInt(nbEpDub) > 1 ? 's' : ''}` : '';
+    return new Data(image, title, eps, duration, type, '', '', false, link, false);
 });
 
-var textLayout = new Layout(new Insets(0, 0, 10, 10), 1, 2, 3, 6, 300, new Size(0, 0), null, new Size(0, 0), 0, 0);
-
-if (Schedule.length === 0) {
-    let date = new Date();
-    date.setDate(date.getDate() + 1); // Move to the next day
-
-    let year = date.getFullYear();
-    let month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure two-digit format
-    let day = String(date.getDate()).padStart(2, '0');
-
-    let timezoneOffset = date.getTimezoneOffset();
-
-    nextRequest = `https:\/\/hianime.to/ajax/schedule/list?tzOffset=${timezoneOffset}&date=${year}-${month}-${day}`;
-} else {
-    output.push(new Output(CellDesings.small2, Orientation.vertical, DefaultLayouts.none, Paging.leading, new Section('Airs Today:', true), textLayout, Schedule));
-}
-
-let MainPageObject = new MainPage(new ModuleRequest(nextRequest, 'get', XHRequest, null), new Extra([ new Commands('', emptyKeyValue) ], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
-var finalJson = JSON.stringify(MainPageObject);
+var searchLayout = new Layout(new Insets(10, 10, 10, 10), 1, 2, 3, 1, 500, new Size(400, 400), new Ratio('width', 4, 11), new Size(0, 0), 10, 10);
+output.push( new Output( CellDesings.wide8, Orientation.vertical, DefaultLayouts.none, Paging.none, new Section( '', true ), searchLayout, Searches ) );
+let searchPageObject = new Search( new ModuleRequest( '', 'get', emptyKeyValue, null ), new Extra( [ new Commands( '', emptyKeyValue ) ], emptyKeyValue ), '', new JavascriptConfig( true, false, '' ), output );
+var finalJson = JSON.stringify( searchPageObject );
 savedData.innerHTML = finalJson;
 window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');

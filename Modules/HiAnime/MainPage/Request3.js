@@ -175,56 +175,58 @@ function Data (image, title, description, field1, field2, field3, field4, isChap
 }
 
 // Functions
-function cleanText(obj) {
-	return obj.replaceAll('\\n','').replaceAll('\\t', '').trim();
+function cleanText(str) {
+	return str?.replace(/[\\n\\t]/g, '').trim() ?? '';
 }
 
 function cleanUrl(url) {
-    return 'https://hianime.to' + url.replace('/watch', '').replace('?w=latest', '');  
+    return 'https://hianime.to' + url.replace('/watch', '').trim();
 }
 
-// Layouts
-var testLayout = new Layout(
-    new Insets(0, 0, 10, 10), 
-    1, 
-    2, 
-    3, 
-    6, 
-    300, 
-    new Size(0, 0), 
-    null, 
-    new Size(0, 0), 
-    0, 
-    0
-);
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(url, 'get', emptyKeyValue, null);
+	}
+}
+
+function checkTime () {
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var time = hour + ':' + minute;
+    return time;
+}
 
 //Init
+var actualtime = checkTime();
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [ new KeyValue('', '') ];
 
 // Data
-var schedule = [];
 let output = parsedJson.output;
 
 // Elements
-var script = document.querySelector('script').innerText.replace('*/', '').replace('/*', '');
-var json = JSON.parse(script).html;
-var htmldom = new DOMParser().parseFromString(json, 'text/html');
-var content = htmldom.querySelectorAll('li');
+var format = document.querySelector('script').innerText.replace('*/', '').replace('/*', '');
+var htmldom = new DOMParser().parseFromString(JSON.parse(format).html, 'text/html');
+var scheduleList = htmldom.querySelectorAll('li');
 
-for (anime of content) {
-    var link = cleanUrl(anime.querySelector('a').getAttribute('href')); link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-    var dummyQuest = new ModuleRequest('', 'get', emptyKeyValue, null);
+let Schedule = Array.from(scheduleList).map(anime => {
+    var blankRequest = new ModuleRequest('', 'get', emptyKeyValue, null);
+
+    var link = quickRequest(anime.querySelector('a').href, true);
     var episode = cleanText(anime.querySelector('.fd-play').innerText);
     var time = cleanText(anime.querySelector('.time').innerText);
     var title = time + ' - ' + cleanText(anime.querySelector('h3').innerText) + ' ' + episode;
-    schedule.push(new Data(dummyQuest, title, '', '', '', '', '', false, link, false));
-}
+    return new Data(blankRequest, title, '', '', '', '', '', false, link, false);
+});
 
-output.push(new Output(CellDesings.small2, Orientation.vertical, DefaultLayouts.none, Paging.leading, new Section('Airs Tomorrow', true), testLayout, schedule));
+var textLayout = new Layout(new Insets(0, 0, 10, 10), 1, 2, 3, 6, 300, new Size(0, 0), null, new Size(0, 0), 0, 0);
+output.push(new Output(CellDesings.small2, Orientation.vertical, DefaultLayouts.none, Paging.leading, new Section('Airs Tomorrow:', true), textLayout, Schedule));
 
 let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra([ new Commands('', emptyKeyValue) ], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;
-window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');    
+window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');

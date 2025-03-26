@@ -14,10 +14,10 @@
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/Bilna95/bilna95.github.io/main/VostFree%20Ketsu/moduleTemplate.json"
     }, {
         "name": "HiAnime | ENG",
-        "author": "Nabil",
+        "author": "Scrumptious",
         "image": "https://i.postimg.cc/7ZJGjqVw/download.webp",
         "info": "Watch subbed and dubbed animes with the HiAnime (Aniwatch) module",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/mprotmod/Modules-KETSU/refs/heads/main/Module%20Parser%20KETSU/aniwatch.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/HiAnime/HiAnime.json"
     }, {
         "name": "Wiflix | FR",
         "author": "Nabil",
