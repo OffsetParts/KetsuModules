@@ -93,7 +93,11 @@ function findProperties(obj, keysToFind) {
 
 let goatCriteria = { 'value': { type: 'string', value: 'all' } };
 
+<<<<<<< Updated upstream
 let GOATData = []; let goatData = dynamicCiteriaSearch(scriptFilter('{\\"value\\":\\"all\\"'), goatCriteria); if (goatData) {
+=======
+let GOATData = []; let goatData = dynamicCiteriaSearch(scriptFilter('{\"value\":\"all\"'), goatCriteria); /* if (goatData) {
+>>>>>>> Stashed changes
 	GOATData = Array.from(goatData[0]['children']).map(list => {
         const info = findProperties(list, ['href', 'children'])[1];
 		let title = info.children;

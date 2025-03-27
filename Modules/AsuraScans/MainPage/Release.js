@@ -201,8 +201,11 @@ let Poster = new Layout(
 
 //Init
 let output = [];
-var savedData = document.getElementById('ketsu-final-data');
-var parsedJson = JSON.parse(savedData.innerHTML);
+var id = 'ketsu-final-data';
+document.body.querySelectorAll('#' + id).forEach((el) => (el.remove()));
+let ketsu = document.createElement('div');
+ketsu.setAttribute('id', id);
+document.body.prepend(ketsu);
 
 var emptyKeyValue = [new KeyValue('', '')];
 var commands = [new Commands('helperFunctions', [new KeyValue('isCustomRequest', 'true')])];
@@ -225,6 +228,7 @@ function quickRequest(url, clean) {
 	}
 }
 
+<<<<<<< Updated upstream
 function scriptFilter(innerRegex) {
     let refinedData = '';
     let outerFunctionRegex = /self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u;
@@ -234,6 +238,16 @@ function scriptFilter(innerRegex) {
 			let match = content.match(outerFunctionRegex); if (match) {
 			refinedData = JSON.parse(match[2]
 				.replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
+=======
+function scriptFilter(match) {
+	let refinedData = '';
+    document.querySelectorAll('script').forEach((elm) => {
+        let content = elm.textContent;
+        if (content.match('self.__next_f.push') && content.includes(match)) {
+            let match = content.match(/self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u); if (match) {
+                refinedData = JSON.parse(match[2]
+                .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
+>>>>>>> Stashed changes
                 .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
                 .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
                 .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
@@ -327,21 +341,39 @@ which I'll call Dynamic Criteria Search (DCS). This method is a more advanced ve
 
 let goatCriteria = { 'value': { type: 'string', value: 'all' } };
 
+<<<<<<< Updated upstream
 let GOAT = []; let goatData = dynamicCiteriaSearch(scriptFilter('{\\\\\"value\\\\\":\\\\\"all\\\\\"'), goatCriteria); if (goatData) {
 	GOAT = Array.from(goatData[0]['children']).map(list => {
 		const info = findProperties(list, ['href', 'children'])[1];
+=======
+let GoatData = { }; let GOATData = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"all\\\\\"');
+const goatData = dynamicCiteriaSearch(GoatData, goatCriteria);
+if (goatData) {
+	GOATData = Array.from(goatData[0]['children']).map(list => {
+		const info = findProperties(list, ['href', 'children'])[0];
+>>>>>>> Stashed changes
 		let title = info.children;
 		let url = quickRequest(info.href, true);
 		let image = quickRequest('https:' + findProperties(list, ['src'])[0].src);
 		return new Data(image, title, '0', '', '', '3', '4', false, url);
   	});
 
+<<<<<<< Updated upstream
   	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOAT));
+=======
+  	output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Poster, GOATData));
+>>>>>>> Stashed changes
 }
 
 let monthlyCriteria = { 'value': { type: 'string', value: 'monthly' } };
 
+<<<<<<< Updated upstream
 let MonthlyList = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"'); let monthlyData = dynamicCiteriaSearch(scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"'), monthlyCriteria); if (monthlyData) {
+=======
+let MonthlyData = { }; let MonthlyList = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"');
+const monthlyData = dynamicCiteriaSearch(MonthlyData, monthlyCriteria);
+if (monthlyData) {
+>>>>>>> Stashed changes
   	MonthlyList = Array.from(monthlyData[0]['children']).map(list => {
 		const info = findProperties(list, ['href', 'children'])[1];
 		let title = info.children;
@@ -356,6 +388,15 @@ let MonthlyList = []; scriptFilter('{\\\\\"value\\\\\":\\\\\"monthly\\\\\"'); le
 }
 
 /* {{ Static Elements }} */
+
+let FeaturedElm = document.querySelectorAll('.slide');
+let Featured = Array.from(FeaturedElm).map(list => {
+	let title = cleanText(list.querySelector('a').textContent);
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src);
+
+	return new Data(image, title, '0', '', '', '3', '4', false, link);
+});
 
 // Weekly
 const weeklyElm = document.querySelectorAll('[id*=\"weekly\"] > div');
@@ -376,10 +417,13 @@ let = Featured = Array.from(FeaturedElms).map(list => {
 	var link = quickRequest(list.querySelector('a').href);
 	var image = quickRequest(list.querySelector('img').src);
 
+<<<<<<< Updated upstream
 	return new Data(image, title, '0', '', '', '3', '4', false, link);
 });
 
 
+=======
+>>>>>>> Stashed changes
 // Popular Today
 const popularElm = document.querySelectorAll('div.hidden > [class*=\"p-1.5\"]');
 let Popular = Array.from(popularElm).map(list => {
@@ -394,8 +438,8 @@ let Popular = Array.from(popularElm).map(list => {
 });
 
 // Latest Chapters
-const latestElms = document.querySelectorAll('[class*=\"w-full p-1\"]');
-let Latests = Array.from(latestElms).map(list => {
+const latestElm = document.querySelectorAll('[class*=\"w-full p-1\"]');
+let Latests = Array.from(latestElm).map(list => {
 	let title = cleanText(list.querySelector('span').textContent);
 	var link = quickRequest(list.querySelector('a').href);
 	var image = quickRequest(list.querySelector('img').src);
@@ -406,6 +450,7 @@ let Latests = Array.from(latestElms).map(list => {
 	return new Data(image, title, ep, '', '1', '2', '3', false, link);
 });
 
+output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('Featured', false), Poster, Featured));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section('Weekly', false), null, WeeklyList));
 output.push(new Output(CellDesings.normal1, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('Featured', false), Poster, Featured));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
@@ -413,5 +458,9 @@ output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts
 
 let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, true, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
+<<<<<<< Updated upstream
 savedData.innerHTML = finalJson;
+=======
+ketsu.innerHTML = finalJson;
+>>>>>>> Stashed changes
 window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');
