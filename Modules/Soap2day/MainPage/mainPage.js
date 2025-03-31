@@ -174,58 +174,166 @@ function Data(image, title, description, field1, field2, field3, field4, isChapt
     this.openInWebView = openInWebView;
 }
 
-function shuffle(a) {
-    var j, x, i;
-    for (i = a.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        x = a[i];
-        a[i] = a[j];
-        a[j] = x;
-    }
-    return a;
-}
+
+let output = [];
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
-let output = [];
+
+let nextRequest = '';
+var extraInfo = [new KeyValue('count', '0')];
 let emptyKeyValue = [new KeyValue('', '')];
-const panels = document.querySelectorAll('div.col-sm-8 > .panel > .panel-heading');
-for (const panel of panels) {
-    const panelName = panel.textContent.trim();
-    if (!panelName.includes('Movies') && !panelName.includes('TV')) {
-        continue;
-    }
-    const type = panelName.includes('Movies') ? 'Movies' : 'TV-Series';
-    const alerts = panel.nextElementSibling.querySelectorAll('.row > .col-sm-12 > .row > .col-sm-12 > .alert');
-    for (const alert of alerts) {
-        const alertTitle = alert.textContent.trim();
-        const alertType = alertTitle.includes('Popular') ? 'Popular' : 'Latest';
-        let results = [];
-        const items = alert.parentElement.querySelectorAll('.col-sm-4 > .thumbnail');
-        for (const item of items) {
-            const title = item.querySelector('div:not(.img-group) > h5 > a').textContent.trim();
-            let link = item.querySelector('.img-group > a').href;
-            link = new URL(link, parsedJson.request.url).href;
-            link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-            let image = item.querySelector('.img-group > a > img').src;
-            image = image.indexOf('/') === 0 ? new URL(image, parsedJson.request.url).href : image;
-            image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-            let extra = item.querySelector('.img-group > .img-tip').textContent.trim();
-            if (panelName.includes('TV')) {
-                const se = item.querySelector('div:not(.img-group) > h5 > a:last-child').textContent.trim();
-                const sp = se.replace(/\\[|\\]/g, '').split('×');
-                extra = sp.length > 1 ? `S${sp[0]}E${sp[1]}` : se;
-            }
-            const obj = new Data(image, title, '', extra, '', '', '', false, link, false);
-            results.push(obj);
-        }
-        if (alertType === 'Popular') {
-            output.push(new Output(CellDesings.wide6, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section(`${alertType} ${type}`, true), null, results));
-        } else {
-            output.push(new Output(CellDesings.normal7, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section(`${alertType} ${type}`, true), null, results));
-        }
-        results = [];
-    }
-}
+
+let mainEntries = [
+    "Movies",
+    "TV Shows",
+
+]
+
+let subEntries = [
+    "Movies",
+    "2025",
+    "Best 2024",
+    "Trending Movies",
+    "Top Most Popular Movies",
+    "Oscar",
+    "Golden Globe",
+    "Box Office in All Times",
+    "TV Shows",
+    "Top Most Popular TVs",
+    "Trending TV Shows",
+    "Best 2022 TV shows",
+    "Best 2023 TV shows",
+    "Best TV mini-series",
+    "Best Netflix Series",
+    "Best Reality-Shows",
+    "Top 250",
+    "Top 250 Movies",
+    "Top 250 TVs",
+    "Animation",
+    "Adventure",
+    "Action",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "History",
+    "Horror",
+    "Kids",
+    "Music",
+    "Musical",
+    "Mystery",
+    "Reality",
+    "Romance",
+    "Sci-Fi",
+    "Sport",
+    "Thriller",
+    "War",
+    "Western",
+    "Best Movies",
+    "Best 2016",
+    "Best 2017",
+    "Best 2018",
+    "Best 2019",
+    "Best 2020",
+    "Best 2021",
+    "Best 2022",
+    "Best 2023",
+    "Best Action 2021",
+    "Best Action 2023",
+    "Best Animated 2017",
+    "Best Animated 2019",
+    "Best Animated 2023",
+    "Best Adventure 2021",
+    "Best Adventure 2023",
+    "Best Biography 2022",
+    "Best Biography 2023",
+    "Best Comedy 2017",
+    "Best Comedy 2022",
+    "Best Comedy 2023",
+    "Best Crime 2021",
+    "Best Crime 2022",
+    "Best Crime 2023",
+    "Best Documentary 2021",
+    "Best Documentaries 2022",
+    "Best Documentaries 2023",
+    "Best Drama 2019",
+    "Best Drama 2021",
+    "Best Drama 2023",
+    "Best Family 2021",
+    "Best Family 2023",
+    "Best Fantasy & Sci-fi 2021",
+    "Best Fantasy & Sci-fi 2023",
+    "Best History 2021",
+    "Best History 2022",
+    "Best History 2023",
+    "Best History 2023",
+    "Best Horror 2023",
+    "Best Musical 2022",
+    "Best Mystery 2021",
+    "Best Mystery 2022",
+    "Best Mystery 2023",
+    "Best Romantic 2021",
+    "Best Romantic 2022",
+    "Best Romantic 2023",
+    "Best Thriller 2021",
+    "Best Thriller 2022",
+    "Best 2010s Body Horror",
+    "Best War 2021",
+    "Best War 2022",
+    "Best War 2023",
+    "2024 Highest Grossing",
+    "2023 Highest Grossing",
+    "2022 Highest Grossing",
+    "Animated for Kids",
+    "Artificial Intelligence",
+    "Action Comedies",
+    "Batman",
+    "Best Anime Movies",
+    "Best Chick Flick",
+    "Best Disney Princess",
+    "Best Existential",
+    "Best German",
+    "Best Franchise",
+    "Best Japanese",
+    "Best Loners",
+    "Best Netflix Movies",
+    "Best Songs from Movies",
+    "DC Comics",
+    "Feminist",
+    "Fast and Furious",
+    "Gay",
+    "Good Cop/Bad Cop",
+    "Greatest Remakes",
+    "James Bond",
+    "Mardi Gras",
+    "Marvel",
+    "Most Inspirational",
+    "Most Rewatchable",
+    "Palme d’Or winners",
+    "Funniest 2010s Horror",
+    "Harry Potter",
+    "Martin Luther King",
+    "Oldest Profession Movies",
+    "Oscar 2019",
+    "Oscar 2020",
+    "Oscar 2021",
+    "Oscar 2024",
+    "Pixar",
+    "Racism and Movies",
+    "Saw Movies",
+    "Space",
+    "Spider-Man",
+    "Superman"
+]
+
+let Links = Entries.map((site, index) => {
+    var url = Array.from(document.querySelectorAll('[id=menu] li a')).find(elm => elm?.textContent == site).href
+    if (index == 0) {nextRequest = url} else {extraInfo.push(new KeyValue(`${index}`, `${url}`))};
+});
+
 let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);
 var finalJson = JSON.stringify(MainPageObject);
 savedData.innerHTML = finalJson;

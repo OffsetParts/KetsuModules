@@ -5,7 +5,7 @@
         "author": "Nabil",
         "image": "https://i.postimg.cc/pVFx8ZN2/lib-dessin.png",
         "info": "All the modules hosted by this website directly inside Ketsu.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/Modules%20Library/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/Modules%20Library/moduleTemplate.json"
     }, {
         "name": "VostFree | FR",
         "author": "Nabil",
@@ -17,7 +17,7 @@
         "author": "Scrumptious",
         "image": "https://i.postimg.cc/7ZJGjqVw/download.webp",
         "info": "Watch subbed and dubbed animes with the HiAnime (Aniwatch) module",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/HiAnime/HiAnime.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/HiAnime/HiAnime.json"
     }, {
         "name": "Wiflix | FR",
         "author": "Nabil",
@@ -41,7 +41,7 @@
         "author": "Nabil",
         "image": "https://i.postimg.cc/V6KWhqVc/9anime.png",
         "info": "Watch subbed and dubbed animes with the module of 9anime.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/9Anime/module.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/9Anime/module.json"
     },
     {
         "name": "MyKDrama | FR",
@@ -55,7 +55,7 @@
         "author": "Danyspb",
         "image": "https://i.postimg.cc/fTkrNh5s/space.png",
         "info": "Watch subbed and dubbed films and shows with the module of Spacemov.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/SpaceMove/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/SpaceMove/moduleTemplate.json"
     },
     {
         "name": "SuperCartoons | ENG",
@@ -77,43 +77,43 @@
         "author": "Scrumptious",
         "image": "https://i.postimg.cc/MK0y10tY/asura-logo.png",
         "info": "Read webtoons/manhua/manhwa on AsuraScans",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/Asura.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsuraScans/Asura.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asura.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asura.json"
     }, {
         "name": "FlameScans | ENG",
         "author": "Scrumptious",
         "image": "https://i.postimg.cc/W1y2xnfX/image.png",
         "info": "Read manhwa translations at Flamescans.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/Flames.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/Flames.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json"
     }, {
         "name": "GalaxyAction | ENG",
         "author": "Scrumptious",
         "image": "https://galaxyaction.net/wp-content/uploads/2024/12/GALAXY-LOGO-TEXT.png",
         "info": "Read action and romance scanlations @ Galaxyaction.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/GalaxyAction/Galatic.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/GalaxyAction/Galatic.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/GalaxyAction/Galatic.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/GalaxyAction/Galatic.json"
     }, {
         "name": "AsuraScans Free | ENG",
         "author": "Scrumptious",
         "image": "https://asurascansfree.com/wp-content/uploads/2024/12/Asura-scans-free-icon.png",
         "info": "A stable and completely free version of asurascans developed by the devs @ Galaxyaction.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsurascansFree/AsuraFree.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/AsurascansFree/AsuraFree.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsurascansFree/AsuraFree.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsurascansFree/AsuraFree.json"
     }, {
         "name": "Vortexscans Free | ENG",
         "author": "Scrumptious",
         "image": "https://vortexscansfree.com/wp-content/uploads/2024/12/Logo-d426c8cb30892710.webp",
         "info": "A stable and completely free version of vortexscans developed by the devs @ Galaxyaction.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/VortexscansFree/VortexFree.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/VortexscansFree/VortexFree.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/VortexscansFree/VortexFree.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/VortexscansFree/VortexFree.json"
     },{
         "name": "MangaDex | ENG",
         "author": "Nabil",
         "image": "https://i.postimg.cc/4d38NsqH/Manga-Dex-logo.png",
         "info": "Read manga for free with the module of MangaDex.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/MangaDex/moduleTemplate.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/MangaDex/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/MangaDex/moduleTemplate.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/MangaDex/moduleTemplate.json"
     }, {
         "name": "Scans Mangas | FR",
         "author": "Frizrat",
@@ -140,15 +140,15 @@
         "author": "Nabil",
         "image": "https://i.postimg.cc/rptLRW8s/mangaweeb-logo.png",
         "info": "Read for free webtoons that are on the website MangaWeebs",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/Manga%20Weeb/moduleTemplate.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/Manga%20Weeb/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/Manga%20Weeb/moduleTemplate.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/Manga%20Weeb/moduleTemplate.json"
     }, {
         "name": "Senmanga | JP",
         "author": "Nabil",
         "image": "https://i.postimg.cc/hvP5c4qS/logo-sen.png",
         "info": "Read raw mangas on the module for Senmanga.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/SenManga/moduleTemplate.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/SenManga/moduleTemplate.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/SenManga/moduleTemplate.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/SenManga/moduleTemplate.json"
     },
     {
         "name": "Mangas-Origines | FR",
