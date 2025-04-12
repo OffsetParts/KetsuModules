@@ -17,7 +17,7 @@
         "author": "Scrumptious",
         "image": "https://i.postimg.cc/7ZJGjqVw/download.webp",
         "info": "Watch subbed and dubbed animes with the HiAnime (Aniwatch) module",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/HiAnime/HiAnime.json"
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/HiAnime/Hianime.json"
     }, {
         "name": "Wiflix | FR",
         "author": "Nabil",
