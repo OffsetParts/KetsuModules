@@ -107,4 +107,4 @@ var chapters = Array.from(chapterElms) // Convert NodeList to Array
 
 let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, state, type, '', 'Chapters : ' + chapters.length, chapters));
 var finalJson = JSON.stringify(infoPageObject);
-savedData.innerHTML = finalJson;
+savedData.textContent = finalJson;
