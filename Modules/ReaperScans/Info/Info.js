@@ -53,6 +53,46 @@ function Output(image, title, link, description, genres, field1, field2, field3,
     this.chapters = chapters;
 }
 
+function scriptFilter(match) {
+	let refinedData = '';
+    document.querySelectorAll('script').forEach((element) => {
+        let content = element.textContent;
+        if (content.match('self.__next_f.push') && content.includes(match)) {
+            let match = content.match(/self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u); if (match) {
+                refinedData = JSON.parse(match[2]
+                .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
+                .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
+                .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
+                .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
+                .replace(/\\\\n$/, '')
+			);
+		}}
+    });
+    return refinedData
+}
+
+function findProperties(obj, keysToFind) {
+	let results = [];
+
+	function recursiveSearch(obj) {
+		if (typeof obj === 'object' && obj !== null) {
+			// Check if all keysToFind exist in the current object
+			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
+				// Push the entire object containing all keysToFind
+				results.push(obj);
+			}
+
+			// Continue searching nested objects
+			for (let key in obj) {
+				recursiveSearch(obj[key]);
+			}
+		}
+	}
+
+	recursiveSearch(obj);
+	return results;
+}
+
 function cleanUrl(path) {
 	return 'https://reaperscans.com' + (path).trim();
 }
@@ -69,95 +109,54 @@ function quickRequest(url, clean) {
 	}
 }
 
-function scriptFilter(match) {
-    let refinedData = '';
-    document.querySelectorAll('script').forEach((elm) => {
-        let content = elm.textContent;
-        if (content.match('self.__next_f.push') && content.includes(match)) {
-            let match = content.match(/self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u); if (match) {
-                refinedData = JSON.parse(match[2]
-                    .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
-                    .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
-                    .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
-                    .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
-                    .replace(/\\\\n$/, ''));
-            }
+function getText(node, accumulator = []) {
+    function decodeCorruptedText(text) {
+        // Converts corrupted UTF-8 text interpreted as Latin-1 back to clean UTF-8
+        const bytes = Uint8Array.from(text, c => c.charCodeAt(0));
+        const decoder = new TextDecoder('utf-8');
+        return decoder.decode(bytes);
+    }
+
+    if (node.nodeType === Node.TEXT_NODE) {
+        accumulator.push(decodeCorruptedText(node.textContent));
+    } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() !== 'script') {
+        for (let child of node.childNodes) {
+            getText(child, accumulator);
         }
-    });
-    return refinedData;
+    }
+    return cleanText(accumulator.join(' ')).trim();
 }
 
-function findProperties(obj, keysToFind) {
-	let results = [];
-
-	function recursiveSearch(obj) {
-		if (typeof obj === 'object' && obj !== null) {
-			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
-				results.push(obj);
-			}
-
-			// Continue searching nested objects
-			for (let key in obj) {
-				recursiveSearch(obj[key]);
-			}
-		}
-	}
-
-	recursiveSearch(obj);
-	return results;
-}
-
-const xhr = new XMLHttpRequest();
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML);
 let emptyKeyValue = [new KeyValue('', '')];
 
 var preset = {
-    request : new ModuleRequest('', 'get', emptyKeyValue, null),
-    extra : new Extra([new Commands('', emptyKeyValue)], emptyKeyValue),
-    javascriptConfig : new JavascriptConfig(true, false, ''),
+    extra : new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), // [new KeyValue('base', parsedJson.request.url)]
+    javascriptConfig : new JavascriptConfig(true, true, ''),
 }
 
 // Details
 var title = cleanText(document.querySelector('h1').textContent);
-var image = quickRequest(findProperties(scriptFilter('series_id'), ['src'])[0]['src'], true);
+var image = quickRequest(document.querySelector('img[alt][fetchpriority]').src);
 
-var Synopsis = cleanText(document.querySelector('.mt-3').textContent);
+var Synopsis = getText(document.querySelector('div[class=\"text-muted-foreground\"]'));
 
-var genres = ['N/A', 'None', 'Null'];
-var AgeRating = document.querySelectorAll('dd.text-neutral-200')[2].textContent;
-var status = document.querySelectorAll('dd.text-neutral-200')[3].textContent;
-var LastUpdated = document.querySelectorAll('dd.text-neutral-200')[5].textContent;
-var chapterAmount = document.querySelectorAll('span.font-medium')[3]
+var genres = Array.from(document.querySelectorAll('section > div > div > [class*=flex-row] > [class*=FFC5C5')).map(g => g.textContent);
+var state = document.querySelector('section > div > div > [class*=flex-row] > [class*=E1F0DA').textContent;
+var releaseYear = document.querySelectorAll('span[class=\"text-muted-foreground\"]')[1].textContent;
+var chapterAmount = document.querySelectorAll('span[class=\"text-muted-foreground line-clamp-1\"]')[1].textContent
 
 // Chapters
 let id = findProperties(scriptFilter('series_id'), ['series_id'])[0]['series_id'];
-let dataUrl = `https://api.reaperscans.com/chapter/query?perPage=999&query=&order=asec&series_id=${id}`;
-
-xhr.open("GET", dataUrl, true);
-
-xhr.onload = function () {
-    if (xhr.status === 200) {
-        console.log("Response:", JSON.parse(xhr.responseText));
-    } else {
-        console.error("Error:", xhr.status, xhr.statusText);
-    }
-};
-
-// Set up a callback function to handle network errors
-xhr.onerror = function () {
-    console.error("Network error");
-};
-
-// Send the request
-xhr.send();
-
+let dataUrl = `https:\/\/api.reaperscans.com/chapters/${id}?perPage=9999&order=asec`;
 
 let infoPageObject = new Info(
-    new ModuleRequest('', 'get', emptyKeyValue, null),
+    new ModuleRequest(dataUrl, 'get', emptyKeyValue, null),
     preset.extra,
     preset.javascriptConfig,
-    new Output(image, title, parsedJson.request, Synopsis, genres, AgeRating, status, LastUpdated, 'Chapters : ' + chapterAmount, episodes)
+    new Output(image, title, parsedJson.request, Synopsis, genres, releaseYear, state, '', 'Chapters: ' + chapterAmount, [])
 );
 
 savedData.innerHTML = JSON.stringify(infoPageObject);
+window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');

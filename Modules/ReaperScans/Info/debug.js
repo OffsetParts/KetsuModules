@@ -1,18 +1,20 @@
-function scriptFilter(match) {
+function scriptFilter(innerRegex) {
     let refinedData = '';
-    document.querySelectorAll('script').forEach((elm) => {
-        let content = elm.textContent;
-        if (content.match('self.__next_f.push') && content.includes(match)) {
-            let match = content.match(/self\.__next_f\.push\(\[(\d+),\s*"(.*?)"\]\)/u); if (match) {
+    let outerFunctionRegex = /self\.__next_f\.push\(\[(\d+),\s*"(.*?)"\]\)/u;
+    document.querySelectorAll('script').forEach((element) => {
+        let content = element.innerHTML;
+			if (content.includes(innerRegex)) {
+            	let match = content.match(outerFunctionRegex); if (match) {
                 refinedData = JSON.parse(match[2]
                     .replace(/[a-zA-Z0-9]+:/g, '')     // Remove number prefixes
                     .replace(/\\r\\n/g, '\n')          // Replace escaped newlines
                     .replace(/\\"/g, '"')              // Unescape quotation marks
                     .replace(/\\\\/g, '\\')            // Handle any other escape sequences
-                    .replace(/\\n$/, ''));
+                    .replace(/\\n$/, '')
+				);
             }
         }
-    });
+    })
     return refinedData;
 }
 
@@ -21,7 +23,9 @@ function findProperties(obj, keysToFind) {
 
 	function recursiveSearch(obj) {
 		if (typeof obj === 'object' && obj !== null) {
+			// Check if all keysToFind exist in the current object
 			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
+				// Push the entire object containing all keysToFind
 				results.push(obj);
 			}
 
@@ -35,5 +39,4 @@ function findProperties(obj, keysToFind) {
 	recursiveSearch(obj);
 	return results;
 }
-
-let image = findProperties(scriptFilter('series_id'), ['src'])[0]['src']; console.log(image);
+findProperties(scriptFilter('series_id'), ['series_id'])

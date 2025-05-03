@@ -192,29 +192,43 @@ function Data(image,title,description,field1,field2,field3,field4,isChapter,link
     this.openInWebView = openInWebView;
 }
 
-
-var savedData = document.getElementById('ketsu-final-data');
-
-var parsedJson = JSON.parse(savedData.innerHTML); 
-
-let output = [];
-let emptyKeyValue = [new KeyValue('','')];
-
-var lastAdded = document.querySelector('.listupd').querySelectorAll('.bs');
-let lastAddedArray = [];
-
-for(var x = 0; x < lastAdded.length; x++) {
-    var last = lastAdded[x];
-    var image = last.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-    let title = last.querySelector('.bsx a').title;
-    var link = last.querySelector('.bsx a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-    var lastchap = 'Last chapter : ' + last.querySelector('.adds .epxs').textContent.replaceAll('\\n','');
-    let data = new Data(image, title, lastchap, 'Manhwa', '', '', '', false, link);
-    lastAddedArray.push(data);
+function cleanUrl(path) {
+	return 'https://reaperscans.com/' + (path).trim();
 }
 
+function cleanText(str) {
+	return str?.replace(/[\\n\\t]/g, '').trim() ?? '';
+}
+
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(cleanText(url), 'get', emptyKeyValue, null);
+	}
+}
+
+
+let output = [];
+var savedData = document.getElementById('ketsu-final-data');
+var parsedJson = JSON.parse(savedData.innerHTML); 
+let emptyKeyValue = [new KeyValue('','')];
+
+const formatData = document.querySelector('pre').innerHTML;
+
+let Searched = Array.from(JSON.parse(formatData).data).map(entry => {
+    const title = cleanText(entry['title']);
+    const link = quickRequest(entry['series_slug'], true);
+    const image = quickRequest(entry['thumbnail'], true);
+    const lastChapter = cleanText(entry['meta']['chapters_count'] + ' chapters');
+    // const type = list.querySelector('span[class*=\"font-bold\"]').textContent;
+    // const rating = cleanText('Rating : ' + list.querySelector('[class*=\"ml-1\"]').textContent);
+    return new Data(image, title, lastChapter, '', '', '', '', false, link);
+});
+
+
 var testLayout = new Layout(new Insets(10, 10, 10, 10), 1, 2, 3, 1, 500, new Size(400, 400), new Ratio('width', 4, 11), new Size(0, 0), 10, 10);
-output.push(new Output(CellDesings.wide8, Orientation.vertical, DefaultLayouts.none, Paging.none, new Section('', false), testLayout, lastAddedArray));
+output.push(new Output(CellDesings.wide8, Orientation.vertical, DefaultLayouts.none, Paging.none, new Section('', false), testLayout, Searched));
 
 let searchPageObject = new Search(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), '', new JavascriptConfig(false, false, ''), output);
 var finalJson = JSON.stringify(searchPageObject);

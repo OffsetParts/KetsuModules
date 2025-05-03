@@ -211,35 +211,25 @@ class Output {
 
 //Init
 let output = [];
-const savedData = document.getElementById('ketsu-final-data');
-const parsedJson = JSON.parse(savedData.innerHTML); console.log(parsedJson.output.url);
+var id = 'ketsu-final-data';
+document.body.querySelectorAll('#' + id).forEach((el) => (el.remove()));
+let ketsu = document.createElement('div');
+ketsu.setAttribute('id', id);
+document.body.prepend(ketsu);
 
 const emptyKeyValue = [new KeyValue('', '')];
 const commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 'true')])];
 const emptyExtra = new Extra(commands, emptyKeyValue);
 
 // Custom Layouts
-const Carousel = new Layout(
-    new Insets(5, 5, 5, 5), // insets
-    1, // visibleCellsWidthS
-    2, // visibleCellsWidthM
-    3, // visibleCellsWidthL
-    1, // visibleCellsHeight
-    500, // heightForVisibleCells
-    new Size(200, 200), // cellSize
-    new Ratio(RatioRelation.width, 315, 590), // ratio
-    new Size(0, 0), // constant
-    5, // horizontalSpacing
-    5 // verticalSpacing
-);
+const Carousel = new Layout( new Insets( 1, 1, 1, 1 ), 1, 1, 1, 1, 45, new Size( 59, 45 ), new Ratio( RatioRelation.width, 15, 40 ), new Size( 0, 0 ), 0, 0 );
 
 function cleanUrl(path) {
 	return 'https://reaperscans.com' + (path).trim();
 }
 
 function cleanText(str) {
-	return str.replace(/[\\n\\t]/g, '')
-    .replace();
+	return str?.replace(/[\\n\\t]/g, '').trim() ?? '';
 }
 
 function quickRequest(url, clean) {
@@ -250,18 +240,25 @@ function quickRequest(url, clean) {
 	}
 }
 
-let NewSeriesList = Array.from(document.querySelectorAll('[class*=embla__slide]')).map(list => {
+let Featured = Array.from(document.querySelectorAll('[class*=main-embla__slide]')).map(list => {
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src, true);
+
+	return new Data(image, '', '0', '', '', '3', '4', false, link);
+});
+
+let NewSeriesList = Array.from(document.querySelectorAll('div.embla__slide')).map(list => {
     var title = cleanText(list.querySelector('h5').textContent);
-	var link = quickRequest(list.querySelector('a').href);
-	var image = quickRequest(list.querySelector('img').src);
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src, true);
 
 	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
 });
 
 let Latests = Array.from(document.querySelector('div.col-span-full').querySelectorAll('[role=group]')).map(list => {
     var title = cleanText(list.querySelector('span [class*=line-clamp-1]').textContent);
-	var link = quickRequest(list.querySelector('a').href);
-	var image = quickRequest(list.querySelector('img').src);
+	var link = quickRequest(list.querySelector('a').href, true);
+	var image = quickRequest(list.querySelector('img').src, true);
 
     var lastChapter = cleanText(list.querySelector('h5').textContent);
 
@@ -269,6 +266,7 @@ let Latests = Array.from(document.querySelector('div.col-span-full').querySelect
 });
 
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTripletsFull, Paging.leading, new Section('New Series', true), null, NewSeriesList));
+output.push(new Output(CellDesings.normal3, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, Featured));
 output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
 const MainPageObject = new MainPage(
@@ -279,4 +277,5 @@ const MainPageObject = new MainPage(
 );
 
 const finalJson = JSON.stringify(MainPageObject);
-savedData.innerHTML = finalJson;
+ketsu.textContent = finalJson;
+window.webkit.messageHandlers.EXECUTE_KETSU_ASYNC.postMessage('');

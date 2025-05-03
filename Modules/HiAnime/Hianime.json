@@ -672,8 +672,7 @@
           "headers": [
             {
               "key": "",
-              "value": "",
-              "moduleCreatorHeaderisActive": false
+              "value": ""
             }
           ]
         },
@@ -946,13 +945,11 @@
               "headers": [
                 {
                   "key": "referer",
-                  "value": "https://megacloud.club/",
-                  "moduleCreatorHeaderisActive": true
+                  "value": "https://megacloud.club/"
                 },
                 {
                   "key": "",
-                  "value": "",
-                  "moduleCreatorHeaderisActive": true
+                  "value": ""
                 }
               ]
             },

@@ -76,7 +76,7 @@
         "name": "AsuraScans | ENG",
         "author": "Scrumptious",
         "image": "https://i.postimg.cc/MK0y10tY/asura-logo.png",
-        "info": "Read webtoons/manhua/manhwa on AsuraScans",
+        "info": "Read manhua/manhwa on AsuraScans",
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asura.json",
         "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asura.json"
     }, {
@@ -87,6 +87,13 @@
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json",
         "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json"
     }, {
+        "name": "Reaperscans | ENG",
+        "author": "Scrumptious",
+        "image": "https://reaperscans.com/_next/image?url=%2Fwetried_only.png&w=96&q=75",
+        "info": "Read manhwa translations at Reaperscans.",
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/ReaperScans/Reaper.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/ReaperScans/Reaper.json"
+    }, {
         "name": "GalaxyAction | ENG",
         "author": "Scrumptious",
         "image": "https://galaxyaction.net/wp-content/uploads/2024/12/GALAXY-LOGO-TEXT.png",
@@ -94,20 +101,6 @@
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/GalaxyAction/Galatic.json",
         "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/GalaxyAction/Galatic.json"
     }, {
-        "name": "AsuraScans Free | ENG",
-        "author": "Scrumptious",
-        "image": "https://asurascansfree.com/wp-content/uploads/2024/12/Asura-scans-free-icon.png",
-        "info": "A stable and completely free version of asurascans developed by the devs @ Galaxyaction.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsurascansFree/AsuraFree.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsurascansFree/AsuraFree.json"
-    }, {
-        "name": "Vortexscans Free | ENG",
-        "author": "Scrumptious",
-        "image": "https://vortexscansfree.com/wp-content/uploads/2024/12/Logo-d426c8cb30892710.webp",
-        "info": "A stable and completely free version of vortexscans developed by the devs @ Galaxyaction.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/VortexscansFree/VortexFree.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/VortexscansFree/VortexFree.json"
-    },{
         "name": "MangaDex | ENG",
         "author": "Nabil",
         "image": "https://i.postimg.cc/4d38NsqH/Manga-Dex-logo.png",
