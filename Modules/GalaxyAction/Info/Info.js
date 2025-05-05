@@ -89,16 +89,14 @@ var Status = cleanText(info.filter(e => e.textContent.includes('Status')).pop().
 var type = cleanText(info.filter(e => e.textContent.includes('Type')).pop().querySelector('a').textContent);
 var genres = Array.from(document.querySelectorAll('[class=mgen] > [rel=tag]')).map(g => g.textContent);
 
-var synopsis = getText(document.querySelector('[itemprop=description]').textContent);
+var synopsis = getText(document.querySelector('[itemprop=description]'));
 
 var title = cleanText(document.querySelector('[class=entry-title]').textContent);
 var image = quickRequest(document.querySelector('[class=thumb] > img').src);
 var chapterElms = document.querySelectorAll('[class=eplister] li');
 
-var chapters = Array.from(chapterElms).map((element, index) => {
-    var link = element.querySelector('a').href;
-    let chapter = new Chapter(element.querySelector('[class=chapternum]').textContent, quickRequest(link, true), false);
-    return chapter;
+var chapters = Array.from(chapterElms).map((element) => {
+    return new Chapter(element.querySelector('[class=chapternum]').textContent, quickRequest(element.querySelector('a').href), false);
 }).reverse();
 
 let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, Status, type, '', 'Chapters : ' + chapterElms.length, chapters));

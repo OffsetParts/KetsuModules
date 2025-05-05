@@ -86,13 +86,12 @@ var genres = parsedJson.output.genres;
 var type = '';
 
 // Details
-const formatData = document.querySelector('pre').innerHTML;
-
-let Chapters = Array.from(JSON.parse(formatData).data).map((entry) => {
+const formatData = JSON.parse(document.querySelector('script').innerHTML.replace('/*', '').replace('*/', ''));
+let Chapters = Array.from(formatData.data).map((entry) => {
     let chapName = cleanText(entry['chapter_name']);
     let link = quickRequest(output.link.url + '/' + entry['chapter_slug']);
     return new Chapter(chapName, link, false);
-});
+}); console.log(Chapters);
 
 let infoPageObject = new Info(
     new ModuleRequest('', 'get', emptyKeyValue, null),

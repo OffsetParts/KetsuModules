@@ -224,7 +224,7 @@ let searchEntries = seriesData.filter(entry => entry['label'].toLowerCase().incl
     let status = entry['status'];
     let link = quickRequest('/series/' + entry['id'], true);
 
-    return new Data(image, title, status, '', '', '', '', '', link, true);
+    return new Data(image, title, status, '', '', '', '', false, link);
 });
 
 output.push(new Output(CellDesings.wide9, Orientation.vertical, DefaultLayouts.wideStrechedList, Paging.none, new Section('', false), null, searchEntries));

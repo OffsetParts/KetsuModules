@@ -360,7 +360,7 @@ const monthlyData = dynamicCiteriaSearch(scriptFilter('{\\\\\"value\\\\\":\\\\\"
 let FeaturedElm = document.querySelectorAll('.slide');
 let Featured = Array.from(FeaturedElm).map(list => {
 	let title = cleanText(list.querySelector('a').textContent);
-	var link = quickRequest(list.querySelector('a').href, true);
+	var link = quickRequest('/' + list.querySelector('a').href, true);
 	var image = quickRequest(list.querySelector('img').src);
 
 	return new Data(image, title, '0', '', '', '3', '4', false, link);
@@ -377,17 +377,6 @@ let WeeklyList = Array.from(weeklyElm).map(list => {
 
 	return new Data(image, title, '0', '1', '2', '3', '4', false, link);
 });
-
-// Featured
-const FeaturedElms = document.querySelectorAll('.slide');
-let = Featured = Array.from(FeaturedElms).map(list => {
-	let title = cleanText(list.querySelector('a').textContent);
-	var link = quickRequest(list.querySelector('a').href, true);
-	var image = quickRequest(list.querySelector('img').src);
-
-	return new Data(image, title, '0', '', '', '3', '4', false, link);
-});
-
 
 // Popular Today
 const popularElm = document.querySelectorAll('div.hidden > [class*=\"p-1.5\"]');

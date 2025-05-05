@@ -87,7 +87,7 @@ var chaptersData = Array.from(JSON.parse(document.querySelector('script[id=__NEX
     let link = quickRequest('/series/' + entry['series_id'] + '/' + entry['token'], true);
     let title = 'Chapter ' + entry['chapter'].replace('.0', '');
     return new Chapter(title, link, false);
-});
+}).reverse();
 
 
 var infoPageObject = new Info( new ModuleRequest( '', 'GET', emptyKeyValue, null ), emptyExtra, new JavascriptConfig( false, false, ''), new Output(image, title, parsedJson.request, Synopsis, genres, type, state, '', chaptersData.length + ' Chapters', chaptersData));

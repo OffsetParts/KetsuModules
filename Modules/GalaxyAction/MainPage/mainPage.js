@@ -240,7 +240,7 @@ let Latests = Array.from(document.querySelectorAll('[class=listupd] > .bs > .bsx
 	const title = cleanText(list.querySelector('a').title);
 	const link = quickRequest(list.querySelector('a').href);
 	const image = quickRequest(list.querySelector('img').src);
-	const ep = cleanText(list.querySelector('.fivchap').textContent);
+	const ep = cleanText(list.querySelector('.fivchap')?.textContent ?? '');
 
 	return new Data(image, title, ep, '', '', '', '', false, link);
 });

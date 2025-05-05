@@ -214,12 +214,12 @@ var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML); 
 let emptyKeyValue = [new KeyValue('','')];
 
-const formatData = document.querySelector('pre').innerHTML;
+const formatData = document.querySelector('script').innerHTML.replace('/*', '').replace('*/', '');
 
 let Searched = Array.from(JSON.parse(formatData).data).map(entry => {
     const title = cleanText(entry['title']);
     const link = quickRequest(entry['series_slug'], true);
-    const image = quickRequest(entry['thumbnail'], true);
+    const image = quickRequest(entry['thumbnail'].includes('comics') ? (`https:\/\/media.reaperscans.com/file/4SRBHm/${entry['thumbnail']}`) : entry['thumbnail'] ?? '');
     const lastChapter = cleanText(entry['meta']['chapters_count'] + ' chapters');
     // const type = list.querySelector('span[class*=\"font-bold\"]').textContent;
     // const rating = cleanText('Rating : ' + list.querySelector('[class*=\"ml-1\"]').textContent);
