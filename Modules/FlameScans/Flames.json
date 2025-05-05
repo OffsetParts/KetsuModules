@@ -155,7 +155,7 @@
   "search": [
     {
       "request": {
-        "url": "https://flamecomics.xyz/page/<page>/?s=<searched>",
+        "url": "https://flamecomics.xyz/api/series?s=<searched>",
         "method": "get",
         "headers": [
           {
