@@ -98,12 +98,11 @@ var image = quickRequest(document.querySelector('[alt=\"poster\"]').src);
 var chapterElms = document.querySelectorAll('div[class*=\"border-[#A2A2A2]/20\"]');
 
 var chapters = Array.from(chapterElms) // Convert NodeList to Array
-    .map((element, index) => {
-        var link = element.querySelector('a').href;
-        let chapter = new Chapter('Chapter ' + (chapterElms.length - index), quickRequest(link, true), false);
-        return chapter;
-    })
-    .reverse(); // Reverse the array to maintain the original order // Reverse the array to maintain the original order
+.map((element, index) => {
+    var link = element.querySelector('a').href;
+    return new Chapter('Chapter ' + (chapterElms.length - index), quickRequest(link, true), false);
+})
+.reverse(); // Reverse the array to maintain chronological order
 
 let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, state, type, '', 'Chapters : ' + chapters.length, chapters));
 var finalJson = JSON.stringify(infoPageObject);

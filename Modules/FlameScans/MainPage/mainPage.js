@@ -186,6 +186,21 @@ function Output ( cellDesing, orientation, defaultLayout, paging, section, layou
 	this.data = data;
 }
 
+// Custom Layouts
+let Carousel = new Layout(
+	new Insets(5, 5, 5, 5), // insets
+	1, // visibleCellsWidthS
+	2, // visibleCellsWidthM
+	3, // visibleCellsWidthL
+	1, // visibleCellsHeight
+	500, // heightForVisibleCells
+	new Size(200, 200), // cellSize
+	new Ratio(RatioRelation.width, 315, 590), // ratio
+	new Size(0, 0), // constant
+	5, // horizontalSpacing
+	5 // verticalSpacing
+);
+
 function cleanUrl(url) {
 	return 'https://flamecomics.xyz' + (url).trim();
 }
@@ -210,60 +225,47 @@ var commands = [new Commands('helperFunction', [new KeyValue('isCustomRequest', 
 var emptyKeyValue = [new KeyValue('', '')];
 var emptyExtra = new Extra(commands, emptyKeyValue);
 
-// Custom Layouts
-let Carousel = new Layout(
-	new Insets(5, 5, 5, 5), // insets
-	1, // visibleCellsWidthS
-	2, // visibleCellsWidthM
-	3, // visibleCellsWidthL
-	1, // visibleCellsHeight
-	500, // heightForVisibleCells
-	new Size(200, 200), // cellSize
-	new Ratio(RatioRelation.width, 315, 590), // ratio
-	new Size(0, 0), // constant
-	5, // horizontalSpacing
-	5 // verticalSpacing
-);
-
 // Top
-let GOATs = [];
-goats = document.querySelectorAll('.mantine-Card-root');
-for (list of goats) {
-	var link = quickRequest(list.querySelector('a').href, true);
-	var banner = quickRequest(list.querySelector('img').src, true);
+let Goats = Array.from(document.querySelectorAll('div[class*=mantine-Carousel-slide]')).map(entry => {
+	let link = quickRequest(entry.querySelector('a').href, true);
+	let banner = quickRequest(entry.querySelector('img').src, true);
 
-	var title = cleanText(list.querySelector('h1').textContent);
+	let title = cleanText(entry.querySelector('h1').textContent);
 
-
-	GOATs.push(new Data(banner, title, '', '', '', '', '', false, link ));
-}
+	return new Data(banner, title, '', '', '', '', '', false, link );
+});
 
 // Popular
-let popularElms = document.querySelectorAll('.mantine-Grid-root')[0].querySelectorAll('.mantine-Stack-root');
-let Popular = Array.from(popularElms).map(list => {
-	let title = cleanText(list.querySelector('.mantine-Text-root').textContent);
-	var link = quickRequest(list.querySelector('.mantine-Text-root').href, true);
-	var image = quickRequest(list.querySelector('img').src, true);
+let Popular = Array.from(document.querySelectorAll('div[class*=Raep6nm] > div > div')).map(entry => {
+	let title = cleanText(entry.querySelector('p').textContent);
+	var link = quickRequest(entry.querySelector('a').href, true);
+	var image = quickRequest(entry.querySelector('img').src, true);
+
+	return new Data(image, title, '', '', '', '', '', false, link);
+});
+
+// Staff Picks
+let staffPicked = Array.from(document.querySelectorAll('div[class*=Ramp6nm] > div > div')).map(entry => {
+	let title = cleanText(entry.querySelector('p').textContent);
+	var link = quickRequest(entry.querySelector('a').href, true);
+	var image = quickRequest(entry.querySelector('img').src, true);
 
 	return new Data(image, title, '', '', '', '', '', false, link);
 });
 
 // Latest Chapters
-let latestElms = document.querySelectorAll('.mantine-Grid-root')[1].querySelectorAll('[class*=chapterCardContainer]');
-let Latests = Array.from(latestElms).map(list => {
-	let title = cleanText(list.querySelector('.mantine-Text-root').textContent);
-	var link = quickRequest(list.querySelector('.mantine-Text-root').href, true);
-	var image = quickRequest(list.querySelector('img').src, true);
+let Latests = Array.from(document.querySelectorAll('div[class*=Raup6nm] > div > div')).map(entry => {
+	let title = cleanText(entry.querySelector('a[class*=mantine-Text-root]').textContent);
+	var link = quickRequest(entry.querySelector('a').href, true);
+	var image = quickRequest(entry.querySelector('img').src, true);
+	var lchapter = cleanText(entry.querySelector('p').textContent);
 
-	var info = list.querySelectorAll('[class*=chapterPillWrapper] > p');
-	var lchapter = cleanText(info[0].textContent);
-	var ldate = cleanText(info[1].textContent);
-
-	return new Data(image, title, lchapter, ldate, '', '', '', false, link);
+	return new Data(image, title, lchapter, '', '', '', '', false, link);
 });
 
-output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, GOATs));
+output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.none, Paging.leading, new Section('', false), Carousel, Goats));
 output.push(new Output(CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section('Popular Today', true), null, Popular));
+output.push( new Output( CellDesings.normal4, Orientation.horizontal, DefaultLayouts.longTriplets, Paging.leading, new Section( 'Staff Picked', true ), null, staffPicked ) );
 output.push(new Output(CellDesings.wide9, Orientation.horizontal, DefaultLayouts.wideStrechedList, Paging.leading, new Section('Latest Chapters', true), null, Latests));
 
 let MainPageObject = new MainPage(new ModuleRequest('', 'get', emptyKeyValue), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(true, false, ''), output);

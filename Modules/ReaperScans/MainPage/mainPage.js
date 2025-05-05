@@ -209,6 +209,8 @@ class Output {
     }
 }
 
+//TODO: setup recursive requests for genres [popular_tags] and rankings [daily, weekly, all]
+
 //Init
 let output = [];
 var id = 'ketsu-final-data';

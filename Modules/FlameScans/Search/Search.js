@@ -192,27 +192,42 @@ function Data(image,title,description,field1,field2,field3,field4,isChapter,link
     this.openInWebView = openInWebView;
 }
 
+// Functions
+function cleanUrl(url) {
+	return 'https://flamecomics.xyz' + (url).trim();
+}
+
+function cleanText(str) {
+	return str.replace(/[\\n\\t]/g, '').trim();
+}
+
+function quickRequest(url, clean) {
+	if (clean == true) {
+		return new ModuleRequest(cleanUrl(url), 'get', emptyKeyValue, null);
+	} else if (clean == false || clean == null) {
+		return new ModuleRequest(cleanText(url), 'get', emptyKeyValue, null);
+	}
+}
+
 let output = [];
 var savedData = document.getElementById('ketsu-final-data');
 var parsedJson = JSON.parse(savedData.innerHTML); 
 
 let emptyKeyValue = [new KeyValue('','')];
 
-let lastAddedArray = [];
-var lastAdded = document.querySelectorAll('.listupd .bs');
+let searched = (new URL(parsedJson.request.url).search).replace('?s=', '');
+let seriesData = JSON.parse(document.querySelector('script').innerHTML.replace('/*', '').replace('*/', ''));
 
-for(var x = 0; x < lastAdded.length; x++) {
-    var last = lastAdded[x];
-    var image = last.querySelector('img').src; image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-    let title = last.querySelector('.bsx a').title;
-    var link = last.querySelector('.bsx a').href; link = new ModuleRequest(link, 'get', emptyKeyValue, null);
-    var status = last.querySelector('.status i').textContent;
-    let data = new Data(image, title, status, '', '', '', '', false, link);
-    lastAddedArray.push(data);
-}
+let searchEntries = seriesData.filter(entry => entry['label'].toLowerCase().includes(searched.toLowerCase())).map(entry => {
+    let image = quickRequest('https://upload.wikimedia.org/wikipedia/commons/5/59/Empty.png');
+    let title = entry['label'];
+    let status = entry['status'];
+    let link = quickRequest('/series/' + entry['id'], true);
 
-var testLayout = new Layout(new Insets(10, 10, 10, 10), 1, 2, 3, 1, 500, new Size(400, 400), new Ratio('width', 4, 11), new Size(0, 0), 10, 10);
-output.push(new Output(CellDesings.wide8, Orientation.vertical, DefaultLayouts.none, Paging.none, new Section('', false), testLayout, lastAddedArray));
+    return new Data(image, title, status, '', '', '', '', '', link, true);
+});
+
+output.push(new Output(CellDesings.wide9, Orientation.vertical, DefaultLayouts.wideStrechedList, Paging.none, new Section('', false), null, searchEntries));
 
 let searchPageObject = new Search(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), '', new JavascriptConfig(false, false, ''), output);
 var finalJson = JSON.stringify(searchPageObject);
