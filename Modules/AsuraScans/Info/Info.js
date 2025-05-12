@@ -95,14 +95,13 @@ var synopsis = getText(document.querySelector( 'span[class*=\"A2A2A2\"]'));
 
 var title = cleanText(document.querySelector('[class*=\"text-xl\"]').textContent);
 var image = quickRequest(document.querySelector('[alt=\"poster\"]').src);
-var chapterElms = document.querySelectorAll('div[class*=\"border-[#A2A2A2]/20\"]');
+const chapterElms = document.querySelectorAll('div[class*="border-[#A2A2A2]/20"]');
 
-var chapters = Array.from(chapterElms) // Convert NodeList to Array
-.map((element, index) => {
-    var link = element.querySelector('a').href;
-    return new Chapter('Chapter ' + (chapterElms.length - index), quickRequest(link, true), false);
-})
-.reverse(); // Reverse the array to maintain chronological order
+const chapters = Array.from(chapterElms).filter(element => !element.querySelector('svg')) // exclude elements containing SVGs
+.map((element, index, filteredArray) => {
+    const link = element.querySelector('a')?.href;
+    return new Chapter('Chapter ' + (filteredArray.length - index), quickRequest(link), false);
+}).reverse();
 
 let infoPageObject = new Info(new ModuleRequest('', '', emptyKeyValue, null), new Extra([new Commands('', emptyKeyValue)], emptyKeyValue), new JavascriptConfig(false, false, ''), new Output(image, title, parsedJson.request, synopsis, genres, state, type, '', 'Chapters : ' + chapters.length, chapters));
 var finalJson = JSON.stringify(infoPageObject);

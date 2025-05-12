@@ -87,13 +87,6 @@
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json",
         "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json"
     }, {
-        "name": "Reaperscans | ENG",
-        "author": "Scrumptious",
-        "image": "https://reaperscans.com/_next/image?url=%2Fwetried_only.png&w=96&q=75",
-        "info": "Read manhwa translations at Reaperscans.",
-        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/ReaperScans/Reaper.json",
-        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/ReaperScans/Reaper.json"
-    }, {
         "name": "GalaxyAction | ENG",
         "author": "Scrumptious",
         "image": "https://galaxyaction.net/wp-content/uploads/2024/12/GALAXY-LOGO-TEXT.png",

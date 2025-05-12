@@ -43,18 +43,12 @@ var emptyKeyValue = [new KeyValue('', '')];
 
 var output = [];
 
-function getImages() {
-	var images = document.querySelectorAll('[decoding=async]');;
-	for (var x = 0; x < images.length; x++) {
-		var img = images[x].src;
-		output.push(new ModuleRequest(img, 'get', emptyKeyValue, null));
-	}
-
-	return output;
-}
+let Images = Array.from(document.querySelectorAll('img[decoding=async][fit=contain]')).map(function(img) {
+	return new ModuleRequest(img.src, 'get', emptyKeyValue, null);
+});
 
 let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
-var chaptersObject = new Chapters(new ModuleRequest('', '', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, false, ''), new Package(getImages()));
+var chaptersObject = new Chapters(new ModuleRequest('', '', emptyKeyValue, null), emptyExtra, new JavascriptConfig(false, false, ''), new Package(Images));
 var finalJson = JSON.stringify(chaptersObject);
 
 savedData.innerHTML = finalJson;

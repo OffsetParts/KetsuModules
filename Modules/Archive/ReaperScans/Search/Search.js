@@ -218,7 +218,7 @@ const formatData = document.querySelector('script').innerHTML.replace('/*', '').
 
 let Searched = Array.from(JSON.parse(formatData).data).map(entry => {
     const title = cleanText(entry['title']);
-    const link = quickRequest(entry['series_slug'], true);
+    const link = quickRequest('series/' + entry['series_slug'], true);
     const image = quickRequest(entry['thumbnail'].includes('comics') ? (`https:\/\/media.reaperscans.com/file/4SRBHm/${entry['thumbnail']}`) : entry['thumbnail'] ?? '');
     const lastChapter = cleanText(entry['meta']['chapters_count'] + ' chapters');
     // const type = list.querySelector('span[class*=\"font-bold\"]').textContent;
