@@ -42,7 +42,7 @@ const Block = ({ className, image, author, KetsuHref, ZetsuHref, ...rest }) => {
             initial="hidden"
             animate={control}
             className={twMerge(
-                "relative border rounded border-zinc-700 hover:border-teal-50 bg-zinc-900 p-4",
+                "relative border rounded-sm border-zinc-700 hover:border-teal-50 bg-zinc-900 p-4",
                 className
             )}
             {...rest}
@@ -102,7 +102,7 @@ const ModulesList = () => {
     return (
         <>
             {Object.keys(modules).map(category => (
-                <section id={category} className="mb-10 p-4 bg-zinc-900 rounded-lg shadow-lg outline outline-offset-2 outline-red-500">
+                <section id={category} className="mb-10 p-4 bg-zinc-900 rounded-lg shadow-lg outline-solid outline-offset-2 outline-red-500">
                     <h2 class="text-5xl font-bold text-white mb-4 capitalize">{category}</h2>
                     <div class="grid grid-cols-3 gap-4">
                         {modules[category].map(module => (

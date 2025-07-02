@@ -41,7 +41,7 @@ const Block = ({ className, ...rest }) => {
             initial="hidden"
             animate={control}
             className={twMerge(
-                "col-span-4 border rounded border-zinc-700 hover:border-red-600 bg-zinc-900 p-4",
+                "col-span-4 border rounded-sm border-zinc-700 hover:border-red-600 bg-zinc-900 p-4",
                 className
             )}
             {...rest}
