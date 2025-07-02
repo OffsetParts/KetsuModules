@@ -102,7 +102,7 @@ const ModulesList = () => {
     return (
         <>
             {Object.keys(modules).map(category => (
-                <section id={category} class="mb-10 p-4 bg-zinc-900 rounded-lg shadow-lg outline outline-offset-2 outline-red-500">
+                <section id={category} className="mb-10 p-4 bg-zinc-900 rounded-lg shadow-lg outline outline-offset-2 outline-red-500">
                     <h2 class="text-5xl font-bold text-white mb-4 capitalize">{category}</h2>
                     <div class="grid grid-cols-3 gap-4">
                         {modules[category].map(module => (
