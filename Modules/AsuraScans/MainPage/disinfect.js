@@ -1,16 +1,37 @@
+function isObject(value) {
+	return typeof value === 'object' && value !== null;
+}
+
+function deepAutoParse(obj) {
+  if (typeof obj === "string") {
+    try {
+      const parsed = JSON.parse(obj);
+      return deepAutoParse(parsed);
+    } catch {
+      return obj;
+    }
+  } else if (Array.isArray(obj)) {
+    return obj.map(deepAutoParse);
+  } else if (typeof obj === "object" && obj !== null) {
+    return Object.fromEntries(
+      Object.entries(obj).map(([k, v]) => [k, deepAutoParse(v)])
+    );
+  }
+  return obj;
+}
+
+
 function scriptFilter(innerRegex) {
     let refinedData = '';
-    let outerFunctionRegex = /self\.__next_f\.push\(\[(\d+),\s*"(.*?)"\]\)/u;
+    let outerFunctionRegex = /self.__next_f.push\(\[(\d+),s*"(.*?)"\]\)/u;
     document.querySelectorAll('script').forEach((element) => {
         let content = element.innerHTML;
 			if (content.includes(innerRegex)) {
             	let match = content.match(outerFunctionRegex); if (match) {
-                refinedData = JSON.parse(match[2]
-                    .replace(/[a-zA-Z0-9]+:/g, '')     // Remove number prefixes
-                    .replace(/\\r\\n/g, '\n')          // Replace escaped newlines
-                    .replace(/\\"/g, '"')              // Unescape quotation marks
-                    .replace(/\\\\/g, '\\')            // Handle any other escape sequences
-                    .replace(/\\n$/, '')
+                refinedData = deepAutoParse(match[2]
+                    .replace(/[a-zA-Z0-9]+:/g, '')
+					.replace(/\\n$/, '')
+					.replace(/\\"/g, '"')
 				);
             }
         }
@@ -18,87 +39,72 @@ function scriptFilter(innerRegex) {
     return refinedData;
 }
 
-function dynamicCiteriaSearch(obj, criteria) {
-	let results = [];
+function matchesCriteria(obj, criteria) {
+	return Object.entries(criteria).every(([key, { type, value }]) => {
+		if (!(key in obj)) return false;
+		if (typeof obj[key] !== type) return false;
 
-	function recursiveSearch(obj) {
-		if (Array.isArray(obj)) {
-			obj.forEach(item => {
-				if (typeof item === 'object' && item !== null) {
-					let matches = Object.keys(criteria).every(key => {
-						const expectedType = criteria[key].type;
-						const valueType = typeof item[key];
-
-						// Check if key exists and type matches
-						if (expectedType && valueType === expectedType) {
-							const expectedValue = criteria[key].value;
-							// If a specific value is provided, check it
-							if (expectedValue !== undefined) {
-								// Handle specific value checks based on type
-								if (valueType === 'string' && expectedValue instanceof RegExp) {
-									// Use regex for string matching
-									return expectedValue.test(item[key]);
-								} else if (valueType === 'number' && typeof expectedValue === 'function') {
-									// Use a function for number matching (e.g., range check)
-									return expectedValue(item[key]);
-								} else {
-									return item[key] === expectedValue;
-								}
-							}
-							return true; // No specific value check, just type match
-						}
-						return false;
-					});
-
-					if (matches) {
-						results.push(item); // Push the matched object, not the parent array
-					}
-				}
-			});
+		if (value !== undefined) {
+			const val = obj[key];
+			if (type === 'string' && value instanceof RegExp) return value.test(val);
+			if (type === 'number' && typeof value === 'function') return value(val);
+			return val === value;
 		}
+		return true;
+	});
+}
 
-		// Continue searching nested objects
-		if (typeof obj === 'object' && obj !== null) {
-			for (let key in obj) {
-				recursiveSearch(obj[key]);
-			}
+function dynamicCriteriaSearch(obj, criteria) {
+	const results = [];
+
+	function search(node) {
+		if (Array.isArray(node)) {
+			node.forEach(search);
+		} else if (isObject(node)) {
+			if (matchesCriteria(node, criteria)) results.push(node);
+			Object.values(node).forEach(search);
 		}
 	}
 
-	recursiveSearch(obj);
+	search(obj);
 	return results;
 }
 
-function findProperties(obj, keysToFind) {
-	let results = [];
 
-	function recursiveSearch(obj) {
-		if (typeof obj === 'object' && obj !== null) {
-			// Check if all keysToFind exist in the current object
-			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
-				// Push the entire object containing all keysToFind
-				results.push(obj);
-			}
+function hasKeys(obj, keys) {
+	return keys.every(k => k in obj);
+}
 
-			// Continue searching nested objects
-			for (let key in obj) {
-				recursiveSearch(obj[key]);
-			}
+function findWhere(obj, predicate) {
+	const results = [];
+
+	function search(node) {
+		if (isObject(node)) {
+			if (predicate(node)) results.push(node);
+			Object.values(node).forEach(search);
 		}
 	}
 
-	recursiveSearch(obj);
+	search(obj);
 	return results;
+}
+
+function encodeFunction(fn) {
+    return btoa(fn.toString());
+}
+
+function decodeFunction(encoded) {
+    eval(atob(encoded));
 }
 
 let goatCriteria = { 'value': { type: 'string', value: 'all' } };
 
 let GOATData = []; let goatData = dynamicCiteriaSearch(scriptFilter('{\\"value\\":\\"all\\"'), goatCriteria); if (goatData) {
 	GOATData = Array.from(goatData[0]['children']).map(list => {
-        const info = findProperties(list, ['href', 'children'])[1];
-		let title = info.children;
-		var link = info.href;
-		var image = 'https:' + findProperties(list, ['src'])[0].src;
+        const info = findWhere(list, node => hasKeys(node, ['href', 'children']));
+		let title = info[1].children;
+		var link = info[1].href;
+		var image = 'https:' + findWhere(list, node =>  hasKeys(node, ['src']))[0].src;
 		console.log({title, link, image});
 	});
 }

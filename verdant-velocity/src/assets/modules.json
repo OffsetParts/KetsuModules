@@ -80,6 +80,13 @@
         "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asura.json",
         "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asura.json"
     }, {
+        "name": "Comick | ENG",
+        "author": "Scrumptious",
+        "image": "https://comick.io/static/icons/unicorn-64.png",
+        "info": "Read all kinds of comics @ Comick.io",
+        "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/Comick/Comick.io.json",
+        "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/Comick/Comick.io.json"
+    }, {
         "name": "FlameScans | ENG",
         "author": "Scrumptious",
         "image": "https://i.postimg.cc/W1y2xnfX/image.png",

@@ -214,7 +214,77 @@ let genres = [
 ]
 
 let bestEntries = [
-    "Best Movies"
+    "Best 2025",
+    "Best 2022 TV shows",
+    "Best 2023 TV shows",
+    "Best 2024 TV shows",
+    "Best 2025 TV shows",
+    "Best TV mini-series",
+    "Best Netflix Series",
+    "Best Reality-Shows",
+    "Best Movies",
+    "Best 2024",
+    "Best 2023",
+    "Best 2022",
+    "Best 2021",
+    "Best 2020",
+    "Best 2019",
+    "Best 2018",
+    "Best 2017",
+    "Best 2016",
+    "Best Action 2021",
+    "Best Action 2023",
+    "Best Animated 2017",
+    "Best Animated 2019",
+    "Best Animated 2023",
+    "Best Adventure 2021",
+    "Best Adventure 2023",
+    "Best Biography 2022",
+    "Best Biography 2023",
+    "Best Comedy 2017",
+    "Best Comedy 2022",
+    "Best Comedy 2023",
+    "Best Crime 2021",
+    "Best Crime 2022",
+    "Best Crime 2023",
+    "Best Documentary 2021",
+    "Best Documentaries 2022",
+    "Best Documentaries 2023",
+    "Best Drama 2019",
+    "Best Drama 2021",
+    "Best Drama 2023",
+    "Best Family 2021",
+    "Best Family 2023",
+    "Best Fantasy & Sci-fi 2021",
+    "Best Fantasy & Sci-fi 2023",
+    "Best History 2021",
+    "Best History 2022",
+    "Best History 2023",
+    "Best History 2023",
+    "Best Horror 2023",
+    "Best Musical 2022",
+    "Best Mystery 2021",
+    "Best Mystery 2022",
+    "Best Mystery 2023",
+    "Best Romantic 2021",
+    "Best Romantic 2022",
+    "Best Romantic 2023",
+    "Best Thriller 2021",
+    "Best Thriller 2022",
+    "Best 2010s Body Horror",
+    "Best War 2021",
+    "Best War 2022",
+    "Best War 2023",
+    "Best Anime Movies",
+    "Best Chick Flick",
+    "Best Disney Princess",
+    "Best Existential",
+    "Best German",
+    "Best Franchise",
+    "Best Japanese",
+    "Best Loners",
+    "Best Netflix Movies",
+    "Best Songs from Movies"
 ]
 
 let subEntries = [
@@ -343,7 +413,6 @@ function getEntries(count) {
     
     return uniqueEntries;
 }
-
 
 function getRandomInteger(min, max) {
     const minValue = Math.ceil(min);

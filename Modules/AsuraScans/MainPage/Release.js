@@ -201,11 +201,8 @@ let Poster = new Layout(
 
 //Init
 let output = [];
-var id = 'ketsu-final-data';
-document.body.querySelectorAll('#' + id).forEach((el) => (el.remove()));
-let ketsu = document.createElement('div');
-ketsu.setAttribute('id', id);
-document.body.prepend(ketsu);
+let ketsu = document.getElementById('ketsu-final-data');
+let parsedJson = JSON.parse(ketsu.innerHTML || '{}');
 
 var emptyKeyValue = [new KeyValue('', '')];
 var commands = [new Commands('helperFunctions', [new KeyValue('isCustomRequest', 'true')])];
@@ -228,101 +225,10 @@ function quickRequest(url, clean) {
 	}
 }
 
-function scriptFilter(match) {
-	let refinedData = '';
-    document.querySelectorAll('script').forEach((elm) => {
-        let content = elm.textContent;
-        if (content.match('self.__next_f.push') && content.includes(match)) {
-            let match = content.match(/self\\.__next_f\\.push\\(\\[(\\d+),\\s*\"(.*?)\"\\]\\)/u); if (match) {
-                refinedData = JSON.parse(match[2]
-                .replace(/[a-zA-Z0-9]+:/g, '')              // Remove any alphanumeric prefix followed by a colon
-                .replace(/\\\\r\\\\n/g, '\\n')          // Replace escaped newlines
-                .replace(/\\\\\"/g, '\"')              // Unescape quotation marks
-                .replace(/\\\\\\\\/g, '\\\\')            // Handle any other escape sequences
-                .replace(/\\\\n$/, '')
-			);
-		}}
-    });
-    return refinedData
-}
-
-function dynamicCiteriaSearch(obj, criteria) {
-	let results = [];
-
-	function recursiveSearch(obj) {
-		if (Array.isArray(obj)) {
-			obj.forEach(item => {
-				if (typeof item === 'object' && item !== null) {
-					let matches = Object.keys(criteria).every(key => {
-						const expectedType = criteria[key].type;
-						const valueType = typeof item[key];
-
-						// Check if key exists and type matches
-						if (expectedType && valueType === expectedType) {
-							const expectedValue = criteria[key].value;
-							// If a specific value is provided, check it
-							if (expectedValue !== undefined) {
-								// Handle specific value checks based on type
-								if (valueType === 'string' && expectedValue instanceof RegExp) {
-									// Use regex for string matching
-									return expectedValue.test(item[key]);
-								} else if (valueType === 'number' && typeof expectedValue === 'function') {
-									// Use a function for number matching (e.g., range check)
-									return expectedValue(item[key]);
-								} else {
-									return item[key] === expectedValue;
-								}
-							}
-							return true; // No specific value check, just type match
-						}
-						return false;
-					});
-
-					if (matches) {
-						results.push(item); // Push the matched object, not the parent array
-					}
-				}
-			});
-		}
-
-		// Continue searching nested objects
-		if (typeof obj === 'object' && obj !== null) {
-			for (let key in obj) {
-				recursiveSearch(obj[key]);
-			}
-		}
-	}
-
-	recursiveSearch(obj);
-	return results;
-}
-
-function findProperties(obj, keysToFind) {
-	let results = [];
-
-	function recursiveSearch(obj) {
-		if (typeof obj === 'object' && obj !== null) {
-			// Check if all keysToFind exist in the current object
-			let foundKeys = keysToFind.every(key => key in obj); if (foundKeys) {
-				// Push the entire object containing all keysToFind
-				results.push(obj);
-			}
-
-			// Continue searching nested objects
-			for (let key in obj) {
-				recursiveSearch(obj[key]);
-			}
-		}
-	}
-
-	recursiveSearch(obj);
-	return results;
-}
-
 /*
 UPDATE: 8/17/2024 @ 4:03 AM
 After some extensive testing, I have found a new methodology towards grabbing info for grabbing hydrazied data on numerous sites
-which I'll call Dynamic Criteria Search (DCS). This method is a more advanced version of nested arraies */
+which I'll call this Dynamic Criteria Search (DCS). This method is a more advanced version for searching arraies */
 
 
 /* {{ Dynamic Elements }} */

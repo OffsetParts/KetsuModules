@@ -83,7 +83,7 @@ var Synopsis = cleanText(document.querySelector('div [style*=transition] > p.man
 var type = document.querySelectorAll('div[class*=Card] p[class*=infoValue]')[3].textContent;
 var genres = Array.from(document.querySelectorAll('a[href*=genre] span')).map(g => g.textContent);
 
-var chaptersData = Array.from(JSON.parse(document.querySelector('script[id=__NEXT_DATA__]').textContent)['props']['pageProps']['chapters']).map((entry) => {
+var chaptersData = Array.from(JSON.parse(document.querySelector('script[id=__NEXT_DATA__]').textContent)['props']['pageProps']['data']).map((entry) => {
     let link = quickRequest('/series/' + entry['series_id'] + '/' + entry['token'], true);
     let title = 'Chapter ' + entry['chapter'].replace('.0', '');
     return new Chapter(title, link, false);

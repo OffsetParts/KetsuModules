@@ -240,6 +240,20 @@ var Spotlight = Array.from(topSlider).map(slide => {
 		return new Data(image,'', '', title, airing, '', '', false, link, false);
 	}
 });
+// New Model Creation
+/* let hiAnime = await core.fetch("https://hianime.to/home", {}, (w) => {
+    let topSlider = w.document.querySelectorAll('#slider .swiper-wrapper .swiper-slide');
+    let loggedTitles = new Set();
+
+    var Spotlight = Array.from(topSlider).map(slide => {
+        var title = slide!.querySelector('div.desi-head-title')!.textContent;
+        var image = slide!.querySelector('img')!.dataset?.src;
+        // var link = slide!.querySelector('div.desi-buttons a')!.href!
+        return {title, image};
+    });
+
+    return Spotlight;
+}); */
 
 var risingTides = document.querySelectorAll('div [class=trending-list] > div > div > div');
 var Trending = Array.from(risingTides).map(list => {

@@ -20,8 +20,8 @@
     },
     "global": {
         "variables": [{
-            "key": "",
-            "value": ""
+            "key": "webBaseURL",
+            "value": "https://ww25.soap2day.day"
         }],
         "cookies": [{
             "key": "",
@@ -34,7 +34,7 @@
     },
     "mainPage": [{
         "request": {
-            "url": "https://soap2day.tf/",
+            "url": "https://ww25.soap2day.day/",
             "method": "get",
             "headers": [{
                 "key": "",

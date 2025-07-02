@@ -189,7 +189,7 @@ function getRandomInteger(min, max) {
 }
 
 let Links = getEntries(getRandomInteger(8, 13)).map((site, index) => {
-    var url = Array.from(document.querySelectorAll('[id=menu] li a')).find(elm => elm?.textContent == site).href
+    var url = Array.from(document.querySelectorAll('[id=menu] li a')).find(elm => elm?.textContent == site).href;
     if (index === 0) {nextRequest = url} else {extraInfo.push(new KeyValue(`${index}`, `${url}`))};
 });
 
