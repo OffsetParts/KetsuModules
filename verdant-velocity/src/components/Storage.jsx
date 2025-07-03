@@ -8,7 +8,7 @@ import modules from "../assets/modules.json"
 
 export const Modules = () => {
     return (
-        <div className="min-h-screen bg-zinc-900 text-zinc-50 pt-10 pl-16">
+        <div className="min-h-screen bg-zinc-900 text-zinc-50 pt-10 px-4 overflow-x-hidden">
             <Intro />
             <div>
                 <ModulesList />
@@ -102,9 +102,9 @@ const ModulesList = () => {
     return (
         <>
             {Object.keys(modules).map(category => (
-                <section id={category} className="mb-10 p-4 bg-zinc-900 rounded-lg shadow-lg outline-solid outline-offset-2 outline-red-500">
+                <section id={category} className="mb-10 p-4 bg-zinc-900 rounded-lg shadow-lg outline-solid outline-offset-2 outline">
                     <h2 class="text-5xl font-bold text-white mb-4 capitalize">{category}</h2>
-                    <div class="grid grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {modules[category].map(module => (
                         <Block className="col-span-1" image={module.image} author={module.author} KetsuHref={module.ketsu_link} ZetsuHref={module.zetsu_link}>
                             <h3 class="text-2xl font-bold text-white">{module.name}</h3>

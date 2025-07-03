@@ -1,6 +1,34 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @plugin 'tailgrids/plugin';
+
+@theme {
+  --color-discord-blue: #5865f2;
+  --color-javascript: #ffe873;
+  --color-python: #4b8bbe;
+  --color-nodejs: #53a54b;
+  --color-yxn: #ff50f0;
+  --color-online: #57f287;
+  --color-offline: #808080;
+  --color-idle: #f0b232;
+  --color-dnd: #ed4245;
+
+  --animate-wave: wave 1s infinite;
+
+  @keyframes wave {
+    0%,
+    100% {
+      color: #ff50f0;
+      text-decoration-color: #ff50f0;
+    }
+    50% {
+      color: #bf10b0;
+      text-decoration-color: bf10b0;
+    }
+  }
+}
 
 @theme {
   --color-discord-blue: #5865f2;
@@ -25,6 +53,24 @@
       color: #bf10b0;
       text-decoration-color: bf10b0;
     }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 }
 
