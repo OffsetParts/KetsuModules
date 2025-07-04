@@ -3,9 +3,15 @@ import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel";
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
-export default defineConfig({ 
-  integrations: [react(), tailwind()],
+export default defineConfig({
+  integrations: [react()],
   output: "server",
-  adapter: vercel()
+  adapter: vercel(),
+
+  vite: {
+    plugins: [tailwindcss()]
+  }
 });
