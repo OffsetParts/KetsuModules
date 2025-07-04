@@ -25,5 +25,7 @@ export default {
 			}
 		},
 	},
-	plugins: [],
+	plugins: [
+		require('tailgrids/plugin'),
+	],
 }
