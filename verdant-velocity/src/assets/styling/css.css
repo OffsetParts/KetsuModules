@@ -1,8 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@plugin 'tailgrids/plugin';
+@import 'tailwindcss';
 
 @theme {
   --color-discord-blue: #5865f2;
@@ -28,6 +24,10 @@
       text-decoration-color: bf10b0;
     }
   }
+}
+
+@layer utilities {
+  @plugin 'tailgrids/plugin';
 }
 
 /*
