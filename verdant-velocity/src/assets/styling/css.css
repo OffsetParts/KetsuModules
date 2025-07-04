@@ -15,32 +15,6 @@
   --color-idle: #f0b232;
   --color-dnd: #ed4245;
 
-  --animate-wave: wave 1s infinite;
-
-  @keyframes wave {
-    0%,
-    100% {
-      color: #ff50f0;
-      text-decoration-color: #ff50f0;
-    }
-    50% {
-      color: #bf10b0;
-      text-decoration-color: bf10b0;
-    }
-  }
-}
-
-@theme {
-  --color-discord-blue: #5865f2;
-  --color-javascript: #ffe873;
-  --color-python: #4b8bbe;
-  --color-nodejs: #53a54b;
-  --color-yxn: #ff50f0;
-  --color-online: #57f287;
-  --color-offline: #808080;
-  --color-idle: #f0b232;
-  --color-dnd: #ed4245;
-
   --animate-wave: wave 5s infinite;
 
   @keyframes wave {
@@ -125,6 +99,6 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #bb3939;
+    background: #ffffff;
     border-radius: 2px;
 }

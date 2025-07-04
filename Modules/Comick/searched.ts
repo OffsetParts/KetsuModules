@@ -3,7 +3,7 @@ import * as shared from "../Template/shared"
 
 // TODO CREATE SEARCH METADATA FUNCTION
 
-core.log(core.searchMetadata({searched: "reincarnated", page: 1}))
+core.log(core.searchMetadata())
 
 core.search([
     core.viewsHolder({
