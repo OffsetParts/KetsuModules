@@ -3,10 +3,14 @@ import react from "@astrojs/react";
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 
+import sentry from "@sentry/astro";
+import spotlightjs from "@spotlightjs/astro";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()],
-  output: "server",
+  site: "https://exiled.me",
+  integrations: [react(), sentry(), spotlightjs()],
+  output: "static",
   adapter: vercel(),
 
   vite: {

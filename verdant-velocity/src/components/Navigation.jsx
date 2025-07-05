@@ -9,7 +9,7 @@ export const Navigation = () => {
     }
 
     return (
-        <header className="w-min h-12 bg-zinc-900 border border-zinc-700 rounded-sm fixed isolate overflow-hidden top-4 start-0 end-0 ms-auto me-auto z-50 flex items-center px-3">
+        <header className="w-min h-12 bg-zinc-900 border border-zinc-700 rounded fixed isolate overflow-hidden top-4 start-0 end-0 ms-auto me-auto z-50 flex items-center px-3">
             <nav className="flex items-center gap-2">
                 <a href="/"><span className="text-red-500">ZKetsu</span></a>
                 <b>|</b>

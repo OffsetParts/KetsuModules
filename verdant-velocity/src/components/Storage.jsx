@@ -10,9 +10,7 @@ export const Modules = () => {
     return (
         <div className="min-h-screen bg-zinc-900 text-zinc-50 pt-10 px-4 overflow-x-hidden">
             <Intro />
-            <div>
-                <ModulesList />
-            </div>
+            <ModulesList />
         </div>
     )
 }
@@ -103,12 +101,12 @@ const ModulesList = () => {
         <>
             {Object.keys(modules).map(category => (
                 <section id={category} className="mb-10 p-4 bg-zinc-900 rounded-lg shadow-lg outline-solid outline-offset-2 outline">
-                    <h2 class="text-5xl font-bold text-white mb-4 capitalize">{category}</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <h2 className="text-5xl font-bold text-white mb-4 capitalize">{category}</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {modules[category].map(module => (
-                        <Block className="col-span-1" image={module.image} author={module.author} KetsuHref={module.ketsu_link} ZetsuHref={module.zetsu_link}>
-                            <h3 class="text-2xl font-bold text-white">{module.name}</h3>
-                            <p class="text-zinc-400">{module.info}</p>
+                        <Block className="col-span-1" key={module.id} image={module.image} author={module.author} KetsuHref={module.ketsu_link} ZetsuHref={module.zetsu_link}>
+                            <h3 className="text-2xl font-bold text-white">{module.name}</h3>
+                            <p className="text-zinc-400">{module.info}</p>
                         </Block>
                         ))}
                     </div>
