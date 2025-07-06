@@ -86,41 +86,6 @@ const ParticlesBg = () => {
           detectRetina: true,
         }}
       />
-
-      {/* Foreground Layer (custom atom icons) */}
-      <Particles
-        id="icon-layer"
-        init={particlesInit}
-        options={{
-          fullScreen: { enable: true, zIndex: -5 },
-          particles: {
-            number: { value: 8 },
-            shape: {
-              type: "image",
-              image: [
-                {
-                  src: "/assets/icons/atom-light.svg",
-                  width: 24,
-                  height: 24,
-                },
-                {
-                  src: "/assets/icons/orbit-light.svg",
-                  width: 24,
-                  height: 24,
-                },
-              ],
-            },
-            size: { value: 10 },
-            opacity: { value: 0.2 },
-            move: {
-              enable: true,
-              speed: 0.15,
-              outModes: { default: "bounce" },
-              direction: "none",
-            },
-          },
-        }}
-      />
     </>
   );
 };
