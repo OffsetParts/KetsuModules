@@ -1,0 +1,22 @@
+@layer base {
+  html {
+    color: rgb(245, 245, 245);
+    background: #18181b;
+    text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+  }
+
+  @keyframes wave {
+    0%, 100% {
+      color: #ff50f0;
+      text-decoration-color: #ff50f0;
+    }
+    50% {
+      color: #bf10b0;
+      text-decoration-color: #bf10b0;
+    }
+  }
+}

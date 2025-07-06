@@ -1,0 +1,18 @@
+@layer base {
+  html {
+    color: #1a1a1a;
+    background: #f9f9f9;
+    text-shadow: none;
+  }
+
+  @keyframes wave {
+    0%, 100% {
+      color: #b83280;
+      text-decoration-color: #b83280;
+    }
+    50% {
+      color: #6b21a8;
+      text-decoration-color: #6b21a8;
+    }
+  }
+}

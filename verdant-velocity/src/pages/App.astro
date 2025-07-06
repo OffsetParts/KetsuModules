@@ -1,0 +1,67 @@
+---
+import Block from '../components/Block.jsx';
+import ParticlesBg from '../components/subcomponents/Particles.tsx';
+---
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Atlas</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body class="bg-white dark:bg-[#18181b] text-gray-900 dark:text-gray-100 relative z-10 bg-transparent">
+
+    <!-- 🌌 Particle Background -->
+    <ParticlesBg client:load />
+
+    <!-- 🔭 Hero -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-24">
+      <h1 class="text-5xl font-bold mb-4">Welcome to Atlas</h1>
+      <p class="text-lg text-gray-500 dark:text-gray-400 mb-6 max-w-xl">Reigniting STEM through curiosity, creativity, and collaboration.</p>
+      <button class="bg-black text-white px-6 py-3 rounded-full hover:scale-105 transition-transform">Join the Movement</button>
+    </section>
+
+    <!-- 🧠 Animated Goals -->
+    <section class="px-6 py-20 bg-gray-100 dark:bg-zinc-900">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6">
+        <Block className="row-span-2 md:col-span-5" client:visible>
+          <h3 class="text-xl font-bold mb-2 text-indigo-400">🔬 STEM Events</h3>
+          <p>Run hands-on builds like ionic thrusters and make science fun and accessible.</p>
+        </Block>
+        <Block className="row-span-2 md:col-span-5" client:visible>
+          <h3 class="text-xl font-bold mb-2 text-indigo-400">🧠 Innovation</h3>
+          <p>Support interdisciplinary student-led projects across CS, physics, and engineering.</p>
+        </Block>
+        <Block className="row-span-2 md:col-span-5" client:visible>
+          <h3 class="text-xl font-bold mb-2 text-indigo-400">🏗 Impact</h3>
+          <p>Build a scalable STEM model with research partnerships and enterprise vision.</p>
+        </Block>
+      </div>
+    </section>
+
+    <!-- 🌗 Theme Toggle -->
+    <button id="themeToggle" aria-label="Toggle theme" class="fixed bottom-6 right-6 z-50 bg-white dark:bg-zinc-800 border border-gray-300 dark:border-zinc-700 p-3 rounded-full shadow-lg hover:scale-105 transition duration-300">
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <script>
+      const btn = document.getElementById('themeToggle');
+      const icon = document.getElementById('themeIcon');
+      const html = document.documentElement;
+
+      if (localStorage.theme === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+
+      btn.addEventListener('click', () => {
+        const isDark = html.classList.toggle('dark');
+        localStorage.theme = isDark ? 'dark' : 'light';
+        icon.textContent = isDark ? '🌙' : '☀️';
+      });
+
+      icon.textContent = html.classList.contains('dark') ? '🌙' : '☀️';
+    </script>
+
+  </body>
+</html>

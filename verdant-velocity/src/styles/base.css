@@ -1,0 +1,36 @@
+@layer base {
+  @font-face {
+    font-family: "Cozette";
+    src: url("../assets/fonts/cozette.ttf");
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: "Cozette", monospace;
+  }
+
+  ::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #57534e;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(64.5% 0.246 16.439);
+    border-radius: 2px;
+  }
+}

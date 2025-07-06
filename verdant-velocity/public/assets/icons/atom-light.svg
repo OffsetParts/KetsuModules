@@ -1,0 +1,15 @@
+<!-- public/assets/icons/orbit-light.svg -->
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="32" cy="32" r="4" fill="#155dfc" />
+  <circle cx="32" cy="32" r="20" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.2" />
+  <circle cx="32" cy="12" r="3" fill="#ffffff">
+    <animateTransform
+      attributeName="transform"
+      attributeType="XML"
+      type="rotate"
+      from="0 32 32"
+      to="360 32 32"
+      dur="12s"
+      repeatCount="indefinite" />
+  </circle>
+</svg>

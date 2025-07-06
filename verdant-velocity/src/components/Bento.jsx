@@ -74,7 +74,7 @@ const FeaturedProjects = () => (
 const Credits = () => {
     return (
         <Block className="row-span-2 md:col-span-12">
-            <h1 className="text-2xl font-medium leading-tight"><a className="text-red-600 hover:underline" >Credits</a> <br /> Ketsu:<a className="text-online underline animate-wave" href="https://ketsu.app">Page</a></h1>
+            <h1 className="text-2xl font-medium leading-tight"><a className="text-red-600 hover:underline" >Credits</a> <br /> Ketsu:<a className="text-online underline animate-[wave_1s_infinite]" href="https://ketsu.app">Page</a></h1>
         </Block>
     )
 }
