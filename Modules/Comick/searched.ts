@@ -5,7 +5,7 @@ import * as shared from "../Template/shared"
 
 let SM = core.searchMetadata()
 
-let searchAPI = await core.fetch(`https://api.comick.io/v1.0/search?q=${SM.searched}&limit=49&page=${SM.page}`, {headers: {"Referer": "https://comick.io/"}});
+let searchAPI = await core.fetch(`https://api.comick.io/v1.0/search?q=${SM.searched}&page=${SM.page+1}`, {headers: {"Referer": "https://comick.io/"}});
 let API_Data = shared.extractJsonString(searchAPI.querySelector('script')!.textContent!);
 
 let filtered_data = API_Data.map((entry : any) => {
