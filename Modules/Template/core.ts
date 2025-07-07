@@ -87,7 +87,7 @@ export async function fetch<T extends RunWithinSite>(
     if (url === metaUrl) {
         let res = run.length > 0 ? await run[0]?.(window) : window.document.documentElement.outerHTML
         store.set(url, res)
-        return run.length > 0 ? res : window.document.documentElement as any
+        return run.length > 0 ? res : window.document.documentElement as any;
     }
     let cached = store.get(url)
     if (cached === undefined) {
@@ -136,7 +136,7 @@ export async function dynamicFetch<T extends RunWithinSite>(
         if (!currentURL.includes("ketsu_dynamic=")) {
             throw new Error("No dynamic URL available and no testURL provided.");
         }
-
+        store.set("ketsu_dynamic_raw",currentURL) // THIS
         const encoded = currentURL.split("ketsu_dynamic=")[1];
         const originalRequest: Request = JSON.parse(decodeURIComponent(encoded));
 
@@ -489,7 +489,7 @@ type _InfoPage = Prettify<Partial<InfoPage>>
 export function info(data: _InfoPage): void {
     let l: InfoPage = {
         image: data.image || defaultImage,
-        link: data.link || metadata().request, 
+        link: request(store.get<string>("ketsu_dynamic_raw") || metadata().request.url),        
         title: data.title || "",
         description: data.description || "",
         genres: data.genres || [],
