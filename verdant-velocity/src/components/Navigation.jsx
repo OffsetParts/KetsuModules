@@ -15,7 +15,7 @@ export const Navigation = () => {
                 <b>|</b>
                 <ul className="flex gap-2">
                     {Object.entries(items).map(([key, [href, text]]) => (
-                        <a key={key} href={href} className="hover:text-red-400">{text}</a>
+                        <a key={key} href={href} className="text-white hover:text-red-400">{text}</a>
                     ))}
                 </ul>
             </nav>

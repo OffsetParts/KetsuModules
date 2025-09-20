@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useAnimationControls } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { twMerge } from "tailwind-merge";
 import modules from "../assets/modules.json"
@@ -22,8 +22,11 @@ const variant = {
 
 const Block = ({ className, image, author, KetsuHref, ZetsuHref, ...rest }) => {
 
-    const control = useAnimation()
-    const [ref, inView] = useInView()
+    const control = useAnimationControls()
+    const { ref, inView } = useInView({
+        triggerOnce: false,
+        threshold: 0.1
+    })
 
     useEffect(() => {
         if (inView) {
@@ -49,7 +52,7 @@ const Block = ({ className, image, author, KetsuHref, ZetsuHref, ...rest }) => {
             {image && (
                 <img
                     src={image}
-                    alt="Module Image"
+                    alt=""
                     className="absolute top-0 right-0 w-16 h-16 rounded-full m-2 object-cover"
                 />
             )}

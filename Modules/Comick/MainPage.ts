@@ -70,32 +70,32 @@ core.main([
     core.viewsHolder({
         orientation: "horizontal",
         design: "wide3",
-        distribution: "longTripletsDouble",
+        distribution: "longDoubletsFull",
         title : "Trending",
         views : Trending
     }), core.viewsHolder({
         orientation: "horizontal",
-        design: "wide10",
+        design: "normal1",
         distribution: "longTripletsDouble",
         title : "Rising Stars",
         views : RisingStars
     }), core.viewsHolder({
         orientation: "horizontal",
-        design: "wide3",
-        distribution: "wideFull",
-        title: "Adapted To Mange",
+        design: "wide6",
+        distribution: "longTriplets",
+        title: "Adapted To Manga",
         views: AdaptedManga
     }), core.viewsHolder({
         orientation: "horizontal",
-        design: "wide3",
+        design: "wide4",
         distribution: "wideFull",
-        title: "Adapted To Mange",
+        title: "Completed",
         views: Completed
     }), core.viewsHolder({
-        orientation: "horizontal",
-        design: "wide3",
-        distribution: "wideFull",
-        title: "Adapted To Mange",
+        orientation: "vertical",
+        design: "wide9",
+        distribution: "wideStrechedFullList",
+        title: "Recent Updates",
         views: Recent
     })
 ])
