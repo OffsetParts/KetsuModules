@@ -7,13 +7,14 @@ import { Navigation } from "../components/Navigation"
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="ZKetsu no Kaisen - Your source for quality manga modules and scanlation content" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Exiled</title>
-		<link rel="icon" type="image/x-icon" href="/Astro.svg" />
+		<title>ZKetsu no Kaisen</title>
+		<link rel="icon" type="image/svg+xml" href="/Astro.svg" />
 	</head>
-	<body >
-		<Navigation />
+	<body class="bg-zinc-900">
+		<Navigation client:load />
 		<slot/>
 	</body>
 </html>

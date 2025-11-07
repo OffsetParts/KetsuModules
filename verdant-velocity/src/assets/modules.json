@@ -96,17 +96,8 @@
             "author": "Scrumptious",
             "image": "https://i.postimg.cc/MK0y10tY/asura-logo.png",
             "info": "Read manhua/manhwa on AsuraScans",
-            "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asura.json",
-            "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asura.json"
-        },
-        {
-            "id": "n3p9q4o6-3r1s-5t4u-0v2w-3x4y5z6a7b8c",
-            "name": "Comick | ENG",
-            "author": "Scrumptious",
-            "image": "https://comick.io/static/icons/unicorn-64.png",
-            "info": "Read all kinds of comics @ Comick.io",
-            "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/Comick/Comick.io.json",
-            "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/Comick/Comick.io.json"
+            "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asurascans.json",
+            "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/AsuraScans/Asurascans.json"
         },
         {
             "id": "o4q0r5p7-4s2t-6u5v-1w3x-4y5z6a7b8c9d",
@@ -116,15 +107,6 @@
             "info": "Read manhwa translations at Flamescans.",
             "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json",
             "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json"
-        },
-        {
-            "id": "p5r1s6q8-5t3u-7v6w-2x4y-5z6a7b8c9d0e",
-            "name": "GalaxyAction | ENG",
-            "author": "Scrumptious",
-            "image": "https://galaxyaction.net/wp-content/uploads/2024/12/GALAXY-LOGO-TEXT.png",
-            "info": "Read action and romance scanlations @ Galaxyaction.",
-            "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/GalaxyAction/Galatic.json",
-            "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/GalaxyAction/Galatic.json"
         },
         {
             "id": "q6s2t7r9-6u4v-8w7x-3y5z-6a7b8c9d0e1f",

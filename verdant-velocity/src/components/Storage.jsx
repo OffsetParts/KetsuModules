@@ -43,7 +43,7 @@ const Block = ({ className, image, author, KetsuHref, ZetsuHref, ...rest }) => {
             initial="hidden"
             animate={control}
             className={twMerge(
-                "relative border border-zinc-700 hover:border-stone-50 bg-zinc-900 transform hover:-rotate-1 hover:scale-[1.02] transition-all duration-300 ease-in-out backdrop-blur-md p-6 shadow-lg",
+                "relative border border-zinc-700 hover:border-stone-50 bg-zinc-900 backdrop-blur-md p-6 shadow-lg",
                 className
             )}
             {...rest}
