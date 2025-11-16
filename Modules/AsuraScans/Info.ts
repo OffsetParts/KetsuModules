@@ -16,18 +16,6 @@ const [genreContainer, stateEl, typeEl, synopsisEl, titleEl, imageEl] = [
     contentWrapper.querySelector('[alt="poster"]')
 ];
 
-// Helper function to extract text content recursively (avoiding script tags)
-function getText(node: Node, accumulator: string[] = []): string {
-    if (node.nodeType === Node.TEXT_NODE) {
-        accumulator.push(node.textContent || '');
-    } else if (node.nodeType === Node.ELEMENT_NODE && (node as Element).tagName.toLowerCase() !== 'script') {
-        for (let child of node.childNodes) {
-            getText(child, accumulator);
-        }
-    }
-    return cleanText(accumulator.join(' ')).trim();
-}
-
 // Extract title
 if (!titleEl || !imageEl) {
     throw new Error("Failed to parse manga info");
@@ -51,7 +39,7 @@ const chapterElms = contentWrapper.querySelectorAll('div[class*="border-[#A2A2A2
 const totalChapters = chapterElms.length;
 
 const chapters = Array.from(chapterElms, (element, index) => {
-    const link = element.querySelector('a')?.getAttribute('href') || '';
+    const link = '/' + element.querySelector('a')?.getAttribute('href') || '';
     return core.chapterRequest(cleanUrl(link), {
         name: `Chapter ${totalChapters - index}`,
         openInWebView: false

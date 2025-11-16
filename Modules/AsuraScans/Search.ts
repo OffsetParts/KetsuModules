@@ -16,7 +16,7 @@ const results = Array.from(searchResults).map(list => {
     const titleElem = list.querySelector('span[class*="block"]');
     const title = titleElem?.textContent || '';
     
-    const link = list.getAttribute('href') || '';
+    const link = '/' + list.getAttribute('href') || '';
     const imageElem = list.querySelector('img');
     const image = imageElem?.getAttribute('src') || '';
     

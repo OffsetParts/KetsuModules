@@ -2,7 +2,7 @@
  * Cleans and formats a URL for AsuraScans
  */
 export function cleanUrl(url: string): string {
-    return 'https://asuracomic.net' + url.trim();
+    return 'https://asuracomic.net/' + url.trim();
 }
 
 /**
