@@ -101,12 +101,12 @@
         },
         {
             "id": "o4q0r5p7-4s2t-6u5v-1w3x-4y5z6a7b8c9d",
-            "name": "FlameScans | ENG",
+            "name": "Flamecomics | ENG",
             "author": "Scrumptious",
             "image": "https://i.postimg.cc/W1y2xnfX/image.png",
-            "info": "Read manhwa translations at Flamescans.",
-            "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json",
-            "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flames.json"
+            "info": "Read manhwa translations at Flamecomics.",
+            "ketsu_link": "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flamecomics.json",
+            "zetsu_link": "zetsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/refs/heads/master/Modules/FlameScans/Flamecomics.json"
         },
         {
             "id": "q6s2t7r9-6u4v-8w7x-3y5z-6a7b8c9d0e1f",

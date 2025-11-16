@@ -1,8 +1,3 @@
-/**
- * FlameScans MainPage Module
- * Fetches homepage sections: Carousel, Popular Today, Staff Picked, Latest Chapters
- */
-
 import * as core from "../Template/core"
 import { cleanUrl, cleanText, cleanImage } from './shared';
 
@@ -14,7 +9,7 @@ const carouselElm = res.querySelectorAll('div[class*=mantine-Carousel-slide]');
 let Carousel = Array.from(carouselElm).map(entry => {
     const link = cleanUrl(entry.querySelector('a')?.getAttribute('href') || '');
     const banner = entry.querySelector('img')?.getAttribute('src') || '';
-    const title = cleanText(entry.querySelector('h1')?.textContent || '');
+    const title = cleanText(entry.querySelector('h3')?.textContent || '');
 
     return core.view({
         link: core.request(link),
@@ -24,7 +19,7 @@ let Carousel = Array.from(carouselElm).map(entry => {
 });
 
 // Popular Today
-const popularElm = res.querySelectorAll('div[class*=Raep6nm] > div > div');
+const popularElm = res.querySelectorAll('div[id="popular"] > div > div');
 let Popular = Array.from(popularElm).map(entry => {
     const title = cleanText(entry.querySelector('p')?.textContent || '');
     const link = cleanUrl(entry.querySelector('a')?.getAttribute('href') || '');
@@ -38,7 +33,7 @@ let Popular = Array.from(popularElm).map(entry => {
 });
 
 // Staff Picked
-const staffPickedElm = res.querySelectorAll('div[class*=Ramp6nm] > div > div');
+const staffPickedElm = res.querySelectorAll('div[id="staff-picks"] > div > div');
 let StaffPicked = Array.from(staffPickedElm).map(entry => {
     const title = cleanText(entry.querySelector('p')?.textContent || '');
     const link = cleanUrl(entry.querySelector('a')?.getAttribute('href') || '');
@@ -52,7 +47,7 @@ let StaffPicked = Array.from(staffPickedElm).map(entry => {
 });
 
 // Latest Chapters
-const latestElm = res.querySelectorAll('div[class*=Raup6nm] > div > div');
+const latestElm = res.querySelectorAll('div[id="latest"] > div > div');
 let Latests = Array.from(latestElm).map(entry => {
     const title = cleanText(entry.querySelector('a[class*=mantine-Text-root]')?.textContent || '');
     const link = cleanUrl(entry.querySelector('a')?.getAttribute('href') || '');

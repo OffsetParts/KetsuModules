@@ -11,29 +11,25 @@ let res = await core.dynamicFetch({loadInSite: true, removeScripts: false});
 // Extract basic info
 const title = cleanText(res.querySelector('h1')?.textContent || '');
 const image = core.request(cleanImage(res.querySelector('img')?.getAttribute('src') || ''));
-const state = cleanText(res.querySelector('div[style*=green] span[class*=Badge]')?.textContent || '');
-const synopsis = cleanText(res.querySelector('div [style*=transition] > p.mantine-Text-root')?.textContent || '');
 
-// Extract type
-const infoValues = Array.from(res.querySelectorAll('div[class*=Card] p[class*=infoValue]'));
-const type = infoValues[3]?.textContent || '';
+const nextDataScript = JSON.parse(res.querySelector('script[id=__NEXT_DATA__]')?.textContent || '{}').props?.pageProps || {};
 
-// Extract genres
-const genres = Array.from(res.querySelectorAll('a[href*=genre] span')).map((g: any) => 
-    cleanText(g.textContent || '')
-);
+const seriesInfo = nextDataScript?.series;
+const synopsis = seriesInfo.description || '';
+const state = seriesInfo?.status || '';
+const type = seriesInfo?.type || '';
 
-// Extract chapters from Next.js data
-const nextDataScript = res.querySelector('script[id=__NEXT_DATA__]');
+const genres = seriesInfo?.tags;
+
+
 let chapters: any[] = [];
 
 if (nextDataScript) {
     try {
-        const nextData = JSON.parse(nextDataScript.textContent || '');
-        const chaptersData = nextData?.props?.pageProps?.data || [];
+        const chaptersData = nextDataScript.chapters || [];
 
         chapters = chaptersData.map((entry: any) => {
-            const chapterNum = entry.chapter?.replace('.0', '') || '';
+            const chapterNum = entry.chapter?.replace('.00', '') || '';
             const link = cleanUrl(`/series/${entry.series_id}/${entry.token}`);
             const name = `Chapter ${chapterNum}`;
 

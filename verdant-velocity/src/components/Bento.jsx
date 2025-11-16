@@ -121,8 +121,8 @@ const projects = [
         icon: "📚"
     },
     {
-        name: "Flamescans",
-        url: "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/Flames.json",
+        name: "Flamecomics",
+        url: "ketsuapp://?moduleData=https://raw.githubusercontent.com/OffsetParts/KetsuModules/master/Modules/FlameScans/Flamecomics.json",
         color: "red-500",
         gradient: "from-red-500 to-orange-600",
         description: "Another popular manga scanlation group",

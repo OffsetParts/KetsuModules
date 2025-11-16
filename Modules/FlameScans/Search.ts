@@ -10,7 +10,7 @@ import { cleanUrl, cleanText, cleanImage } from './shared';
 let SM = core.searchMetadata();
 
 // Fetch the series list page (all comics)
-let res = await core.fetch('https://flamecomics.xyz/series', {loadInSite: true, removeScripts: false});
+let res = await core.fetch('https://flamecomics.xyz/browse', {loadInSite: true, removeScripts: false});
 
 // Extract all series cards
 const seriesCards = res.querySelectorAll('.DescSeriesCard_cardContainer__39kZS');
