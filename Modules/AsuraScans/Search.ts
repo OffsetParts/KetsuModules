@@ -6,28 +6,34 @@ let SM = core.searchMetadata();
 
 // Fetch search results page
 let res = await core.fetch(
-    `https://asuracomic.net/series?page=${SM.page}&name=${encodeURIComponent(SM.searched)}`,
-    { loadInSite: true, removeScripts: true }
+    `https://asurascans.com/browse?q=${SM.searched}&page=${SM.page}`,
+    { loadInSite: true, removeScripts: true, headers: {
+        'Referer' : 'https://asurascans.com/'
+    } }
 );
 
 // Extract search results
-const searchResults = res.querySelectorAll('[class*="gap-3 p-4"] a');
+const searchResults = res.querySelectorAll('div[class^="series-card"]');
 const results = Array.from(searchResults).map(list => {
-    const titleElem = list.querySelector('span[class*="block"]');
+    const titleElem = list.querySelector('div > a > h3');
     const title = titleElem?.textContent || '';
     
-    const link = '/' + list.getAttribute('href') || '';
+    const link = list.querySelector('a')!.getAttribute('href') || '';
     const imageElem = list.querySelector('img');
     const image = imageElem?.getAttribute('src') || '';
     
-    const chapterElem = list.querySelector('[class*="text-[13px]"]');
+    const chapterElem = list.querySelector('div > div > span');
     const lastChapter = chapterElem ? cleanText(chapterElem.textContent || '') : '';
+
+    const ratingElem = list.querySelector('a > div > span');
+    const rating = ratingElem ? cleanText(ratingElem.textContent || '') : '';
     
     return core.view({
         link: core.request(cleanUrl(link)),
         image: core.request(image),
         title: cleanText(title),
-        description: lastChapter
+        description: lastChapter,
+        field1: rating,
     });
 });
 
@@ -35,7 +41,7 @@ const results = Array.from(searchResults).map(list => {
 core.search([
     core.viewsHolder({
         title: 'Search Results',
-        design: 'wide8',
+        design: 'wide6',
         distribution: 'longDoubletsDouble',
         orientation: 'vertical',
         views: results
